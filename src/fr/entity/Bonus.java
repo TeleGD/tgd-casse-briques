@@ -57,7 +57,7 @@ public class Bonus  extends Movable implements fr.util.Circle{
 				default:break;
 				}
 			}
-			World.destroyBonus(this);
+			World.destroy(this);
 		}
 		moveY(delta);
 	}

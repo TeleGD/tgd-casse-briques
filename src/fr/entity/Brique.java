@@ -59,6 +59,7 @@ public abstract class Brique extends Entity implements Rectangle{
 		else
 		{
 			this.setLife(b.life);
+			
 		}
 		this.colliding = false;
 		this.hard = b.hard;
@@ -162,11 +163,16 @@ public abstract class Brique extends Entity implements Rectangle{
 			b=new BriqueTp();
 		b.setX(Double.parseDouble(t[1]));
 		b.setY(Double.parseDouble(t[2]));
-		b.setColor(new Color(Integer.parseInt(t[3]),Integer.parseInt(t[4]),Integer.parseInt(t[5])));
+		b.color = (new Color(Integer.parseInt(t[3]),Integer.parseInt(t[4]),Integer.parseInt(t[5])));
 		b.setLife(Integer.parseInt(t[6]));
 		b.setHard(Boolean.parseBoolean(t[7]));
 
 		return b;
 		
 	}
+
+public void lastWhisper() {
+	// TODO Auto-generated method stub
+	
+}
 }

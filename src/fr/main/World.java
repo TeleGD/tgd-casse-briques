@@ -13,14 +13,16 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import fr.entity.Ball;
 import fr.entity.Bonus;
-
 import fr.entity.Brique;
+import fr.entity.Bullet;
 import fr.entity.Player;
 import fr.menus.PauseMenu;
 
 public class World extends BasicGameState{
 	
 	private static ArrayList<Brique> briques;
+	private static ArrayList<Bullet> bullet;
+	private static ArrayList<Bonus> bonus;
 	private static Player Player;
 	private static Ball Balls;
 	
@@ -49,6 +51,13 @@ public class World extends BasicGameState{
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		Player.update(arg0, arg1, arg2);
 		Balls.update(arg0, arg1, arg2);
+		for (Bullet b:bullet)
+		{
+			if (getTouched(b))
+			{
+				destroy(b);
+			}
+		}
 	}
 
 	@Override
@@ -77,8 +86,20 @@ public class World extends BasicGameState{
 		Player = playerP;
 	}
 
-	public static void destroyBonus(Bonus bon){
+	public static void destroy(Bullet b)
+	{
+		bullet.remove(b);
+	}
+	
+	public static void destroy(Brique b)
+	{
+		briques.remove(b);
+		b.lastWhisper();
+	}
+	
+	public static void destroy(Bonus b){
 		// TODO destruction du bonus
+		bonus.remove(b);
 	}
 	
 	public static int getScore() {
@@ -90,11 +111,29 @@ public class World extends BasicGameState{
 		return briques;
 	}
 	
+	public static ArrayList<Bonus> getBonus(){
+		return bonus;
+	}
+	
 	public static void addBrique(Brique b){
 		briques.add(b);
+	}
+	
+	public static void addBonus(Bonus b){
+		bonus.add(b);
+	}
+	
+	public static void addBullet(Bullet b)
+	{
+		bullet.add(b);
 	}
 
 	public static void removeBrique(Brique b){
 		briques.remove(b);
+	}
+	
+	public static boolean getTouched(Bullet b)
+	{
+		return getTouched(b);
 	}
 }
