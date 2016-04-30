@@ -19,10 +19,9 @@ public class LevelEditor extends Entity{
 	private ArrayList<Brique> menuBriques=new ArrayList<Brique>();
 	private Brique briqueSelectionne;
 	private int oldBriqueX,oldBriqueY;
-	
-	private Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan,Color.gray};
 	private int couleurId;
 	private Brique lastBrique;
+	private boolean sauvegarder=false;
 	public LevelEditor()
 	{
 		width=800;
@@ -54,6 +53,16 @@ public class LevelEditor extends Entity{
 		for(int i=0;i<menuBriques.size();i++)
 		{
 			menuBriques.get(i).render(arg0, arg1, arg2);
+		}
+		
+		if(briqueSelectionne!=null)
+		{
+			briqueSelectionne.render(arg0, arg1, arg2);
+		}
+		if(sauvegarder)
+		{
+			arg2.setColor(Color.red);
+			arg2.fillRoundRect(100, 200, 300, 100,20,20);
 		}
 		
 	}
@@ -108,11 +117,24 @@ public class LevelEditor extends Entity{
 
 	public void keyPressed(int key, char c) {
 
-		if(key==Input.KEY_UP)couleurId++;
-		else if(key==Input.KEY_DOWN)couleurId--;
+		if(key==Input.KEY_UP){
+			couleurId++;
+		}
+		else if(key==Input.KEY_DOWN){
+			couleurId--;
+
+		}
+		else if(key==Input.KEY_S)
+		{
+			sauvegarder=true;
+		}
 		
-		couleurId=couleurId%couleurs.length;
-		lastBrique.setColor(couleurs[couleurId]);
+		if(lastBrique!=null)
+		{
+			couleurId=couleurId%Brique.couleurs.length;
+			lastBrique.setColor(Brique.couleurs[couleurId]);
+		}
+		
 	
 	}
 	
