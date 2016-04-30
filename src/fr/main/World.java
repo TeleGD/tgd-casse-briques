@@ -83,4 +83,11 @@ public class World extends BasicGameState{
 		return briques;
 	}
 	
+	public static void addBrique(Brique b){
+		briques.add(b);
+	}
+
+	public static void removeBrique(Brique b){
+		briques.remove(b);
+	}
 }
