@@ -29,7 +29,7 @@ public class Main extends StateBasedGame {
 	
 
 	public Main() {
-		super("Ouep");
+		super("LE CACHE BRIQUE CH'EST UN CHEU DE PORTOUGESH");
 	}
 
 
@@ -46,6 +46,7 @@ public class Main extends StateBasedGame {
 		addState(new PauseMenu());
 		addState(new ScoresMenu());
 		addState(new MissionMenu());
+		addState(new Editor());
 		addState(new World());
 		
 	}

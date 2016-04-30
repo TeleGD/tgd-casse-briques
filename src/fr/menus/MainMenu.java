@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import fr.main.Editor;
 import fr.main.World;
 
 public class MainMenu extends BasicGameState {
@@ -22,7 +23,7 @@ public class MainMenu extends BasicGameState {
 	static TrueTypeFont font1;
 
 	private String nom = "Menu Principal";
-	private String[] items = { "Jouer", "Scores", "Aide (DLC)", "Quitter" };
+	private String[] items = { "Jouer", "Scores", "Aide (DLC)", "Editeur", "Quitter" };
 
 	public int nbrOption = items.length;
 
@@ -120,6 +121,10 @@ public class MainMenu extends BasicGameState {
 		 * case 2: game.enterState(HelpMenu.ID); break;
 		 */
 		case 3:
+			game.enterState(Editor.ID, new FadeOutTransition(),
+					new FadeInTransition());
+			break;
+		case 4:
 			game.enterState(ConfirmMenu.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
