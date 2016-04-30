@@ -30,7 +30,7 @@ public class LevelEditor extends Entity{
 		
 		for(int i=0;i<4;i++)
 		{
-			BriqueClassic b=new BriqueClassic(70*i,600-barHorizontalHeight/2-16,false);
+			BriqueClassic b=new BriqueClassic(70*i,600-barHorizontalHeight/2-16,true);
 			b.setLife((i+1));
 			menuBriques.add(b);
 		}

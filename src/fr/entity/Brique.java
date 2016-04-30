@@ -1,5 +1,4 @@
 package fr.entity;
-import java.awt.*;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -12,26 +11,51 @@ import fr.util.Rectangle;
 public abstract class Brique extends Entity implements Rectangle{
 	
 	private int life;
-	protected java.awt.Color color;
+	protected Color color;
 	private boolean colliding;
 	private boolean hard;
 	private boolean dead = false;
+	private boolean rand;
+	private Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan};
 	
 	public Brique(int x, int y, boolean h, boolean random,int life){
 		this.x=x;
 		this.y=y;
 		this.width=64;
 		this.height=32;
+		this.rand = random;
+		this.color =couleurs[(int)(Math.random()*couleurs.length)];
 		if (random)
 		{
-			this.life = (int) (Math.random()*3+1);
+			setLife((int) (Math.random()*4+1));
 		}
 		else
 		{
-			this.life = life;
+			setLife(life);
 		}
 		this.colliding = false;
-		this.hard = h;
+		this.hard = h;		
+
+		//this.color = new Color(0,0,255-135/4*life);
+	}
+	
+	public Brique(Brique b)
+	{
+		this.x = b.x;
+		this.y = b.y;
+		this.width = 64;
+		this.height = 32;
+		if (b.rand)
+		{
+			this.life = (int) (Math.random()*4+1);
+		}
+		else
+		{
+			this.life = b.life;
+		}
+		this.colliding = false;
+		this.hard = b.hard;
+		this.color = new Color(0,0,255-135/4*life);
 	}
 	
 	@Override
@@ -69,6 +93,10 @@ public abstract class Brique extends Entity implements Rectangle{
 	public void setLife(int life)
 	{
 		this.life = life;
+		int red = (int)(this.color.getRed()-135/4*life);
+		int green = (int)(this.color.getGreen()-135/4*life);
+		int blue = (int)(this.color.getBlue()-135/4*life);
+		this.color = new Color(red,green,blue);
 	}
 	
 	public boolean getColliding()
@@ -91,12 +119,12 @@ public abstract class Brique extends Entity implements Rectangle{
 		this.hard = h;
 	}
 	
-	public void setColor(java.awt.Color c)
+	public void setColor(Color c)
 	{
 		this.color = c;
 	}
 	
-	public java.awt.Color getColor()
+	public Color getColor()
 	{
 		return this.color;
 	}
