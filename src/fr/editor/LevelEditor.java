@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Brique.BriqueClassic;
 import fr.entity.Brique;
 import fr.entity.Entity;
 
@@ -21,10 +22,10 @@ public class LevelEditor extends Entity{
 	{
 		width=800;
 		height=600;
-		menuBriques.add(new Brique(5,600-barHorizontalHeight/2-16));
-		menuBriques.add(new Brique(74,600-barHorizontalHeight/2-16));
-		menuBriques.add(new Brique(143,600-barHorizontalHeight/2-16));
-		menuBriques.add(new Brique(212,600-barHorizontalHeight/2-16));
+		menuBriques.add(new BriqueClassic(5,600-barHorizontalHeight/2-16));
+		menuBriques.add(new BriqueClassic(74,600-barHorizontalHeight/2-16));
+		menuBriques.add(new BriqueClassic(143,600-barHorizontalHeight/2-16));
+		menuBriques.add(new BriqueClassic(212,600-barHorizontalHeight/2-16));
 		
 	}
 
