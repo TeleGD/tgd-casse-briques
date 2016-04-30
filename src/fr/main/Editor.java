@@ -1,7 +1,5 @@
 package fr.main;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -12,10 +10,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import fr.editor.LevelEditor;
-import fr.entity.Ball;
-import fr.entity.Player;
 import fr.menus.MainMenu;
-import fr.menus.PauseMenu;
 
 public class Editor extends BasicGameState{
 	
@@ -59,6 +54,9 @@ public class Editor extends BasicGameState{
 			game.enterState(MainMenu.ID, new FadeOutTransition(),
 					new FadeInTransition());
 		}
+		
+
+		editor.keyPressed(key,c);
 	}
 	
 
