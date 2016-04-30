@@ -15,12 +15,14 @@ public class Ball extends Movable implements Circle{
 	
 	private enum styleEnum {BASIC,LCURVE,RCURVE};
 	private styleEnum style;
+	private double perturbation;
 	
-	public Ball (){
+	public Ball(){
 		this.x=300;
 		this.y=300;
 		this.width=32;
 		style = styleEnum.BASIC;
+		perturbation = 0;
 	}
 	
 	@Override
@@ -40,20 +42,30 @@ public class Ball extends Movable implements Circle{
 	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		//Deplacement de la brique :
-		this.speedX += delta*this.accelX;
-		this.speedY += delta*this.accelY;
-		this.x += delta*this.speedX;
-		this.y += delta*this.speedY;
 		
+		//Deplacement de la brique :
 		switch(style){
 		case BASIC:
+			speedX += delta*accelX;
+			speedY += delta*accelY;
 			break;
 		case LCURVE:
+			perturbation = 10;//Norme du vecteur perturbateur.
+			speedX += perturbation*(speedY/speedNorm());
+			speedY += perturbation*(speedX/speedNorm());
 			break;
 		case RCURVE:
+			perturbation = -10;//Norme du vecteur perturbateur.
+			speedX += perturbation*(speedY/speedNorm());
+			speedY += perturbation*(speedX/speedNorm());
+			break;
+		default:
 			break;
 		}
+		x += delta*speedX;
+		y += delta*speedY;
+
+		setMoving(speedNorm()>0);
 		
 		//Detection de collision : 
 		for(Brique b:World.getBriques()){
