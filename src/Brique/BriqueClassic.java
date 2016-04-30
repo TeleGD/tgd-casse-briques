@@ -26,6 +26,7 @@ public class BriqueClassic extends Brique {
 	@Override
 	public void loseLife() {
 		// TODO Auto-generated method stub
+		this.color = new java.awt.Color(this.color.getRed()/this.getLife()*this.getLife()+1,this.color.getGreen()/this.getLife()*this.getLife()+1,this.color.getBlue()/this.getLife()*this.getLife());
 		this.setLife(this.getLife()-1);
 	}
 
