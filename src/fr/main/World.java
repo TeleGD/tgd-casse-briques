@@ -12,12 +12,13 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import fr.entity.Ball;
+import fr.entity.Brique;
 import fr.entity.Player;
 import fr.menus.PauseMenu;
 
 public class World extends BasicGameState{
 	
-	
+	private static ArrayList<Brique> briques;
 	private static Player Player;
 	private static Ball Balls;
 	
@@ -76,6 +77,10 @@ public class World extends BasicGameState{
 	public static int getScore() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public static ArrayList<Brique> getBriques(){
+		return briques;
 	}
 	
 }
