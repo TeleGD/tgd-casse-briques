@@ -17,6 +17,11 @@ public class BriqueTp extends Brique{
 
 	}
 
+	public BriqueTp() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 

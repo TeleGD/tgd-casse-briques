@@ -13,13 +13,14 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import fr.entity.Ball;
 import fr.entity.Bonus;
+
 import fr.entity.Brique;
 import fr.entity.Player;
 import fr.menus.PauseMenu;
 
 public class World extends BasicGameState{
 	
-	
+	private static ArrayList<Brique> briques;
 	private static Player Player;
 	private static Ball Balls;
 	
@@ -27,7 +28,6 @@ public class World extends BasicGameState{
 	
 	private static GameContainer container;
 	private static StateBasedGame game;
-	private static ArrayList<Brique> briques;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -86,4 +86,15 @@ public class World extends BasicGameState{
 		return 0;
 	}
 	
+	public static ArrayList<Brique> getBriques(){
+		return briques;
+	}
+	
+	public static void addBrique(Brique b){
+		briques.add(b);
+	}
+
+	public static void removeBrique(Brique b){
+		briques.remove(b);
+	}
 }

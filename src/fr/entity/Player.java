@@ -25,7 +25,8 @@ public class Player extends Movable implements Rectangle {
 		this.height=32;
 		this.width=128;
 		isMoving = true;
-		this.life=3;
+		accelX =0.5;
+		life = 3;
 	}
 	
 	@Override
@@ -91,6 +92,7 @@ public class Player extends Movable implements Rectangle {
 		}
 		
 		if ( !(x <= 0 && speedX <=0) && !(x>=800-this.width && speedX >= 0)){
+
 			moveX(delta);
 		}
 		
@@ -128,6 +130,14 @@ public class Player extends Movable implements Rectangle {
 			break;
 		}
 			
+	}
+	
+	public void setLife(int life){
+		this.life = life;
+	}
+	
+	public int getLife(){
+		return this.life;
 	}
 
 	
