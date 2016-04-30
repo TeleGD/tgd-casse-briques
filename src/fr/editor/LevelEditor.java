@@ -22,10 +22,10 @@ public class LevelEditor extends Entity{
 	{
 		width=800;
 		height=600;
-		menuBriques.add(new BriqueClassic(5,600-barHorizontalHeight/2-16));
-		menuBriques.add(new BriqueClassic(74,600-barHorizontalHeight/2-16));
-		menuBriques.add(new BriqueClassic(143,600-barHorizontalHeight/2-16));
-		menuBriques.add(new BriqueClassic(212,600-barHorizontalHeight/2-16));
+		menuBriques.add(new BriqueClassic(5,600-barHorizontalHeight/2-16,false));
+		menuBriques.add(new BriqueClassic(74,600-barHorizontalHeight/2-16,false));
+		menuBriques.add(new BriqueClassic(143,600-barHorizontalHeight/2-16,false));
+		menuBriques.add(new BriqueClassic(212,600-barHorizontalHeight/2-16,false));
 		
 	}
 
