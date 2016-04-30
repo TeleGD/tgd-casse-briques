@@ -12,7 +12,7 @@ import fr.util.Rectangle;
 public abstract class Brique extends Entity implements Rectangle{
 	
 	private int life;
-	private int color;
+	protected java.awt.Color color;
 	private boolean colliding;
 	private boolean hard;
 	private boolean dead = false;
@@ -30,14 +30,13 @@ public abstract class Brique extends Entity implements Rectangle{
 		{
 			this.life = life;
 		}
-		this.color = 255-(life-1)*30;
 		this.colliding = false;
 		this.hard = h;
 	}
 	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		g.setColor(new Color(0,0,this.color));
+		g.setColor(color);
 		g.fillRect((float)x,(float)y,(float)width,(float)height);
 	}
 
@@ -92,6 +91,15 @@ public abstract class Brique extends Entity implements Rectangle{
 		this.hard = h;
 	}
 	
+	public void setColor(java.awt.Color c)
+	{
+		this.color = c;
+	}
+	
+	public java.awt.Color getColor()
+	{
+		return this.color;
+	}
 	
 	public abstract void action();
 	public abstract void loseLife();
