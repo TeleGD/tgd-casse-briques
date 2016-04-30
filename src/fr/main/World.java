@@ -12,6 +12,8 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import fr.entity.Ball;
+import fr.entity.Bonus;
+
 import fr.entity.Brique;
 import fr.entity.Player;
 import fr.menus.PauseMenu;
@@ -33,6 +35,7 @@ public class World extends BasicGameState{
 		Balls=new Ball();
 		container = arg0;
 		game = arg1;
+		briques = new ArrayList<Brique>();
 	}
 
 	@Override
@@ -74,6 +77,10 @@ public class World extends BasicGameState{
 		Player = playerP;
 	}
 
+	public static void destroyBonus(Bonus bon){
+		// TODO destruction du bonus
+	}
+	
 	public static int getScore() {
 		// TODO Auto-generated method stub
 		return 0;

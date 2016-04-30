@@ -91,7 +91,8 @@ public class Player extends Movable implements Rectangle {
 			break;
 		}
 		
-		if ( !(x <= 0 && speedX <= 0 ) && !(x>=800-this.width && speedX >= 0)){
+		if ( !(x <= 0 && speedX <=0) && !(x>=800-this.width && speedX >= 0)){
+
 			moveX(delta);
 		}
 		
