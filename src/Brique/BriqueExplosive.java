@@ -23,11 +23,12 @@ public class BriqueExplosive extends Brique {
 		if (this.getColliding())
 		{
 			loseLife();
-			if (this.getLife()==0)
-			{
-				explose();
-				this.setDead(true);
-			}
+		}
+
+		if (this.getLife()==0)
+		{
+			explose();
+			this.setDead(true);
 		}
 	}
 

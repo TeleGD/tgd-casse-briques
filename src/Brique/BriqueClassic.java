@@ -30,14 +30,13 @@ public class BriqueClassic extends Brique {
 	public void action() {
 		// TODO Auto-generated method stub
 		if (this.getColliding())
+		{	
+			loseLife();		
+		}
+		if (this.getLife()==0)
 		{
-			
-			loseLife();
-			if (this.getLife()==0)
-			{
-				createBonus();
-				this.setDead(true);
-			}
+			createBonus();
+			this.setDead(true);
 		}
 	}
 
