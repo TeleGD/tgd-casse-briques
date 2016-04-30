@@ -1,17 +1,22 @@
 package fr.editor;
-
+import java.awt.Font;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
+import org.newdawn.slick.Color; 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Brique.BriqueClassic;
 import fr.entity.Brique;
 import fr.entity.Entity;
+import fr.menus.MainMenu;
+import fr.parser.WriteFile;
 
 public class LevelEditor extends Entity{
 	private static final int barHorizontalHeight=60;
@@ -22,15 +27,17 @@ public class LevelEditor extends Entity{
 	private int couleurId;
 	private Brique lastBrique;
 	private boolean sauvegarder=false;
+	private String nomFichier="";
 	public LevelEditor()
 	{
 		width=800;
 		height=600;
 		
-		for(int i=0;i<3;i++)
+		for(int i=0;i<4;i++)
 		{
-			BriqueClassic b=new BriqueClassic(70*i,600-barHorizontalHeight/2-16,true);
-			b.setLife((i+1));
+			BriqueClassic b=new BriqueClassic(70*i,600-barHorizontalHeight/2-16,false);
+			b.setColor(Brique.couleurs[0]);
+			b.setLife(i+1);
 			menuBriques.add(b);
 		}
 		
@@ -62,7 +69,23 @@ public class LevelEditor extends Entity{
 		if(sauvegarder)
 		{
 			arg2.setColor(Color.red);
-			arg2.fillRoundRect(100, 200, 300, 100,20,20);
+			arg2.fillRoundRect(200, 200, 400, 200,20,20);
+			arg2.setColor(Color.black);
+			arg2.fillRoundRect(202, 202, 396, 196,20,20);
+			arg2.setColor(Color.white);
+
+
+			Font titre1Font = new Font("Kalinga", Font.BOLD, 15);
+			TrueTypeFont font1 = new TrueTypeFont(titre1Font, false);
+			arg2.setFont(font1);
+			arg2.drawString("Sauvegarder le niveau", 300, 220);
+			
+			titre1Font = new Font("Kalinga", Font.BOLD, 12);
+		    font1 = new TrueTypeFont(titre1Font, false);
+			arg2.setFont(font1);
+			arg2.drawString("Entrer le nom du niveau: "+nomFichier, 300, 280);
+			arg2.drawString("Appuyer sur entrer pour enregistrer le niveau", 260, 300);
+			
 		}
 		
 	}
@@ -80,14 +103,15 @@ public class LevelEditor extends Entity{
 				briqueSelectionne.setY(oldBriqueY);
 			}
 			lastBrique=briqueSelectionne;
+			briqueSelectionne=new BriqueClassic(briqueSelectionne);
 			briques.add(lastBrique);
 		}
 	
-		briqueSelectionne=null;
 	}
 	
 	public void mousePressed(int button, int oldx,int oldy){
 		
+		if(!yapasdebriques(oldx,oldy))return;
 		for(int i=0;i<menuBriques.size();i++)
 		{
 			if(menuBriques.get(i).getX()<oldx  && menuBriques.get(i).getX()+menuBriques.get(i).getWidth()>oldx
@@ -99,13 +123,24 @@ public class LevelEditor extends Entity{
 				
 			}
 		}
+		for(int i=0;i<briques.size();i++)
+		{
+			if(briques.get(i).getX()<oldx  && briques.get(i).getX()+briques.get(i).getWidth()>oldx
+				&& briques.get(i).getY()<oldy  && briques.get(i).getY()+briques.get(i).getHeight()>oldy)
+			{
+				briqueSelectionne=briques.get(i);
+				oldBriqueX=(int)briqueSelectionne.getX();
+				oldBriqueY=(int)briqueSelectionne.getY();
+				
+			}
+		}
 		
 	}
 	
 	
-	public void mouseDragged(int oldx, int oldy, int newx, int newy) {
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 
-		if(briqueSelectionne!=null)
+		if(briqueSelectionne!=null && yapasdebriques(newx,newy) && newy<=370)
 		{
 			briqueSelectionne.setX(newx);
 			briqueSelectionne.setY(newy);
@@ -115,27 +150,76 @@ public class LevelEditor extends Entity{
 		
 	}
 
+	private boolean yapasdebriques(int newx, int newy) {
+
+		for(Brique b:briques)
+		{
+			if(b.getX()==(newx/64)*64 && b.getY()==(newy/32)*32)return false;
+		}
+		return true;
+	}
+
+	public void mouseDragged(int oldx,int  oldy, int newx,int  newy){
+		mousePressed(0,newx,newy);
+	}
 	public void keyPressed(int key, char c) {
 
+		if(sauvegarder)
+		{
+			
+			if(key==Input.KEY_BACK){
+
+				if(nomFichier.length()>0)nomFichier=nomFichier.substring(0, nomFichier.length()-1);
+			}else if(key==Input.KEY_ENTER)
+			{
+				enregistrerNiveau();
+			}
+			else if(key!=Input.KEY_SPACE) nomFichier+=c;
+			
+		}
+		
+		
 		if(key==Input.KEY_UP){
 			couleurId++;
+			if(couleurId==Brique.couleurs.length)couleurId=0;
 		}
 		else if(key==Input.KEY_DOWN){
 			couleurId--;
+			if(couleurId==-1)couleurId=Brique.couleurs.length-1;
 
 		}
 		else if(key==Input.KEY_S)
 		{
 			sauvegarder=true;
+			
 		}
 		
-		if(lastBrique!=null)
+		couleurId=couleurId%Brique.couleurs.length;
+		for(int i=0;i<menuBriques.size();i++)
 		{
-			couleurId=couleurId%Brique.couleurs.length;
-			lastBrique.setColor(Brique.couleurs[couleurId]);
+			menuBriques.get(i).setColor(Brique.couleurs[couleurId]);
 		}
+		
 		
 	
+	}
+
+	private void enregistrerNiveau() {
+		
+		ArrayList<String> textLines=new ArrayList<String>();
+		for(Brique b:briques)
+		{
+			textLines.add(b.briqueToString());
+		}
+		
+		WriteFile file=new WriteFile("levels"+File.separator+nomFichier+".txt");
+		try {
+			file.writeToFile(textLines);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 }
