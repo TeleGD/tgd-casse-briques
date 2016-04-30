@@ -6,6 +6,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Brique.BriqueClassic;
+import Brique.BriqueTp;
 import fr.util.Rectangle;
 
 public abstract class Brique extends Entity implements Rectangle{
@@ -39,6 +41,10 @@ public abstract class Brique extends Entity implements Rectangle{
 		//this.color = new Color(0,0,255-135/4*life);
 	}
 	
+	public Brique()
+	{
+		
+	}
 	public Brique(Brique b)
 	{
 		this.x = b.x;
@@ -132,4 +138,34 @@ public abstract class Brique extends Entity implements Rectangle{
 	public abstract void action();
 	public abstract void loseLife();
 	
+	public String briqueToString(){
+		if(this instanceof BriqueClassic)
+		{
+			return  "BriqueClassic "+x+" "+y+" "+color.getBlue()+" "+color.getRed()+" "+color.getGreen()+" "+life+" "+ hard;
+		}else if(this instanceof BriqueTp)
+		{
+			return  "BriqueTp "+x+" "+y+" "+color.getBlue()+" "+color.getRed()+" "+color.getGreen()+" "+life+" "+ hard;
+		}
+		return null;
+		
+		
+	}
+	
+   public static Brique StringToBrique(String s){
+		String t[]=s.split(" ");
+		Brique b;
+		if(t[0].equals("BriqueClassic"))
+		{
+			b=new BriqueClassic();
+		}else 
+			b=new BriqueTp();
+		b.setX(Double.parseDouble(t[1]));
+		b.setY(Double.parseDouble(t[2]));
+		b.setColor(new Color(Integer.parseInt(t[3]),Integer.parseInt(t[4]),Integer.parseInt(t[5])));
+		b.setLife(Integer.parseInt(t[6]));
+		b.setHard(Boolean.parseBoolean(t[7]);
+
+		
+		
+	}
 }

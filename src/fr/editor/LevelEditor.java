@@ -84,7 +84,7 @@ public class LevelEditor extends Entity{
 			if(menuBriques.get(i).getX()<oldx  && menuBriques.get(i).getX()+menuBriques.get(i).getWidth()>oldx
 				&& menuBriques.get(i).getY()<oldy  && menuBriques.get(i).getY()+menuBriques.get(i).getHeight()>oldy)
 			{
-				//briqueSelectionne=new BriqueClassic(menuBriques.get(i));
+				briqueSelectionne=new BriqueClassic(menuBriques.get(i));
 				oldBriqueX=(int)briqueSelectionne.getX();
 				oldBriqueY=(int)briqueSelectionne.getY();
 				
