@@ -1,5 +1,6 @@
 package fr.entity;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -45,6 +46,7 @@ public class Player extends Movable implements Rectangle {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		g.setColor(Color.green);
 		g.fillRect((float)x, (float)y, (float)width, (float)height);
 	}
 

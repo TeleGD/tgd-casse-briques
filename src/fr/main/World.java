@@ -9,27 +9,32 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.entity.Ball;
 import fr.entity.Player;
 
 public class World extends BasicGameState{
 	
 	
 	private static Player Player;
+	private static Ball Balls;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		Player=new Player();
+		Balls=new Ball();
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		Player.render(arg0, arg1, arg2);
+		Balls.render(arg0, arg1, arg2);
 		
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		Player.update(arg0, arg1, arg2);
+		Balls.update(arg0, arg1, arg2);
 	}
 
 	@Override
