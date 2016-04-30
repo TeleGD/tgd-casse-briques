@@ -17,6 +17,7 @@ public class Player extends Movable implements Rectangle {
 	private boolean lastKeyPressed;
 	private int stillPressed;
 	private int comp = 120;
+	private int life;
 	
 	public Player(){
 		this.x=336;
@@ -24,6 +25,7 @@ public class Player extends Movable implements Rectangle {
 		this.height=32;
 		this.width=128;
 		isMoving = true;
+		this.life=3;
 	}
 	
 	@Override
@@ -76,8 +78,8 @@ public class Player extends Movable implements Rectangle {
 			}
 			keyPressedRight = false;
 		}
-		if (keyPressedLeft)  { speedX = -0.5; }
-		if (keyPressedRight) {	speedX = 0.5;  }
+		if (keyPressedLeft)  { speedX = -0.5*accelX; }
+		if (keyPressedRight) {	speedX = 0.5*accelX;  }
 		
 		switch(stillPressed){
 		case 1 :
@@ -88,7 +90,7 @@ public class Player extends Movable implements Rectangle {
 			break;
 		}
 		
-		if ( !(x <= 0 && speedX == -0.5) && !(x>=800-this.width && speedX == 0.5)){
+		if ( !(x <= 0 && speedX <=0) && !(x>=800-this.width && speedX >= 0)){
 			moveX(delta);
 		}
 		
