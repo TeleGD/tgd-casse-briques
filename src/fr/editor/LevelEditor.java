@@ -28,7 +28,7 @@ public class LevelEditor extends Entity{
 		width=800;
 		height=600;
 		
-		for(int i=0;i<4;i++)
+		for(int i=0;i<3;i++)
 		{
 			BriqueClassic b=new BriqueClassic(70*i,600-barHorizontalHeight/2-16,false);
 			b.setLife((i+1));
@@ -71,7 +71,9 @@ public class LevelEditor extends Entity{
 				briqueSelectionne.setY(oldBriqueY);
 			}
 			lastBrique=briqueSelectionne;
+			briques.add(lastBrique);
 		}
+	
 		briqueSelectionne=null;
 	}
 	
@@ -82,9 +84,10 @@ public class LevelEditor extends Entity{
 			if(menuBriques.get(i).getX()<oldx  && menuBriques.get(i).getX()+menuBriques.get(i).getWidth()>oldx
 				&& menuBriques.get(i).getY()<oldy  && menuBriques.get(i).getY()+menuBriques.get(i).getHeight()>oldy)
 			{
-				briqueSelectionne=menuBriques.get(i);
+				//briqueSelectionne=new BriqueClassic(menuBriques.get(i));
 				oldBriqueX=(int)briqueSelectionne.getX();
 				oldBriqueY=(int)briqueSelectionne.getY();
+				
 			}
 		}
 		
@@ -109,7 +112,7 @@ public class LevelEditor extends Entity{
 		else if(key==Input.KEY_DOWN)couleurId--;
 		
 		couleurId=couleurId%couleurs.length;
-		//lastBrique.setColor(couleurs[couleurId]);
+		lastBrique.setColor(couleurs[couleurId]);
 	
 	}
 	
