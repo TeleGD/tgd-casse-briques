@@ -5,8 +5,8 @@ import fr.entity.Brique;
 
 public class BriqueClassic extends Brique {
 	
-	public BriqueClassic(int x, int y) {
-		super(x, y,true);
+	public BriqueClassic(int x, int y, boolean random) {
+		super(x, y,true, random,1); //Brique à vie random
 		// TODO Auto-generated constructor stub
 	}
 
@@ -16,6 +16,10 @@ public class BriqueClassic extends Brique {
 		if (this.getColliding())
 		{
 			loseLife();
+			if (this.getLife()==0)
+			{
+				this.setDead(true);
+			}
 		}
 	}
 

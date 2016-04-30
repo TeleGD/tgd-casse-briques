@@ -11,7 +11,7 @@ public class BriqueTp extends Brique{
 	private Brique link;
 	
 	public BriqueTp(int x, int y, boolean h, Brique b) {
-		super(x, y, h);
+		super(x, y, h, false, 0);
 		// TODO Auto-generated constructor stub
 		this.link = b;
 
