@@ -11,6 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import fr.editor.LevelEditor;
 import fr.entity.Ball;
 import fr.entity.Player;
 import fr.menus.MainMenu;
@@ -19,33 +20,27 @@ import fr.menus.PauseMenu;
 public class Editor extends BasicGameState{
 	
 	
-	//private static Player Player;
-	//private static Ball Balls;
-	
 	public static int ID = 9;
-	
+	public static LevelEditor editor;
 	private static GameContainer container;
 	private static StateBasedGame game;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-		//Player=new Player();
-		//Balls=new Ball();
+		editor=new LevelEditor();
 		container = arg0;
 		game = arg1;
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		//Player.render(arg0, arg1, arg2);
-		//Balls.render(arg0, arg1, arg2);
+		editor.render(arg0, arg1, arg2);
 		
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		//Player.update(arg0, arg1, arg2);
-		//Balls.update(arg0, arg1, arg2);
+		editor.update(arg0, arg1, arg2);
 	}
 
 	@Override
@@ -66,13 +61,18 @@ public class Editor extends BasicGameState{
 		}
 	}
 	
-	/*public static Player getPlayer() {
-		return Player;
-	}
 
-	public static void setPlayer(Player playerP) {
-		Player = playerP;
-	}*/
+	
+	public void mouseDragged(int oldx,int  oldy, int newx,int  newy){
+		editor.mouseDragged(oldx,oldy, newx,  newy);
+	}
+	public void mouseReleased(int button, int x,int y){
+		editor.mouseReleased(button, x,  y);
+	}
+	public void mousePressed(int button, int oldx,int oldy){
+		editor.mousePressed(button, oldx, oldy);
+		
+	}
 
 	
 }
