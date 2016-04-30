@@ -8,6 +8,10 @@ public abstract class Movable extends Entity{
 	protected double speedX,speedY;
 	protected double accelX,accelY;
 	protected boolean isMoving;
+	protected boolean jump;
+	protected int jumpLeft;
+	protected int jumpMax;
+	protected double jumpPower;
 	protected boolean collision;
 	
 	public void moveX(int delta){
@@ -19,6 +23,13 @@ public abstract class Movable extends Entity{
 	public void moveY(int delta){
 		if(isMoving){
 			y+=speedY*delta;
+		}
+	}
+	
+	public void jump(int delta){
+		if(jumpLeft > 0){
+		speedY = -jumpPower*delta;
+		jumpLeft--;
 		}
 	}
 	
@@ -46,7 +57,14 @@ public abstract class Movable extends Entity{
 		this.oldY = oldY;
 	}
 
-	
+	public int getJumpLeft () {
+		return jumpLeft;
+	}
+
+	public void setJump(int jumpLeft) {
+		this.jumpLeft = jumpLeft;
+	}
+
 	public boolean isCollision() {
 		return collision;
 	}
