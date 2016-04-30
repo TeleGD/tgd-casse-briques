@@ -18,7 +18,7 @@ public abstract class Brique extends Entity implements Rectangle{
 	private boolean hard;
 	private boolean dead = false;
 	private boolean rand;
-	private Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan};
+	public static Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan};
 	
 	public Brique(int x, int y, boolean h, boolean random,int life){
 		this.x=x;
@@ -51,17 +51,18 @@ public abstract class Brique extends Entity implements Rectangle{
 		this.y = b.y;
 		this.width = 64;
 		this.height = 32;
+		this.color = b.color;
 		if (b.rand)
 		{
-			this.life = (int) (Math.random()*4+1);
+			this.setLife((int) (Math.random()*4+1));
 		}
 		else
 		{
-			this.life = b.life;
+			this.setLife(b.life);
 		}
 		this.colliding = false;
 		this.hard = b.hard;
-		this.color = new Color(0,0,255-135/4*life);
+		
 	}
 	
 	@Override
