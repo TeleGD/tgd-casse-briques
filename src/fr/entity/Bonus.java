@@ -1,5 +1,7 @@
 package fr.entity;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,6 +14,7 @@ import fr.util.Movable;
 
 public class Bonus  extends Movable implements fr.util.Circle{ 
 	protected String type;
+	public static String[] lesTypes={"accelerer","ralentir","retraicir","agrandir","collant","pleinBalle","pistolet","agrandirBalle","retrecirBalle"};
 	
 	public Bonus(double x, double y, String type){
 		this.x=x;
@@ -47,8 +50,11 @@ public class Bonus  extends Movable implements fr.util.Circle{
 			if (collisionPlayer()){
 				switch (type){
 				// TODO faire les differents bonus
-				case "plop":World.getPlayer().modify(2, 200);break;
-				default:World.getPlayer().modify(2, 200);break;
+				case "accelerer":World.getPlayer().setAccelX(World.getPlayer().getAccelX()*2);break;
+				case "ralentir":World.getPlayer().setAccelX(World.getPlayer().getAccelX()*0.5);break;
+				case "retraicir":World.getPlayer().modify(0.5, 200);break;
+				case "agrandir":World.getPlayer().modify(2, 200);break;
+				default:break;
 				}
 			}
 			World.destroyBonus(this);
@@ -58,8 +64,8 @@ public class Bonus  extends Movable implements fr.util.Circle{
 
 	@Override
 	public int getRadius() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return (int) this.width;
 	}
 
 }
