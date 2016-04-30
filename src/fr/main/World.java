@@ -11,6 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import fr.entity.Ball;
 import fr.entity.Player;
+import fr.menus.PauseMenu;
 
 public class World extends BasicGameState{
 	
@@ -18,10 +19,17 @@ public class World extends BasicGameState{
 	private static Player Player;
 	private static Ball Balls;
 	
+	public static int ID = 0;
+	
+	private static GameContainer container;
+	private static StateBasedGame game;
+	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		Player=new Player();
 		Balls=new Ball();
+		container = arg0;
+		game = arg1;
 	}
 
 	@Override
@@ -39,8 +47,7 @@ public class World extends BasicGameState{
 
 	@Override
 	public int getID() {
-		// Aucune idée de ca que ça fait ^^
-		return 0;
+		return ID;
 	}
 	
 	public void keyReleased(int key, char c) {
@@ -51,7 +58,7 @@ public class World extends BasicGameState{
 	public void keyPressed(int key, char c) {
 		Player.keyPressed(key, c);
 		if(key == Input.KEY_ESCAPE){
-			System.exit(0);
+			game.enterState(PauseMenu.ID);
 		}
 	}
 	
@@ -61,6 +68,11 @@ public class World extends BasicGameState{
 
 	public static void setPlayer(Player playerP) {
 		Player = playerP;
+	}
+
+	public static int getScore() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }
