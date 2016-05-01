@@ -48,14 +48,15 @@ public class BriqueClassic extends Brique {
 		if(getLife()==0)
 		{
 			coef=1;
-		}else
-		   coef= (getLife()-1)/getLife();
-		 
-		int red = (int)(this.color.getRed()*coef);
-		int green = (int)(this.color.getGreen()*coef);
-		int blue = (int)(this.color.getBlue()*coef);
+		}else{
+			this.setLife(this.getLife()-1);
+		}
+		
+		coef=Math.sqrt(getLife());
+		int red = (int)(this.color.getRed()/coef);
+		int green = (int)(this.color.getGreen()/coef);
+		int blue = (int)(this.color.getBlue()/coef);
 		this.color = new Color(red,green,blue);
-		this.setLife(this.getLife()-1);
 	}
 
 	public void createBonus(){

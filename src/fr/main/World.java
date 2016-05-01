@@ -185,4 +185,28 @@ public class World extends BasicGameState{
 	{
 		return getTouched(b);
 	}
+	
+	public static void reload(String niveau)
+	{
+		if(new File("levels"+File.separator+niveau).exists())
+		{
+			ReadFile file=new ReadFile("levels"+File.separator+niveau);
+		    ArrayList<String> texts;
+			try {
+				texts = file.readFromFile();
+				briques.removeAll(briques);
+				for(String s:texts)
+				{
+					Brique b=Brique.StringToBrique(s);
+					if(b.getY()<400){
+						briques.add(b);
+					}
+					
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }
