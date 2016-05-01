@@ -6,14 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import fr.main.World;
-import fr.menus.ConfirmMenu;
-import fr.menus.CreditsMenu;
-import fr.menus.GameOverMenu;
-import fr.menus.MainMenu;
-import fr.menus.MissionMenu;
-import fr.menus.PauseMenu;
-import fr.menus.ScoresMenu;
-import fr.menus.WelcomeMenu;
+import fr.menus.*;
 
 
 public class Main extends StateBasedGame {
@@ -46,6 +39,7 @@ public class Main extends StateBasedGame {
 		addState(new PauseMenu());
 		addState(new ScoresMenu());
 		addState(new MissionMenu());
+		addState(new LevelSelectorMenu());
 		addState(new Editor());
 		addState(new World());
 		
