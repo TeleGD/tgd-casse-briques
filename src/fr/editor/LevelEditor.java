@@ -349,5 +349,13 @@ public class LevelEditor extends Entity{
 		briques.add(b);
 		
 	}
+
+	public void reload() {
+		briques.removeAll(briques);
+		sauvegarderSucces=false;
+		sauvegarder=false;
+		briqueSelectionne=null;
+		
+	}
 	
 }

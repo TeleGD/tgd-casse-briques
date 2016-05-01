@@ -108,5 +108,10 @@ public class Editor extends BasicGameState{
 		}
 	}
 
+	public static void reload() {
+		editor.reload();
+		
+	}
+
 	
 }
