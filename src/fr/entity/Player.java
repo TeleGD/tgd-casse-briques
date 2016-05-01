@@ -14,10 +14,13 @@ public class Player extends Movable implements Rectangle {
 
 	private boolean keyPressedLeft;
 	private boolean keyPressedRight;
+	private boolean keyPressedSpace;
 	private boolean lastKeyPressed;
 	private int stillPressed;
 	private int comp = 120;
+	private int compTir;
 	private int life;
+	private boolean modePistolet;
 	
 	public Player(){
 		this.x=336;
@@ -27,8 +30,17 @@ public class Player extends Movable implements Rectangle {
 		isMoving = true;
 		accelX =0.5;
 		life = 3;
+		modePistolet=false;
+		compTir=0;
 	}
 	
+	public boolean getModePistolet(){
+		return this.modePistolet;
+	}
+	
+	public void setModePistolet(boolean modePistolet){
+		this.modePistolet=modePistolet;
+	}
 	@Override
 	public double getY() {
 		return this.y;
@@ -50,12 +62,22 @@ public class Player extends Movable implements Rectangle {
 	}
 	
 	public void modify ( double multi, int time ){
-		double var = this.width - this.width*multi; 
-		this.x = this.x + var/2;
-		this.width = this.width*multi;
+		if (this.width*multi<32||this.width*multi>800){
+			if(this.width*multi<32){
+				this.width = 32;
+			} else{
+				this.width = 800;
+			}
+		} else {
+			double var = this.width - this.width*multi;
+			this.x = this.x + var/2;
+			this.width = this.width*multi;
+		}
+		
 		if ( x <= 0 ){ x = 0;}
 		if ( x >= 800 - this.width ){ x = 800 - this.width; }
 		comp = time;
+		
 	}
 
 	@Override
@@ -99,7 +121,13 @@ public class Player extends Movable implements Rectangle {
 		if ( comp > 0 ){
 			comp --;
 		}
-		
+		if ( compTir > 0 ){
+			compTir --;
+			keyPressedSpace=false;
+		}
+		if (comp==0) {
+			modify(2, 200);
+		}
 	}
 
 	public void keyReleased(int key, char c) {
@@ -127,6 +155,13 @@ public class Player extends Movable implements Rectangle {
 		case Input.KEY_RIGHT:
 			keyPressedRight = true;
 			lastKeyPressed = true;
+			break;
+		case Input.KEY_SPACE:
+			if (compTir==0&&modePistolet){
+				keyPressedSpace=true;
+				new Bullet();
+				compTir=60;
+			}
 			break;
 		}
 			

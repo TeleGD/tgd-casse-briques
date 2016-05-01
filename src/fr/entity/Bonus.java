@@ -14,7 +14,7 @@ import fr.util.Movable;
 
 public class Bonus  extends Movable implements fr.util.Circle{ 
 	protected String type;
-	public static String[] lesTypes={"accelerer","ralentir","retraicir","agrandir","collant","pleinBalle","pistolet","agrandirBalle","retrecirBalle"};
+	public static String[] lesTypes={"accelerer","ralentir","retraicir","agrandir","collant","pleinBalle","pistoletoff","pistolet","agrandirBalle","retrecirBalle"};
 	
 	public Bonus(double x, double y, String type){
 		this.x=x;
@@ -50,6 +50,8 @@ public class Bonus  extends Movable implements fr.util.Circle{
 			if (collisionPlayer()){
 				switch (type){
 				// TODO faire les differents bonus
+				case "pistoletoff":World.getPlayer().setModePistolet(false);
+				case "pistolet":World.getPlayer().setModePistolet(true);
 				case "accelerer":World.getPlayer().setAccelX(World.getPlayer().getAccelX()*2);break;
 				case "ralentir":World.getPlayer().setAccelX(World.getPlayer().getAccelX()*0.5);break;
 				case "retraicir":World.getPlayer().modify(0.5, 200);break;
