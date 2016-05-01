@@ -37,6 +37,7 @@ public class LevelEditor extends Entity{
 	private boolean debut=true;
 	private int indexSelection=-1;
 	private boolean gommeActive=false;
+	private boolean pipette=false;
 	public LevelEditor()
 	{
 		width=800;
@@ -160,6 +161,12 @@ public class LevelEditor extends Entity{
 		else arg2.setColor(Color.black);
 		arg2.fillOval(402, (float)height-barHorizontalHeight+barHorizontalHeight/4+2, barHorizontalHeight/4-4, barHorizontalHeight/4-4);
 		
+		arg2.setColor(Color.red);
+		arg2.fillRoundRect(440, (float)height-barHorizontalHeight+barHorizontalHeight/4,  barHorizontalHeight/10, barHorizontalHeight/4,3,3);
+		if(gommeActive)arg2.setColor(Color.green);
+		else arg2.setColor(Color.black);
+		arg2.fillRoundRect(442, (float)height-barHorizontalHeight+barHorizontalHeight/4+2, barHorizontalHeight/10-4, barHorizontalHeight/4-4,3,3);
+
 		
 	}
 
@@ -226,10 +233,11 @@ public class LevelEditor extends Entity{
 
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 
-		if(!gommeActive && briqueSelectionne!=null && yapasdebriques(newx,newy)==null  && newx<=800-12 && newy<=384)
+		if(!gommeActive && briqueSelectionne!=null && yapasdebriques(newx,newy)==null   && newy<=384)
 		{
 			briqueSelectionne.setX(newx);
 			briqueSelectionne.setY(newy);
+			if(newx+64>=800-12)briqueSelectionne.setX(800-12-64);
 			briqueSelectionne.setX(((int)briqueSelectionne.getX()/64)*64+12);
 			briqueSelectionne.setY(((int)briqueSelectionne.getY()/32)*32);
 		}else if(gommeActive){
@@ -306,12 +314,6 @@ public class LevelEditor extends Entity{
 			textLines.add(b.briqueToString());
 		}
 		
-		try {
-			Files.delete(Paths.get("levels"+File.separator+nomFichier+".txt"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		WriteFile file = new WriteFile("levels"+File.separator+nomFichier+".txt",false);
 		try {
 			file.writeToFile(textLines);
