@@ -50,6 +50,18 @@ public class Bonus  extends Movable implements fr.util.Circle{
 			if (collisionPlayer()){
 				switch (type){
 				// TODO faire les differents bonus
+				case "agrandirBalle":
+					for (int i = 0; i < World.getBalls().size(); i++) {
+						World.getBalls().get(i).setWidth(World.getBalls().get(i).getWidth()*2);;
+					};break;
+				case "retrecirBalle":
+					for (int i = 0; i < World.getBalls().size(); i++) {
+						World.getBalls().get(i).setWidth(World.getBalls().get(i).getWidth()/2);;
+					};break;
+				case "pleinBalle":
+					for (int i = 0; i < 2; i++) {
+						World.getBalls().add(new Ball());
+					};break;
 				case "pistoletoff":World.getPlayer().setModePistolet(false);
 				case "pistolet":World.getPlayer().setModePistolet(true);
 				case "accelerer":World.getPlayer().setAccelX(World.getPlayer().getAccelX()*2);break;
