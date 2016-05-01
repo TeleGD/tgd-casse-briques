@@ -3,6 +3,7 @@ package fr.entity;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
@@ -21,6 +22,7 @@ public class Player extends Movable implements Rectangle {
 	private int compTir;
 	private int life;
 	private boolean modePistolet;
+	private Image raquette;
 	
 	public Player(){
 		this.x=336;
@@ -32,6 +34,11 @@ public class Player extends Movable implements Rectangle {
 		life = 3;
 		modePistolet=false;
 		compTir=0;
+		try {
+			raquette = new Image("img/raquette/raquette.png");
+		} catch ( SlickException e){
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean getModePistolet(){
@@ -82,8 +89,7 @@ public class Player extends Movable implements Rectangle {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		g.setColor(Color.yellow);
-		g.fillRect((float)x, (float)y, (float)width, (float)height);
+		g.drawImage(raquette,(float)(this.x),(float)(this.y));
 	}
 
 	@Override
@@ -171,6 +177,8 @@ public class Player extends Movable implements Rectangle {
 	public int getLife(){
 		return this.life;
 	}
+
+
 
 	
 
