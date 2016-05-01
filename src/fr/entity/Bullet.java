@@ -7,55 +7,45 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import fr.main.World;
-import fr.util.Circle;
 import fr.util.Movable;
+import fr.util.Rectangle;
 
-public class Bullet extends Ball implements Circle{
+public class Bullet extends Movable implements Rectangle{
 	
-	private boolean touched;
 	
-	public Bullet(){
-		this.x=300;
-		this.y=300;
-		this.width=32;
-		touched = false;
+	public Bullet(int x,int y){
+		this.x=x;
+		this.y=y;
+		this.width=4;
+		this.height=12;
+		speedY = -0.3;
+		speedX = 0;
+		setMoving(true);
 	}
-	@Override
-	public int getRadius() {
-		// TODO Auto-generated method stub
-		return (int)width;
-	}
+	
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setColor(Color.red);
-		g.fillOval((float)x, (float)y, (float)width, (float)width);
+		g.fillRoundRect((float)x, (float)y, (float)width, (float)height,2,2);
 
 	}
+	
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		// TODO Auto-generated method stub
-		speedY = 0.1;
-		speedX = 0;
 		for (Brique b:World.getBriques())
 		{
-			if (isColliding(b))
+			if (fr.util.Collisions.colBrique(this, b))
 			{
 				b.setLife(b.getLife()-1);
-				setTouched(true);
+				World.getBullets().remove(this);
 			}
 		}
+		System.out.println("touche");
+		moveY(delta);
 	}
 	
-
-	private boolean isColliding(Brique b) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	public void setTouched(boolean t)
-	{
-		this.touched = t;
-	}
 
 }

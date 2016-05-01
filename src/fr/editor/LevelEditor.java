@@ -3,7 +3,6 @@ import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color; 
@@ -20,7 +19,6 @@ import Brique.BriqueMetal;
 import Brique.BriqueTp;
 import fr.entity.Brique;
 import fr.entity.Entity;
-import fr.menus.MainMenu;
 import fr.parser.WriteFile;
 
 public class LevelEditor extends Entity{
@@ -38,6 +36,8 @@ public class LevelEditor extends Entity{
 	private int indexSelection=-1;
 	private boolean gommeActive=false;
 	private boolean pipette=false;
+	private boolean frolleSauvegarde;
+	
 	public LevelEditor()
 	{
 		width=800;
@@ -92,10 +92,10 @@ public class LevelEditor extends Entity{
 		
 		arg2.setColor(Color.red);
 		arg2.fillRect(0f,  (float)height-barHorizontalHeight, (float)width, 2);
-		
-
 		arg2.setColor(Color.white);
-		arg2.fillRect(0f,  384, (float)width, 1);
+		arg2.fillRect(15f,  384, (float)width-31, 1);
+		arg2.fillRect(15,  0,1, 384);
+		arg2.fillRect((float)width-16,  0,1, 384);
 		
 		
 		for(int i=0;i<briques.size();i++)
@@ -154,53 +154,40 @@ public class LevelEditor extends Entity{
 			}
 			
 		}
-		
+		Font titre1Font = new Font("Kalinga", Font.BOLD, 12);
+	    TrueTypeFont font1 = new TrueTypeFont(titre1Font, false);
+	    if(frolleSauvegarde)arg2.setColor(Color.red);
+	    else arg2.setColor(Color.orange);
+		arg2.setFont(font1);
+		arg2.drawString("SAUVEGARDER", 650, 540);
+	
 		arg2.setColor(Color.red);
-		arg2.fillOval(400, (float)height-barHorizontalHeight+barHorizontalHeight/4,  barHorizontalHeight/4, barHorizontalHeight/4);
-		if(gommeActive)arg2.setColor(Color.green);
+		arg2.fillOval(310, (float)height-barHorizontalHeight+barHorizontalHeight/7,  barHorizontalHeight/4, barHorizontalHeight/4);
+		if(gommeActive)arg2.setColor(Color.white);
 		else arg2.setColor(Color.black);
-		arg2.fillOval(402, (float)height-barHorizontalHeight+barHorizontalHeight/4+2, barHorizontalHeight/4-4, barHorizontalHeight/4-4);
+		arg2.fillOval(312, (float)height-barHorizontalHeight+barHorizontalHeight/7+2, barHorizontalHeight/4-4, barHorizontalHeight/4-4);
 		
-		arg2.setColor(Color.red);
-		arg2.fillRoundRect(440, (float)height-barHorizontalHeight+barHorizontalHeight/4,  barHorizontalHeight/10, barHorizontalHeight/4,3,3);
-		if(gommeActive)arg2.setColor(Color.green);
-		else arg2.setColor(Color.black);
-		arg2.fillRoundRect(442, (float)height-barHorizontalHeight+barHorizontalHeight/4+2, barHorizontalHeight/10-4, barHorizontalHeight/4-4,3,3);
-
 		
 	}
 
 	public void mouseReleased(int button, int x,int y){
 		
-		if(!gommeActive && briqueSelectionne!=null)
-		{
-			if(y<=384)
-			{
-				briqueSelectionne.setX(((int)briqueSelectionne.getX()/64)*64+12);
-				briqueSelectionne.setY(((int)briqueSelectionne.getY()/32)*32);
-			}else {
-				briqueSelectionne.setX(oldBriqueX);
-				briqueSelectionne.setY(oldBriqueY);
-			}
-			if(!selectionmenu){
-				briques.add(briqueSelectionne);
-				briqueSelectionne=copie(briqueSelectionne);
-			}
-			
-		}
-	
-		Brique b=yapasdebriques(x,y);
-		if(gommeActive && b!=null )briques.remove(b);
+		
 		
 	}
 	
 	public void mousePressed(int button, int oldx,int oldy){
 		debut=false;
-		if(oldx>400 && oldy> (float)height-barHorizontalHeight+barHorizontalHeight/4 &&  oldx<400+barHorizontalHeight/2&& oldy< (float)height-barHorizontalHeight+barHorizontalHeight/4+ barHorizontalHeight/2)gommeActive=!gommeActive;
 		
-		if(!gommeActive)
+		
+		if(oldx>310 && oldy> (float)height-barHorizontalHeight+barHorizontalHeight/7 &&  oldx<310+barHorizontalHeight/4 && oldy< (float)height-barHorizontalHeight+barHorizontalHeight/7+ barHorizontalHeight/4)
 		{
+			gommeActive=!gommeActive;
+			briqueSelectionne=null;
 			
+		}
+		else
+		{	
 			selectionmenu=false;
 			for(int i=0;i<menuBriques.size();i++)
 			{
@@ -212,7 +199,34 @@ public class LevelEditor extends Entity{
 					oldBriqueY=(int)briqueSelectionne.getY();
 					selectionmenu=true;
 					indexSelection=i;
+					gommeActive=false;
 				}
+			}
+			
+			if(briqueSelectionne!=null)
+			{
+				if(oldy<=384 && recupererBrique(oldx, oldy)==null)
+				{
+					briqueSelectionne.setX((oldx/64)*64+16);
+					briqueSelectionne.setY((oldy/32)*32);
+					briques.add(briqueSelectionne);
+					briqueSelectionne=copie(briqueSelectionne);
+				}else {
+					briqueSelectionne.setX(oldBriqueX);
+					briqueSelectionne.setY(650);
+				}
+				
+			}
+			
+			if(gommeActive)
+			{
+				Brique b=recupererBrique(oldx,oldy);
+				if( b!=null )briques.remove(b);
+			}
+			
+			
+			if(frolleSauvegarde){
+				sauvegarder=true;
 			}
 		}
 		
@@ -233,30 +247,36 @@ public class LevelEditor extends Entity{
 
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 
-		if(!gommeActive && briqueSelectionne!=null && yapasdebriques(newx,newy)==null   && newy<=384)
+		if(newx>650 && newx<750 && newy>=540 && newy<=560){
+			frolleSauvegarde=true;
+		}else 
+			frolleSauvegarde=false;
+		
+		if(briqueSelectionne!=null && recupererBrique(newx,newy)==null)
 		{
-			briqueSelectionne.setX(newx);
-			briqueSelectionne.setY(newy);
-			if(newx+64>=800-12)briqueSelectionne.setX(800-12-64);
-			briqueSelectionne.setX(((int)briqueSelectionne.getX()/64)*64+12);
-			briqueSelectionne.setY(((int)briqueSelectionne.getY()/32)*32);
-		}else if(gommeActive){
-			
+			if(newy>=384)newy=650;
+			if(newx+64>=width-16)newx=(int) (width-16-64);
+			briqueSelectionne.setX((newx/64)*64+16);
+			briqueSelectionne.setY((newy/32)*32);
 		}
+		
+		
 		
 	}
 
-	private Brique yapasdebriques(int newx, int newy) {
+	private Brique recupererBrique(int newx, int newy) {
 
 		for(Brique b:briques)
 		{
-			if(b.getX()==((newx)/64)*64+12 && b.getY()==(newy/32)*32)return b;
+			if(b.getX()==((newx)/64)*64+16 && b.getY()==(newy/32)*32)return b;
 		}
 		return null;
 	}
 
 	public void mouseDragged(int oldx,int  oldy, int newx,int  newy){
+		mouseMoved(oldx,oldy,newx,newy);
 		mousePressed(0,newx,newy);
+		
 	}
 	public void keyPressed(int key, char c) {
 
@@ -276,7 +296,6 @@ public class LevelEditor extends Entity{
 			}
 			
 		}
-		
 		
 		if(key==Input.KEY_UP){
 			couleurId++;
@@ -355,6 +374,8 @@ public class LevelEditor extends Entity{
 		sauvegarderSucces=false;
 		sauvegarder=false;
 		briqueSelectionne=null;
+		debut=true;
+		nomFichier="";
 		
 	}
 	

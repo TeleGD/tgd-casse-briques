@@ -64,11 +64,7 @@ public class BriqueClassic extends Brique {
 		{	
 			loseLife();		
 		}
-		if (this.getLife()==0)
-		{
-			createBonus();
-			this.setDead(true);
-		}
+		super.action();
 	}
 
 	@Override
@@ -85,11 +81,6 @@ public class BriqueClassic extends Brique {
 		mettreAjourCouleur();
 	}
 
-	public void createBonus(){
-		if(liste==null)return;
-		if(type != liste.length){
-			Bonus bonus = new Bonus(this.getX(),this.getY(),Bonus.lesTypes[type]);
-		}
-	}
+
 	
 }

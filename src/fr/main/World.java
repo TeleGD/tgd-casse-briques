@@ -28,7 +28,7 @@ import fr.parser.ReadFile;
 public class World extends BasicGameState{
 	
 	private static ArrayList<Brique> briques;
-	private static ArrayList<Bullet> bullet;
+	private static ArrayList<Bullet> bullets;
 	private static ArrayList<Bonus> bonus;
 	private static Player player;
 	private static Player player2;
@@ -54,10 +54,11 @@ public class World extends BasicGameState{
 		balls=new ArrayList<Ball>();
 		bonus=new ArrayList<Bonus>();
 		balls.add(new Ball());
+		Bonus.chargerImageBonus();
 		container = arg0;
 		game = arg1;
 		briques = new ArrayList<Brique>();
-		bullet=new ArrayList<Bullet>();
+		bullets=new ArrayList<Bullet>();
 		currentCampaignLevel = 1;
 		if(new File("levels"+File.separator+"niveau1.txt").exists())
 		{
@@ -92,13 +93,14 @@ public class World extends BasicGameState{
 		for (int i = 0; i < bonus.size(); i++) {
 			bonus.get(i).render(arg0, arg1, arg2);
 		}
-		for(Brique b:briques)
+		for(int i = 0; i < briques.size(); i++) 
 		{
-			if(!b.getDead()){
-				b.render(arg0, arg1, arg2);
-			}
+			briques.get(i).render(arg0, arg1, arg2);
 		}
 		
+		for (int i = 0; i < bullets.size(); i++) {
+			bullets.get(i).render(arg0, arg1, arg2);
+		}
 		arg2.drawString("Lives : "+player.getLife(), 700, 580);
 		if (gameMode == mode.CAMPAIGN)
 			arg2.drawString("Level : "+currentCampaignLevel, 50, 580);
@@ -133,19 +135,14 @@ public class World extends BasicGameState{
 		for (int i = 0; i < bonus.size(); i++) {
 			bonus.get(i).update(arg0, arg1, arg2);
 		}
-		for(Brique b:briques)
+		for(int i=0;i<briques.size();i++)
 		{
-			if(!b.getDead()){
-				b.update(arg0, arg1, arg2);
-			}
+			briques.get(i).update(arg0, arg1, arg2);
 		}
 		
-		for (Bullet b:bullet)
+		for (int i=0;i<bullets.size();i++)
 		{
-			if (getTouched(b))
-			{
-				destroy(b);
-			}
+			bullets.get(i).update(arg0, arg1, arg2);
 		}
 		
 		if (player.getLife() == 0) {
@@ -159,6 +156,12 @@ public class World extends BasicGameState{
 			} else {
 				game.enterState(LevelSelectorMenu.ID);
 			}
+		}
+		
+		if(balls.size()==0){
+			player.setLife(player.getLife()-1);
+			balls.add(new Ball());
+			player.setHasBall(true);
 		}
 		
 	}
@@ -191,7 +194,7 @@ public class World extends BasicGameState{
 
 	public static void destroy(Bullet b)
 	{
-		bullet.remove(b);
+		bullets.remove(b);
 	}
 	
 	public static void destroy(Brique b)
@@ -236,18 +239,14 @@ public class World extends BasicGameState{
 	
 	public static void addBullet(Bullet b)
 	{
-		bullet.add(b);
+		bullets.add(b);
 	}
 
 	public static void removeBrique(Brique b){
 		briques.remove(b);
 	}
 	
-	public static boolean getTouched(Bullet b)
-	{
-		return getTouched(b);
-	}
-	
+
 	public static void reload(String niveau)
 	{
 		if(new File("levels"+File.separator+niveau).exists())
@@ -257,7 +256,7 @@ public class World extends BasicGameState{
 			balls=new ArrayList<Ball>();
 			balls.add(new Ball());
 			briques = new ArrayList<Brique>();
-			bullet=new ArrayList<Bullet>();
+			bullets=new ArrayList<Bullet>();
 			
 			ReadFile file=new ReadFile("levels"+File.separator+niveau);
 		    ArrayList<String> texts;
@@ -294,6 +293,11 @@ public class World extends BasicGameState{
 		} else if (gameMode == mode.MULTI) {
 			reload("multi.txt");
 		}
+	}
+
+	public static ArrayList<Bullet> getBullets() {
+		// TODO Auto-generated method stub
+		return bullets;
 	}
 	
 }

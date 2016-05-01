@@ -19,12 +19,20 @@ public class Ball extends Movable implements Circle{
     private int compt;
     
     public Ball(){
-        x = 400;
-        y = 300;
+    	x=World.getPlayer().x+World.getPlayer().width/2-width/2;
+        y = World.getPlayer().y-16;
         width = 16;
         height = 16;
         speedY = -0.3;
-        speedX=0.2;
+        speedX=(Math.random()*4 -2) /10;
+    }
+    public Ball(int x,int y){
+    	this.x=x;
+    	this.y=y;
+        width = 16;
+        height = 16;
+        speedY = -0.3;
+        speedX=(Math.random()*4 -2) /10;
     }
     
     @Override
@@ -47,6 +55,10 @@ public class Ball extends Movable implements Circle{
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         setMoving(speedNorm()>0);
         
+        if(World.getPlayer().hasBall()){
+        	x=World.getPlayer().x+World.getPlayer().width/2-width/2;
+        	return;
+        }
         
         //Detection de collisions avec les murs :
         if(x<=0){
@@ -59,12 +71,13 @@ public class Ball extends Movable implements Circle{
         
         if(y<=0){
             speedY *= -1;
+            y=1;
         }else if(y>=(600-height/2)){
-            World.getPlayer().setLife(World.getPlayer().getLife()-1);
-            x = 400;
-            y = 300;
-            speedX = 0;
-            speedY = -0.1;
+            World.getBalls().remove(this);
+        	x=World.getPlayer().x+World.getPlayer().width/2-width/2;
+            y = World.getPlayer().y-16;
+            speedY = -0.3;
+            speedX=(Math.random()*4 -2) /10;
         }
         
         if (fr.util.Collisions.colPlayer(this,World.getPlayer())){

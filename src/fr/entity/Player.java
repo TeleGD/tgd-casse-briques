@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import fr.main.World;
 import fr.menus.GameOverMenu;
 import fr.util.Movable;
 import fr.util.Rectangle;
@@ -19,6 +20,7 @@ public class Player extends Movable implements Rectangle {
 	private boolean keyPressedRight;
 	private boolean keyPressedSpace;
 	private boolean lastKeyPressed;
+	private boolean hasBall=true;
 	private int stillPressed;
 	private int comp = 120;
 	private int compTir;
@@ -182,7 +184,6 @@ public class Player extends Movable implements Rectangle {
 
 	public void keyPressed(int key, char c) {
 		switch (key) {
-		
 		case Input.KEY_LEFT:
 			keyPressedLeft = true;
 			lastKeyPressed = false;
@@ -192,10 +193,12 @@ public class Player extends Movable implements Rectangle {
 			lastKeyPressed = true;
 			break;
 		case Input.KEY_SPACE:
+			hasBall=false;
 			if (compTir==0 && modePistolet){
 				keyPressedSpace=true;
-				new Bullet();
-				compTir=60;
+				World.getBullets().add(new Bullet((int)x,(int)y));
+				World.getBullets().add(new Bullet((int)(x+width),(int)y));
+				compTir=10;
 			}
 			break;
 		}
@@ -210,7 +213,15 @@ public class Player extends Movable implements Rectangle {
 		return this.life;
 	}
 
-	
+	public boolean hasBall(){
+		return hasBall;
+	}
+
+	public void setHasBall(boolean b) {
+
+		hasBall=b;
+		
+	}
 
 
 

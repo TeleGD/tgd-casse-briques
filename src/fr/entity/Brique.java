@@ -115,7 +115,6 @@ public abstract class Brique extends Entity implements Rectangle{
 	public void setColliding(boolean c)
 	{
 		this.colliding = c;
-		if(c && Math.random()*100>97)World.getBonus().add(new Bonus(x,y,Bonus.lesTypes[(int) (Math.random()*Bonus.lesTypes.length)]));
 	}
 	
 	public boolean getHard()
@@ -139,7 +138,13 @@ public abstract class Brique extends Entity implements Rectangle{
 		return this.couleurOriginal;
 	}
 	
-	public abstract void action();
+	public  void action(){
+		if (this.getLife()==0)
+		{
+			this.setDead(true);
+			World.destroy(this);
+		}
+	}
 	public abstract void loseLife();
 	
 	public String briqueToString(){
@@ -211,12 +216,13 @@ public Color mettreAjourCouleur()
 }
 
 public void lastWhisper() {
-        int bonusOuPas = (int) Math.random()*2;
-        int choixBonus = (int) Math.random()*Bonus.lesTypes.length;
+        int bonusOuPas = (int) (Math.random()*20+1);
+        int choixBonus = (int) (Math.random()*Bonus.lesTypes.length);
         if (bonusOuPas==1){
                 World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));
         }
-        }
+       
+   }
 
 
 
