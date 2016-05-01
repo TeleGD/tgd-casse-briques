@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Brique.BriqueClassic;
+import Brique.BriqueExplosive;
 import Brique.BriqueTp;
 import fr.util.Rectangle;
 
@@ -43,7 +44,8 @@ public abstract class Brique extends Entity implements Rectangle{
 	
 	public Brique()
 	{
-		
+		this.width=64;
+		this.height=32;
 	}
 	public Brique(Brique b)
 	{
@@ -147,10 +149,13 @@ public abstract class Brique extends Entity implements Rectangle{
 	public String briqueToString(){
 		if(this instanceof BriqueClassic)
 		{
-			return  "BriqueClassic "+x+" "+y+" "+color.getBlue()+" "+color.getRed()+" "+color.getGreen()+" "+life+" "+ hard;
+			return  "BriqueClassic "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
 		}else if(this instanceof BriqueTp)
 		{
-			return  "BriqueTp "+x+" "+y+" "+color.getBlue()+" "+color.getRed()+" "+color.getGreen()+" "+life+" "+ hard;
+			return  "BriqueTp "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
+		}else if(this instanceof BriqueExplosive)
+		{
+			return  "BriqueExplosive "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+"  "+life+" "+ hard;
 		}
 		return null;
 		
@@ -173,4 +178,9 @@ public abstract class Brique extends Entity implements Rectangle{
 		return b;
 		
 	}
+
+public void lastWhisper() {
+	// TODO Auto-generated method stub
+	
+}
 }
