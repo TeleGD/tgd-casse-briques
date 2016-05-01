@@ -146,6 +146,7 @@ public class MainMenu extends BasicGameState {
 			break;
 		 
 		case 3:
+			Editor.reload();
 			game.enterState(Editor.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;

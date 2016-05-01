@@ -84,7 +84,7 @@ public class LevelEditor extends Entity{
 			Font titre1Font = new Font("Kalinga", Font.BOLD, 20);
 			TrueTypeFont font1 = new TrueTypeFont(titre1Font, false);
 			arg2.setFont(font1);
-			arg2.drawString("Cliquer sur le carré et cliquer ou vous souhaitez le placer !", 100, 170);
+			arg2.drawString("Cliquez sur le carre et cliquez ou vous souhaitez le placer !", 100, 170);
 			arg2.drawString("       Touche haut ou bas pour changer de couleur", 100, 220);
 			arg2.drawString("Appuyez sur S pour sauvegarder", 200, 270);
 
@@ -144,13 +144,13 @@ public class LevelEditor extends Entity{
 			titre1Font = new Font("Kalinga", Font.BOLD, 12);
 		    font1 = new TrueTypeFont(titre1Font, false);
 			arg2.setFont(font1);
-			arg2.drawString("Entrer le nom du niveau: "+nomFichier, 300, 280);
-			arg2.drawString("Appuyer sur entrer pour enregistrer le niveau", 260, 310);
+			arg2.drawString("Entrez le nom du niveau: "+nomFichier, 300, 280);
+			arg2.drawString("Appuyez sur entree pour enregistrer le niveau", 260, 310);
 			
 			if(sauvegarderSucces)
 			{
 				arg2.setColor(Color.green);
-				arg2.drawString("Sauvegarder avec succès ! (je crois...)", 280, 340);
+				arg2.drawString("Sauvegarde avec succes ! (je crois...)", 280, 340);
 			}
 			
 		}
@@ -347,6 +347,14 @@ public class LevelEditor extends Entity{
 
 	public void addBrique(Brique b) {
 		briques.add(b);
+		
+	}
+
+	public void reload() {
+		briques.removeAll(briques);
+		sauvegarderSucces=false;
+		sauvegarder=false;
+		briqueSelectionne=null;
 		
 	}
 	

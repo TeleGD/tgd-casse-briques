@@ -26,7 +26,6 @@ public class BriqueClassic extends Brique {
 	}
 	
 	private void chargerImage() {
-		
 		try {
 			if(images[0]==null)images[0]=new Image("img/brique/Normal1.png");
 			if(images[1]==null)images[1]=new Image("img/brique/Normal2.png");
@@ -36,7 +35,6 @@ public class BriqueClassic extends Brique {
 			e.printStackTrace();
 		}
 		
-		indexImage=2;
 	}
 
 	public BriqueClassic(Brique b)
@@ -52,8 +50,11 @@ public class BriqueClassic extends Brique {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		
-		
-		g.drawImage(images[indexImage],(float)x,(float)y,mettreAjourCouleur());
+		int i=0;
+		if(getLife()==4 || getLife()==3)i=0;
+		else if(getLife()==2)i=1;
+		else if(getLife()==1)i=2;
+		g.drawImage(images[i],(float)x,(float)y,mettreAjourCouleur());
 	}
 
 	@Override

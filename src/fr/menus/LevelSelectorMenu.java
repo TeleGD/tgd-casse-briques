@@ -27,7 +27,7 @@ public class LevelSelectorMenu extends BasicGameState {
 
 	static TrueTypeFont font1;
 
-	private String nom = "S�lection du niveau";
+	private String nom = "Selection du niveau";
 
 	private static String[] items;
 	
