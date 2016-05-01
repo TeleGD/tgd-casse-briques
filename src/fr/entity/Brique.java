@@ -191,9 +191,6 @@ public abstract class Brique extends Entity implements Rectangle{
 		
 	}
 
-public static Color[] getCouleurs() {
-	return couleurs;
-}
 
 public static void setCouleurs(Color[] couleurs) {
 	Brique.couleurs = couleurs;
@@ -207,6 +204,11 @@ public void lastWhisper() {
                 World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));
         }
         }
+
+public static Color[] getCouleurs() {
+	// TODO Auto-generated method stub
+	return couleurs;
+}
 
 
 
