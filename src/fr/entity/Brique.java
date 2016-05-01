@@ -191,9 +191,9 @@ public abstract class Brique extends Entity implements Rectangle{
 		
 	}
 
-public static Color[] getCouleurs() {
-	return couleurs;
-}
+   public static Color[] getCouleurs() {
+		return couleurs;
+	}
 
 public static void setCouleurs(Color[] couleurs) {
 	Brique.couleurs = couleurs;
