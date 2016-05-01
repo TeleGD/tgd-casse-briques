@@ -48,6 +48,7 @@ public class World extends BasicGameState{
 		player2 = new Player();
 		player2.setY(85);
 		balls=new ArrayList<Ball>();
+		bonus=new ArrayList<Bonus>();
 		balls.add(new Ball());
 		container = arg0;
 		game = arg1;
@@ -83,7 +84,9 @@ public class World extends BasicGameState{
 		for (int i = 0; i < balls.size(); i++) {
 			balls.get(i).render(arg0, arg1, arg2);
 		}
-
+		for (int i = 0; i < bonus.size(); i++) {
+			bonus.get(i).render(arg0, arg1, arg2);
+		}
 		for(Brique b:briques)
 		{
 			if(!b.getDead()){
@@ -120,6 +123,9 @@ public class World extends BasicGameState{
 			player2.update(arg0, arg1, arg2);
 		for (int i = 0; i < balls.size(); i++) {
 			balls.get(i).update(arg0, arg1, arg2);
+		}
+		for (int i = 0; i < bonus.size(); i++) {
+			bonus.get(i).update(arg0, arg1, arg2);
 		}
 		for(Brique b:briques)
 		{

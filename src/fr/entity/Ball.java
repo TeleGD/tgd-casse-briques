@@ -51,8 +51,10 @@ public class Ball extends Movable implements Circle{
         //Detection de collisions avec les murs :
         if(x<=0){
             speedX *= -1;
+            x=1;
         }else if(x>(800-getWidth())){
             speedX *= -1;
+            x=800-getWidth()-1;
         }
         
         if(y<=0){
@@ -74,21 +76,22 @@ public class Ball extends Movable implements Circle{
         //Detection de collisions avec les briques : 
         for(Brique b:World.getBriques()){
             if(!b.getDead()){
-        	b.setColliding(fr.util.Collisions.colBrique(this,b));
-            if(fr.util.Collisions.colBrique(this,b)){	
-            	if(b.getHard()){
-            		
-            		//On touche une brique dure.
-                	if((x+width/2>b.getX()) && (x-width/2<(b.getX()+b.getWidth()))){
-                		//Contact effectue par la verticale.
-                        speedY = -1*speedY;
-                    }else if((y+height/2>b.getY())&& (y-height/2<(b.getY()+b.getHeight())))
-                    {
-                    	//Contact effectue par l'horizontale
-                        speedX = -1*speedX;
-                    }    
-                }
-            }
+            	
+	        	b.setColliding(fr.util.Collisions.colBrique(this,b));
+	            if(fr.util.Collisions.colBrique(this,b)){	
+	            	if(b.getHard()){
+	            		
+	            		//On touche une brique dure.
+	                	if((x+width/2>b.getX()) && (x-width/2<(b.getX()+b.getWidth()))){
+	                		//Contact effectue par la verticale.
+	                        speedY = -1*speedY;
+	                    }else if((y+height/2>b.getY())&& (y-height/2<(b.getY()+b.getHeight())))
+	                    {
+	                    	//Contact effectue par l'horizontale
+	                        speedX = -1*speedX;
+	                    }    
+	                }
+	            }
             }
         }
         
