@@ -189,7 +189,7 @@ public class LevelEditor extends Entity{
 	
 	public void mousePressed(int button, int oldx,int oldy){
 		debut=false;
-		if(oldx>600 && oldy> (float)height-barHorizontalHeight+barHorizontalHeight/4 &&  oldx<600+barHorizontalHeight/2&& oldy< (float)height-barHorizontalHeight+barHorizontalHeight/4+ barHorizontalHeight/2)gommeActive=!gommeActive;
+		if(oldx>400 && oldy> (float)height-barHorizontalHeight+barHorizontalHeight/4 &&  oldx<400+barHorizontalHeight/2&& oldy< (float)height-barHorizontalHeight+barHorizontalHeight/4+ barHorizontalHeight/2)gommeActive=!gommeActive;
 		
 		if(!gommeActive)
 		{
