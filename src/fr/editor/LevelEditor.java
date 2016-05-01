@@ -2,10 +2,9 @@ package fr.editor;
 import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color; 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -26,16 +25,14 @@ public class LevelEditor extends Entity{
 	private ArrayList<Brique> briques=new ArrayList<Brique>();
 	private ArrayList<Brique> menuBriques=new ArrayList<Brique>();
 	private Brique briqueSelectionne;
-	private int oldBriqueX,oldBriqueY;
+	private int oldBriqueX;
 	private int couleurId;
 	private boolean sauvegarder=false;
 	private String nomFichier="";
 	private boolean sauvegarderSucces;
-	private boolean selectionmenu;
 	private boolean debut=true;
 	private int indexSelection=-1;
 	private boolean gommeActive=false;
-	private boolean pipette=false;
 	private boolean frolleSauvegarde;
 	
 	public LevelEditor()
@@ -84,6 +81,7 @@ public class LevelEditor extends Entity{
 			Font titre1Font = new Font("Kalinga", Font.BOLD, 20);
 			TrueTypeFont font1 = new TrueTypeFont(titre1Font, false);
 			arg2.setFont(font1);
+			arg2.setColor(Color.red);
 			arg2.drawString("Cliquez sur le carre et cliquez ou vous souhaitez le placer !", 100, 170);
 			arg2.drawString("       Touche haut ou bas pour changer de couleur", 100, 220);
 			arg2.drawString("Appuyez sur S pour sauvegarder", 200, 270);
@@ -188,7 +186,6 @@ public class LevelEditor extends Entity{
 		}
 		else
 		{	
-			selectionmenu=false;
 			for(int i=0;i<menuBriques.size();i++)
 			{
 				if(menuBriques.get(i).getX()<oldx  && menuBriques.get(i).getX()+menuBriques.get(i).getWidth()>oldx
@@ -196,8 +193,6 @@ public class LevelEditor extends Entity{
 				{
 					briqueSelectionne=copie(menuBriques.get(i));
 					oldBriqueX=(int)briqueSelectionne.getX();
-					oldBriqueY=(int)briqueSelectionne.getY();
-					selectionmenu=true;
 					indexSelection=i;
 					gommeActive=false;
 				}
@@ -359,7 +354,6 @@ public class LevelEditor extends Entity{
 	}
 
 	public void removeAllBriques() {
-
 		briques.removeAll(briques);
 		
 	}
