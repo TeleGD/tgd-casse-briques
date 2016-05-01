@@ -16,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import Brique.BriqueClassic;
 import Brique.BriqueExplosive;
+import Brique.BriqueMetal;
 import Brique.BriqueTp;
 import fr.entity.Brique;
 import fr.entity.Entity;
@@ -43,14 +44,22 @@ public class LevelEditor extends Entity{
 		
 		for(int i=0;i<4;i++)
 		{
-			BriqueClassic b=new BriqueClassic(70*i,600-barHorizontalHeight/2-40,false);
+			BriqueClassic b=new BriqueClassic(70*i,600-barHorizontalHeight/2-35,false);
 			b.setColor(Brique.getCouleurs()[0]);
 			b.setLife(i+1);
 			menuBriques.add(b);
 		}
 		for(int i=0;i<4;i++)
 		{
-			BriqueExplosive b=new BriqueExplosive(70*i,600-barHorizontalHeight/2-5,false);
+			BriqueExplosive b=new BriqueExplosive(70*i,600-barHorizontalHeight/2,false);
+			b.setColor(Brique.getCouleurs()[0]);
+			b.setLife(i+1);
+			menuBriques.add(b);
+		}
+		
+		for(int i=0;i<4;i++)
+		{
+			BriqueMetal b=new BriqueMetal(300+70*i,600-barHorizontalHeight/2,false);
 			b.setColor(Brique.getCouleurs()[0]);
 			b.setLife(i+1);
 			menuBriques.add(b);
@@ -208,6 +217,7 @@ public class LevelEditor extends Entity{
 
 		if(brique instanceof BriqueClassic)return new BriqueClassic(brique);
 		else if(brique instanceof BriqueExplosive)return new BriqueExplosive(brique);
+		else if(brique instanceof BriqueMetal)return new BriqueMetal(brique);
 		else if(brique instanceof BriqueTp)return new BriqueTp(brique);
 		return null;
 	}
