@@ -42,19 +42,22 @@ public class World extends BasicGameState{
 		game = arg1;
 		briques = new ArrayList<Brique>();
 		bullet=new ArrayList<Bullet>();
-		
-		ReadFile file=new ReadFile("levels"+File.separator+"niveau1.txt");
-	    ArrayList<String> texts;
-		try {
-			texts = file.readFromFile();
-			for(String s:texts)
-			{
-				briques.add(Brique.StringToBrique(s));
+		if(new File("levels"+File.separator+"niveau1.txt").exists())
+		{
+			ReadFile file=new ReadFile("levels"+File.separator+"niveau1.txt");
+		    ArrayList<String> texts;
+			try {
+				texts = file.readFromFile();
+				for(String s:texts)
+				{
+					briques.add(Brique.StringToBrique(s));
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		
 		
 	}
 
