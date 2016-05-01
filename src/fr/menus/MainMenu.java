@@ -1,6 +1,7 @@
 package fr.menus;
 import java.awt.Font;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -23,7 +24,7 @@ public class MainMenu extends BasicGameState {
 	static TrueTypeFont font1;
 
 	private String nom = "Menu Principal";
-	private String[] items = { "Jouer", "Scores", "Aide (DLC)", "Editeur", "Quitter" };
+	private String[] items = { "Camapgne", "Multijoueur", "Niveaux Custom", "Editeur", "Quitter" };
 
 	public int nbrOption = items.length;
 
@@ -53,7 +54,22 @@ public class MainMenu extends BasicGameState {
 
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		// let this empty
+		
+		if (mouseOverSelection()) {
+			int x = Mouse.getX();
+			int y = 600-Mouse.getY();
+			selection = (y-360)/30;
+		}
+		
+	}
+
+	private boolean mouseOverSelection() {
+		int x = Mouse.getX();
+		int y = 600-Mouse.getY();
+		return (   x>550
+				&& x<750
+				&& y>360
+				&& y<360+nbrOption*30);
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
@@ -69,7 +85,10 @@ public class MainMenu extends BasicGameState {
 		for (int i = 0; i < nbrOption; i++) {
 			g.drawString(this.items[i], 560, 360 + 30 * i);
 		}
+		
 		g.drawString(">>", 540, 360 + 30 * selection);
+
+			
 	}
 
 	@Override
@@ -109,17 +128,23 @@ public class MainMenu extends BasicGameState {
 	public void execOption() {
 		switch (selection) {
 		case 0:
+			//World.gameMode = World.mode.CAMPAIGN;
 			game.enterState(MissionMenu.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 
 		case 1:
-			game.enterState(ScoresMenu.ID, new FadeOutTransition(),
+			//World.gameMode = World.mode.MULTI;
+			game.enterState(World.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
-		/*
-		 * case 2: game.enterState(HelpMenu.ID); break;
-		 */
+		
+		case 2:
+			//World.gameMode = World.mode.CUSTOM;
+			game.enterState(World.ID, new FadeOutTransition(),
+					new FadeInTransition());
+			break;
+		 
 		case 3:
 			game.enterState(Editor.ID, new FadeOutTransition(),
 					new FadeInTransition());
@@ -130,7 +155,12 @@ public class MainMenu extends BasicGameState {
 			break;
 		}
 	}
-
+	
+	public void mousePressed(int button, int oldx,int oldy){
+		if (mouseOverSelection())
+			execOption();
+	}
+	
 	public int getID() {
 		return ID;
 	}

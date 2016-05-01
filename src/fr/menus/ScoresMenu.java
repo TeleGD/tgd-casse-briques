@@ -2,6 +2,7 @@ package fr.menus;
 
 import java.awt.Font;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -59,6 +60,15 @@ public class ScoresMenu extends BasicGameState {
 		firstTime = false;
 	}
 	
+	private boolean mouseOverSelection() {
+		int x = Mouse.getX();
+		int y = 600-Mouse.getY();
+		return (   x>175
+				&& x<375
+				&& y>420 + 13 * (nbrOption-1)
+				&& y<420 + 13 * nbrOption);
+	}
+	
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		this.container = container;
@@ -109,6 +119,11 @@ public class ScoresMenu extends BasicGameState {
 
 	public static void reset() {
 		firstTime = true;
+	}
+	
+	public void mousePressed(int button, int oldx,int oldy){
+		if (mouseOverSelection())
+			game.enterState(MainMenu.ID);
 	}
 
 	@Override

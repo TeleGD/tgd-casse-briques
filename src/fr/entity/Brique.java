@@ -20,7 +20,7 @@ public abstract class Brique extends Entity implements Rectangle{
 	private boolean hard;
 	private boolean dead = false;
 	private boolean rand;
-	public static Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan,Color.magenta,Color.pink,Color.white};
+	private static Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan,Color.magenta,Color.pink,Color.white};
 	
 	public Brique(int x, int y, boolean h, boolean random,int life){
 		this.x=x;
@@ -28,7 +28,7 @@ public abstract class Brique extends Entity implements Rectangle{
 		this.width=64;
 		this.height=32;
 		this.rand = random;
-		this.color =couleurs[(int)(Math.random()*couleurs.length)];
+		this.color =getCouleurs()[(int)(Math.random()*getCouleurs().length)];
 		if (random)
 		{
 			setLife((int) (Math.random()*4+1));
@@ -156,7 +156,7 @@ public abstract class Brique extends Entity implements Rectangle{
 			return  "BriqueTp "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
 		}else if(this instanceof BriqueExplosive)
 		{
-			return  "BriqueExplosive "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+"  "+life+" "+ hard;
+			return  "BriqueExplosive "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
 		}
 		return null;
 		
@@ -169,8 +169,12 @@ public abstract class Brique extends Entity implements Rectangle{
 		if(t[0].equals("BriqueClassic"))
 		{
 			b=new BriqueClassic();
+		}else if(t[0].equals("BriqueExplosive"))
+		{
+			b=new BriqueExplosive();
 		}else 
 			b=new BriqueTp();
+		
 		b.setX(Double.parseDouble(t[1]));
 		b.setY(Double.parseDouble(t[2]));
 		b.color=new Color(Integer.parseInt(t[3]),Integer.parseInt(t[4]),Integer.parseInt(t[5]));
@@ -180,11 +184,22 @@ public abstract class Brique extends Entity implements Rectangle{
 		
 	}
 
+public static Color[] getCouleurs() {
+	return couleurs;
+}
+
+public static void setCouleurs(Color[] couleurs) {
+	Brique.couleurs = couleurs;
+}
+
+
 public void lastWhisper() {
-	int bonusOuPas = (int) Math.random()*2;
-	int choixBonus = (int) Math.random()*Bonus.lesTypes.length;
-	if (bonusOuPas==1){
-		World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));
-	}
-	}
+        int bonusOuPas = (int) Math.random()*2;
+        int choixBonus = (int) Math.random()*Bonus.lesTypes.length;
+        if (bonusOuPas==1){
+                World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));
+        }
+        }
+
+
 }
