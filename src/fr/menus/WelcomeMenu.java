@@ -106,7 +106,8 @@ public class WelcomeMenu extends BasicGameState {
 	
 	public void mousePressed(int button, int oldx,int oldy){
 		if (mouseOverSelection())
-			game.enterState(MainMenu.ID);
+			game.enterState(MainMenu.ID, new FadeOutTransition(),
+					new FadeInTransition());
 	}
 
 	@Override
