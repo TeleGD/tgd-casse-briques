@@ -1,6 +1,5 @@
 package fr.entity;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -202,6 +201,7 @@ public class Player extends Movable implements Rectangle {
 	public int getLife(){
 		return this.life;
 	}
+
 
 
 
