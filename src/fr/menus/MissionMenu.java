@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -77,6 +78,15 @@ public class MissionMenu extends BasicGameState {
 
 		return res;
 	}*/
+	
+	private boolean mouseOverSelection() {
+		int x = Mouse.getX();
+		int y = 600-Mouse.getY();
+		return (   x>72
+				&& x<275
+				&& y>280+12*13
+				&& y<280+13*13);
+	}
 
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -135,6 +145,12 @@ public class MissionMenu extends BasicGameState {
 		
 	}
 
+	public void mousePressed(int button, int oldx,int oldy){
+		if (mouseOverSelection())
+			//World.reset();
+			game.enterState(World.ID);
+	}
+	
 	@Override
 	public void keyPressed(int key, char c) {
 		switch (key) {

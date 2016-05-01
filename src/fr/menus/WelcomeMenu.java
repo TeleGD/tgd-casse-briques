@@ -2,6 +2,7 @@ package fr.menus;
 
 import java.awt.Font;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -39,6 +40,16 @@ public class WelcomeMenu extends BasicGameState {
 	int xs, ys, xc, yc; // coordonnees des deux textes
 	//int dir_h_s, dir_v_s, dir_h_c, dir_v_c;
 
+	
+	private boolean mouseOverSelection() {
+		int x = Mouse.getX();
+		int y = 600-Mouse.getY();
+		return (   x>220
+				&& x<520
+				&& y>550
+				&& y<600);
+	}
+	
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		//background = new Image("sprites/vaisseaux0003.png");
@@ -91,6 +102,11 @@ public class WelcomeMenu extends BasicGameState {
 		if (disp)
 			g.drawString(">        Press Enter        <", 240, 552);
 
+	}
+	
+	public void mousePressed(int button, int oldx,int oldy){
+		if (mouseOverSelection())
+			game.enterState(MainMenu.ID);
 	}
 
 	@Override

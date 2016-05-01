@@ -2,6 +2,7 @@ package fr.menus;
 
 import java.awt.Font;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -61,10 +62,19 @@ public class CreditsMenu extends BasicGameState {
 		Font titre6Font = new Font("Courant", Font.BOLD, 13);
     	font6 = new TrueTypeFont(titre6Font, false);
 	}
+	
+	private boolean mouseOverSelection() {
+		int x = Mouse.getX();
+		int y = 600-Mouse.getY();
+		return (   x>238
+				&& x<438
+				&& y>390 + 13 * (nbrOption-1)
+				&& y<390 + 13 * nbrOption);
+	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-
+		
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
@@ -86,10 +96,13 @@ public class CreditsMenu extends BasicGameState {
 		
 		g.drawString(">>", 225, 390 + 13 * selection);
 		
-		
-		
 	}
 
+	public void mousePressed(int button, int oldx,int oldy){
+		if (mouseOverSelection())
+			game.enterState(MainMenu.ID);
+	}
+	
 	@Override
 	public void keyPressed(int key, char c) {
 		switch (key) {
