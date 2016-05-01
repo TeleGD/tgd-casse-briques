@@ -19,6 +19,8 @@ import fr.entity.Bonus;
 import fr.entity.Brique;
 import fr.entity.Bullet;
 import fr.entity.Player;
+import fr.menus.GameOverMenu;
+import fr.menus.LevelSelectorMenu;
 import fr.menus.PauseMenu;
 import fr.parser.ReadFile;
 
@@ -27,10 +29,11 @@ public class World extends BasicGameState{
 	private static ArrayList<Brique> briques;
 	private static ArrayList<Bullet> bullet;
 	private static ArrayList<Bonus> bonus;
-	private static Player Player;
+	private static Player player;
 	private static ArrayList<Ball> balls;
     public static enum mode {CAMPAIGN, MULTI, CUSTOM};
     public static mode gameMode;
+    public static int currentCampaignLevel;
 	
 	public static int ID = 0;
 	
@@ -39,13 +42,14 @@ public class World extends BasicGameState{
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-		Player=new Player();
+		player=new Player();
 		balls=new ArrayList<Ball>();
 		balls.add(new Ball());
 		container = arg0;
 		game = arg1;
 		briques = new ArrayList<Brique>();
 		bullet=new ArrayList<Bullet>();
+		currentCampaignLevel = 1;
 		if(new File("levels"+File.separator+"niveau1.txt").exists())
 		{
 			ReadFile file=new ReadFile("levels"+File.separator+"niveau1.txt");
@@ -67,7 +71,7 @@ public class World extends BasicGameState{
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		Player.render(arg0, arg1, arg2);
+		player.render(arg0, arg1, arg2);
 	    arg2.drawString(Mouse.getY()+", "+Mouse.getY(), 10, 10);
 
 		for (int i = 0; i < balls.size(); i++) {
@@ -80,12 +84,35 @@ public class World extends BasicGameState{
 				b.render(arg0, arg1, arg2);
 			}
 		}
+		
+		arg2.drawString("Lives : "+player.getLife(), 700, 580);
+		
+		if (player.getLife() == 0) {
+			game.enterState(GameOverMenu.ID, new FadeOutTransition(), new FadeInTransition());
+		}
+		
+		if (areDestroyed(briques)) {
+			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 2) {
+				currentCampaignLevel++;
+				reload();
+			} else {
+				game.enterState(LevelSelectorMenu.ID);
+			}
+		}
 
+	}
+
+	private boolean areDestroyed(ArrayList<Brique> br) {
+		for (Brique b : br) {
+			if (!b.getDead())
+				return false;
+		}
+		return true;
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		Player.update(arg0, arg1, arg2);
+		player.update(arg0, arg1, arg2);
 		for (int i = 0; i < balls.size(); i++) {
 			balls.get(i).update(arg0, arg1, arg2);
 		}
@@ -103,6 +130,20 @@ public class World extends BasicGameState{
 				destroy(b);
 			}
 		}
+		
+		if (player.getLife() == 0) {
+			game.enterState(GameOverMenu.ID, new FadeOutTransition(), new FadeInTransition());
+		}
+		
+		if (areDestroyed(briques)) {
+			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 2) {
+				currentCampaignLevel++;
+				reload();
+			} else {
+				game.enterState(LevelSelectorMenu.ID);
+			}
+		}
+		
 	}
 
 	@Override
@@ -111,12 +152,12 @@ public class World extends BasicGameState{
 	}
 	
 	public void keyReleased(int key, char c) {
-		Player.keyReleased(key, c);
+		player.keyReleased(key, c);
 	}
 
 
 	public void keyPressed(int key, char c) {
-		Player.keyPressed(key, c);
+		player.keyPressed(key, c);
 		if(key == Input.KEY_ESCAPE){
 			game.enterState(PauseMenu.ID, new FadeOutTransition(),
 					new FadeInTransition());
@@ -124,11 +165,11 @@ public class World extends BasicGameState{
 	}
 	
 	public static Player getPlayer() {
-		return Player;
+		return player;
 	}
 
 	public static void setPlayer(Player playerP) {
-		Player = playerP;
+		player = playerP;
 	}
 
 	public static void destroy(Bullet b)
@@ -194,6 +235,13 @@ public class World extends BasicGameState{
 	{
 		if(new File("levels"+File.separator+niveau).exists())
 		{
+			
+			player=new Player();
+			balls=new ArrayList<Ball>();
+			balls.add(new Ball());
+			briques = new ArrayList<Brique>();
+			bullet=new ArrayList<Bullet>();
+			
 			ReadFile file=new ReadFile("levels"+File.separator+niveau);
 		    ArrayList<String> texts;
 			try {
@@ -213,4 +261,11 @@ public class World extends BasicGameState{
 			}
 		}
 	}
+	
+	public static void reload() {
+		if (gameMode == mode.CAMPAIGN) {
+			reload("niveau"+currentCampaignLevel+".txt");
+		}
+	}
+	
 }

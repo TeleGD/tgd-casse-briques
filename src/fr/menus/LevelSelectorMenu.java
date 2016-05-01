@@ -203,20 +203,18 @@ public class LevelSelectorMenu extends BasicGameState {
 	public void execOption() {
 		switch (selectionPopup) {
 		case 0:
-			//il faudra aussi dire au world quel niveau charger
+			World.gameMode = World.mode.CUSTOM;
 			World.reload(items[selection]+".txt");
 			game.enterState(World.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 		case 1:
-			//charger le niveau dans l'editeur
 			Editor.reload(items[selection]+".txt");
 			game.enterState(Editor.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 		
 		case 2:
-			//supprimer le niveau de la base de donnn�es
 			try {
 				Files.delete(Paths.get("levels"+File.separator+items[selection]+".txt"));
 			} catch (IOException e) {
