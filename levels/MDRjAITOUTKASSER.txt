@@ -1,0 +1,8 @@
+BriqueClassic 384.0 192.0 189 -66 -66 1 true
+BriqueClassic 192.0 96.0 189 -66 -66 1 true
+BriqueClassic 256.0 160.0 189 -66 -66 1 true
+BriqueClassic 256.0 96.0 189 -66 -66 1 true
+BriqueClassic 320.0 96.0 222 222 222 1 true
+BriqueClassic 384.0 96.0 222 222 222 1 true
+BriqueClassic 448.0 96.0 222 222 222 1 true
+BriqueClassic 512.0 96.0 222 222 222 1 true
