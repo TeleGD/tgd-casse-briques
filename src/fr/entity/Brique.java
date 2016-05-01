@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import Brique.BriqueClassic;
 import Brique.BriqueExplosive;
 import Brique.BriqueTp;
+import fr.main.World;
 import fr.util.Rectangle;
 
 public abstract class Brique extends Entity implements Rectangle{
@@ -180,7 +181,10 @@ public abstract class Brique extends Entity implements Rectangle{
 	}
 
 public void lastWhisper() {
-	// TODO Auto-generated method stub
-	
-}
+	int bonusOuPas = (int) Math.random()*2;
+	int choixBonus = (int) Math.random()*Bonus.lesTypes.length;
+	if (bonusOuPas==1){
+		World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));
+	}
+	}
 }

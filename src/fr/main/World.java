@@ -27,7 +27,7 @@ public class World extends BasicGameState{
 	private static ArrayList<Bullet> bullet;
 	private static ArrayList<Bonus> bonus;
 	private static Player Player;
-	private static ArrayList<Ball> Balls;
+	private static ArrayList<Ball> balls;
 	
 	public static int ID = 0;
 	
@@ -37,8 +37,8 @@ public class World extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		Player=new Player();
-		Balls=new ArrayList<Ball>();
-		Balls.add(new Ball());
+		balls=new ArrayList<Ball>();
+		balls.add(new Ball());
 		container = arg0;
 		game = arg1;
 		briques = new ArrayList<Brique>();
@@ -65,8 +65,8 @@ public class World extends BasicGameState{
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		Player.render(arg0, arg1, arg2);
-		for (int i = 0; i < Balls.size(); i++) {
-			Balls.get(i).render(arg0, arg1, arg2);
+		for (int i = 0; i < balls.size(); i++) {
+			balls.get(i).render(arg0, arg1, arg2);
 		}
 		
 		for(Brique b:briques)
@@ -78,8 +78,8 @@ public class World extends BasicGameState{
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		Player.update(arg0, arg1, arg2);
-		for (int i = 0; i < Balls.size(); i++) {
-			Balls.get(i).update(arg0, arg1, arg2);
+		for (int i = 0; i < balls.size(); i++) {
+			balls.get(i).update(arg0, arg1, arg2);
 		}
 		for(Brique b:briques)
 		{
@@ -128,8 +128,8 @@ public class World extends BasicGameState{
 	
 	public static void destroy(Brique b)
 	{
-		briques.remove(b);
 		b.lastWhisper();
+		briques.remove(b);
 	}
 	
 	public static void destroy(Bonus b){
@@ -151,7 +151,7 @@ public class World extends BasicGameState{
 	}
 	
 	public static ArrayList<Ball> getBalls(){
-		return Balls;
+		return balls;
 	}
 	
 	public static void addBrique(Brique b){
@@ -159,7 +159,7 @@ public class World extends BasicGameState{
 	}
 	
 	public static void addBall(Ball b){
-		Balls.add(b);
+		balls.add(b);
 	}
 	
 	public static void addBonus(Bonus b){
