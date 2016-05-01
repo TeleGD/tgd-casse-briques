@@ -1,5 +1,9 @@
 package fr.main;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -10,7 +14,9 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import fr.editor.LevelEditor;
+import fr.entity.Brique;
 import fr.menus.MainMenu;
+import fr.parser.ReadFile;
 
 public class Editor extends BasicGameState{
 	
@@ -72,6 +78,34 @@ public class Editor extends BasicGameState{
 	public void mousePressed(int button, int oldx,int oldy){
 		editor.mousePressed(button, oldx, oldy);
 		
+	}
+	
+	public void mouseWheelMoved(int newValue){
+		editor.mouseWheelMoved(newValue);
+	}
+
+	public static void reload(String niveau) {
+		
+		if(new File("levels"+File.separator+niveau).exists())
+		{
+			ReadFile file=new ReadFile("levels"+File.separator+niveau);
+		    ArrayList<String> texts;
+			try {
+				texts = file.readFromFile();
+				editor.removeAllBriques();
+				for(String s:texts)
+				{
+					Brique b=Brique.StringToBrique(s);
+					if(b.getY()<400){
+						editor.addBrique(b);
+					}
+					
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	

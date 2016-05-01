@@ -1,6 +1,5 @@
 package fr.entity;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -23,6 +22,11 @@ public class Player extends Movable implements Rectangle {
 	private int life;
 	private boolean modePistolet;
 	private Image raquette;
+	private Image raquette64;
+	private Image raquette32;
+	private Image raquette256;
+	private Image raquette512;
+	private Image raquette600;
 	
 	public Player(){
 		this.x=336;
@@ -30,12 +34,17 @@ public class Player extends Movable implements Rectangle {
 		this.height=32;
 		this.width=128;
 		isMoving = true;
-		accelX =0.5;
+		accelX =7;
 		life = 3;
 		modePistolet=false;
 		compTir=0;
 		try {
 			raquette = new Image("img/raquette/raquette.png");
+			raquette64 = new Image("img/raquette/raquette64.png");
+			raquette600 = new Image("img/raquette/raquette600.png");
+			raquette32 = new Image("img/raquette/raquette32.png");
+			raquette256 = new Image("img/raquette/raquette256.png");
+			raquette512 = new Image("img/raquette/raquette512.png");
 		} catch ( SlickException e){
 			e.printStackTrace();
 		}
@@ -86,15 +95,30 @@ public class Player extends Movable implements Rectangle {
 		comp = time;
 		
 	}
+	
+	public Image getImage(){
+		if ( this.width == 32 ){
+			return raquette32;
+		} else if ( this.width == 64 ){
+			return raquette64;
+		} else if ( this.width == 256 ){
+			return raquette256;
+		} else if ( this.width == 512 ){
+			return raquette512;
+		} else if ( this.width >= 600 ){
+			return raquette600;
+		} else {
+			return raquette;
+		}
+	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		g.drawImage(raquette,(float)(this.x),(float)(this.y));
+		g.drawImage(getImage(),(float)(this.x),(float)(this.y));
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
 		stillPressed = 0;
 		if (lastKeyPressed) {
 			if(keyPressedLeft ){
@@ -177,6 +201,9 @@ public class Player extends Movable implements Rectangle {
 	public int getLife(){
 		return this.life;
 	}
+
+	
+
 
 
 

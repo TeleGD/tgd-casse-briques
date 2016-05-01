@@ -44,9 +44,9 @@ public class WelcomeMenu extends BasicGameState {
 	private boolean mouseOverSelection() {
 		int x = Mouse.getX();
 		int y = 600-Mouse.getY();
-		return (   x>220
-				&& x<520
-				&& y>550
+		return (   x>0
+				&& x<800
+				&& y>0
 				&& y<600);
 	}
 	

@@ -8,6 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import Brique.BriqueClassic;
 import Brique.BriqueExplosive;
+import Brique.BriqueMetal;
 import Brique.BriqueTp;
 import fr.main.World;
 import fr.util.Rectangle;
@@ -103,9 +104,10 @@ public abstract class Brique extends Entity implements Rectangle{
 	public void setLife(int life)
 	{
 		this.life = life;
-		int red = (int)(this.color.getRed()-135/4*life);
-		int green = (int)(this.color.getGreen()-135/4*life);
-		int blue = (int)(this.color.getBlue()-135/4*life);
+		double sqrt= Math.sqrt(life);
+		int red = (int)(this.color.getRed()/sqrt);
+		int green = (int)(this.color.getGreen()/sqrt);
+		int blue = (int)(this.color.getBlue()/sqrt);
 		this.color = new Color(red,green,blue);
 	}
 	
@@ -133,9 +135,10 @@ public abstract class Brique extends Entity implements Rectangle{
 	{
 		this.color = c;
 
-		int red = (int)(this.color.getRed()-135/4*life);
-		int green = (int)(this.color.getGreen()-135/4*life);
-		int blue = (int)(this.color.getBlue()-135/4*life);
+		double sqrt= Math.sqrt(life);
+		int red = (int)(this.color.getRed()/sqrt);
+		int green = (int)(this.color.getGreen()/sqrt);
+		int blue = (int)(this.color.getBlue()/sqrt);
 		this.color = new Color(red,green,blue);
 	}
 	
@@ -157,6 +160,9 @@ public abstract class Brique extends Entity implements Rectangle{
 		}else if(this instanceof BriqueExplosive)
 		{
 			return  "BriqueExplosive "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
+		}else if(this instanceof BriqueMetal)
+		{
+			return  "BriqueMetals "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
 		}
 		return null;
 		
@@ -172,22 +178,30 @@ public abstract class Brique extends Entity implements Rectangle{
 		}else if(t[0].equals("BriqueExplosive"))
 		{
 			b=new BriqueExplosive();
+		}else if(t[0].equals("BriqueMetal"))
+		{
+			b=new BriqueMetal();
 		}else 
 			b=new BriqueTp();
 		
 		b.setX(Double.parseDouble(t[1]));
 		b.setY(Double.parseDouble(t[2]));
-		b.color=new Color(Integer.parseInt(t[3]),Integer.parseInt(t[4]),Integer.parseInt(t[5]));
+		
+		int a=Integer.parseInt(t[3]);
+		int c=Integer.parseInt(t[4]);
+		int d=Integer.parseInt(t[5]);
+		
+		
+		b.color=new Color(a,c,d);
 		b.setLife(Integer.parseInt(t[6]));
 		b.setHard(Boolean.parseBoolean(t[7]));
 		return b;
 		
 	}
 
-
-public static Color[] getCouleurs() {
-	return couleurs;
-}
+   public static Color[] getCouleurs() {
+		return couleurs;
+	}
 
 public static void setCouleurs(Color[] couleurs) {
 	Brique.couleurs = couleurs;
@@ -201,5 +215,10 @@ public void lastWhisper() {
                 World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));
         }
         }
+
+
+
+
+
 
 }
