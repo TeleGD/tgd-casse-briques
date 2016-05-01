@@ -224,7 +224,7 @@ public class LevelEditor extends Entity{
 
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 
-		if(gommeActive && briqueSelectionne!=null && yapasdebriques(newx,newy)==null  && newx<=800-12 && newy<=384)
+		if(!gommeActive && briqueSelectionne!=null && yapasdebriques(newx,newy)==null  && newx<=800-12 && newy<=384)
 		{
 			briqueSelectionne.setX(newx);
 			briqueSelectionne.setY(newy);
