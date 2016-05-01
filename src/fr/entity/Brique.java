@@ -8,6 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import Brique.BriqueClassic;
 import Brique.BriqueExplosive;
+import Brique.BriqueMetal;
 import Brique.BriqueTp;
 import fr.main.World;
 import fr.util.Rectangle;
@@ -157,7 +158,7 @@ public abstract class Brique extends Entity implements Rectangle{
 		}else if(this instanceof BriqueExplosive)
 		{
 			return  "BriqueExplosive "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
-		}else if(this instanceof BriqueExplosive)
+		}else if(this instanceof BriqueMetal)
 		{
 			return  "BriqueMetals "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
 		}
@@ -177,7 +178,7 @@ public abstract class Brique extends Entity implements Rectangle{
 			b=new BriqueExplosive();
 		}else if(t[0].equals("BriqueMetal"))
 		{
-			b=new BriqueExplosive();
+			b=new BriqueMetal();
 		}else 
 			b=new BriqueTp();
 		
