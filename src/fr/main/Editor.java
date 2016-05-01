@@ -73,6 +73,10 @@ public class Editor extends BasicGameState{
 		editor.mousePressed(button, oldx, oldy);
 		
 	}
+	
+	public void mouseWheelMoved(int newValue){
+		editor.mouseWheelMoved(newValue);
+	}
 
 	
 }
