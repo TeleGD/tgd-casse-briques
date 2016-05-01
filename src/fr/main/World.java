@@ -28,6 +28,7 @@ public class World extends BasicGameState{
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		Player.render(arg0, arg1, arg2);
 		Balls.render(arg0, arg1, arg2);
+		arg2.fillRect(400, 350, 10,10);
 		
 	}
 
