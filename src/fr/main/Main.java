@@ -1,5 +1,7 @@
 package fr.main;
 
+import java.io.File;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -13,6 +15,9 @@ public class Main extends StateBasedGame {
 	
 
 	public static void main(String[] args) throws SlickException {
+		
+		System.setProperty("org.lwjgl.librarypath", new File("").getAbsolutePath());
+		
 		AppGameContainer app = new AppGameContainer(new Main(),800, 600, false);
 		app.setTargetFrameRate(60);
 		app.setVSync(true);

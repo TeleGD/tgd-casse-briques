@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -36,6 +37,8 @@ public class World extends BasicGameState{
     public static mode gameMode;
     public static int currentCampaignLevel;
 	
+    private static Image background;
+    
 	public static int ID = 0;
 	
 	private static GameContainer container;
@@ -44,6 +47,7 @@ public class World extends BasicGameState{
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+		background = new Image("img"+File.separator+"background"+File.separator+"Fond5.png");
 		player=new Player();
 		player2 = new Player();
 		player2.setY(85);
@@ -76,10 +80,11 @@ public class World extends BasicGameState{
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
+		arg2.drawImage(background, 0, 0);
 		player.render(arg0, arg1, arg2);
 		if (gameMode == mode.MULTI)
 			player2.render(arg0, arg1, arg2);
-	    arg2.drawString(Mouse.getX()+", "+Mouse.getY(), 10, 10);
+	    //arg2.drawString(Mouse.getX()+", "+Mouse.getY(), 10, 10);
 
 		for (int i = 0; i < balls.size(); i++) {
 			balls.get(i).render(arg0, arg1, arg2);
@@ -95,7 +100,8 @@ public class World extends BasicGameState{
 		}
 		
 		arg2.drawString("Lives : "+player.getLife(), 700, 580);
-		
+		if (gameMode == mode.CAMPAIGN)
+			arg2.drawString("Level : "+currentCampaignLevel, 50, 580);
 		
 		if (areDestroyed(briques)) {
 			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 2) {
@@ -271,8 +277,12 @@ public class World extends BasicGameState{
 				e.printStackTrace();
 			}
 			
-			if (gameMode == mode.MULTI) {
-				
+			if (gameMode == mode.CAMPAIGN) {
+				try {
+					background = new Image("img"+File.separator+"background"+File.separator+"Fond"+currentCampaignLevel+".png");
+				} catch (SlickException e) {
+					e.printStackTrace();
+				}
 			}
 			
 		}
