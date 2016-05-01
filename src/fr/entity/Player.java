@@ -125,9 +125,6 @@ public class Player extends Movable implements Rectangle {
 			compTir --;
 			keyPressedSpace=false;
 		}
-		if (comp==0) {
-			modify(2, 200);
-		}
 	}
 
 	public void keyReleased(int key, char c) {
