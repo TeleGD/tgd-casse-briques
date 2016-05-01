@@ -8,6 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import Brique.BriqueClassic;
 import Brique.BriqueExplosive;
+import Brique.BriqueMetal;
 import Brique.BriqueTp;
 import fr.main.World;
 import fr.util.Rectangle;
@@ -156,7 +157,10 @@ public abstract class Brique extends Entity implements Rectangle{
 			return  "BriqueTp "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
 		}else if(this instanceof BriqueExplosive)
 		{
-			return  "BriqueExplosive "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+"  "+life+" "+ hard;
+			return  "BriqueExplosive "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
+		}else if(this instanceof BriqueMetal)
+		{
+			return  "BriqueMetals "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
 		}
 		return null;
 		
@@ -172,6 +176,9 @@ public abstract class Brique extends Entity implements Rectangle{
 		}else if(t[0].equals("BriqueExplosive"))
 		{
 			b=new BriqueExplosive();
+		}else if(t[0].equals("BriqueMetal"))
+		{
+			b=new BriqueMetal();
 		}else 
 			b=new BriqueTp();
 		
@@ -183,7 +190,6 @@ public abstract class Brique extends Entity implements Rectangle{
 		return b;
 		
 	}
-
 
 public static Color[] getCouleurs() {
 	return couleurs;
@@ -201,5 +207,8 @@ public void lastWhisper() {
                 World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));
         }
         }
+
+
+
 
 }

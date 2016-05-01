@@ -18,7 +18,7 @@ public class Ball extends Movable implements Circle{
     private double rayonCourbe;
     private boolean sticky;
     private double vect1,vect2;//utile en cas de collision avec le player
-    private double speedNorm=0.3;
+    private double speedNorm=3.5;
     private double speedNormAct;
     
     public Ball(){
