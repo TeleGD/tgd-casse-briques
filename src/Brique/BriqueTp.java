@@ -17,6 +17,10 @@ public class BriqueTp extends Brique{
 
 	}
 
+	public BriqueTp(Brique b)
+	{
+		super(b);
+	}
 	public BriqueTp() {
 		super();
 		// TODO Auto-generated constructor stub
