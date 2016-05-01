@@ -51,12 +51,7 @@ public class BriqueClassic extends Brique {
 		}else{
 			this.setLife(this.getLife()-1);
 		}
-		
-		coef=Math.sqrt(getLife());
-		int red = (int)(this.color.getRed()/coef);
-		int green = (int)(this.color.getGreen()/coef);
-		int blue = (int)(this.color.getBlue()/coef);
-		this.color = new Color(red,green,blue);
+		mettreAjourCouleur();
 	}
 
 	public void createBonus(){
