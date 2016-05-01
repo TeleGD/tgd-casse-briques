@@ -24,7 +24,7 @@ public class MainMenu extends BasicGameState {
 	static TrueTypeFont font1;
 
 	private String nom = "Menu Principal";
-	private String[] items = { "Camapgne", "Multijoueur", "Niveaux Custom", "Editeur", "Quitter" };
+	private String[] items = { "Campagne", "Multijoueur", "Niveaux Custom", "Editeur", "Quitter" };
 
 	public int nbrOption = items.length;
 
@@ -140,8 +140,8 @@ public class MainMenu extends BasicGameState {
 			break;
 		
 		case 2:
-			//World.gameMode = World.mode.CUSTOM;
-			game.enterState(World.ID, new FadeOutTransition(),
+			LevelSelectorMenu.reload();
+			game.enterState(LevelSelectorMenu.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 		 
