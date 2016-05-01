@@ -27,7 +27,7 @@ public class LevelSelectorMenu extends BasicGameState {
 
 	static TrueTypeFont font1;
 
-	private String nom = "Sélection du niveau";
+	private String nom = "Sï¿½lection du niveau";
 
 	private static String[] items;
 	
@@ -204,16 +204,19 @@ public class LevelSelectorMenu extends BasicGameState {
 		switch (selectionPopup) {
 		case 0:
 			//il faudra aussi dire au world quel niveau charger
+			World.reload(items[selection]+".txt");
 			game.enterState(World.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 		case 1:
 			//charger le niveau dans l'editeur
-			
+			Editor.reload(items[selection]+".txt");
+			game.enterState(Editor.ID, new FadeOutTransition(),
+					new FadeInTransition());
 			break;
 		
 		case 2:
-			//supprimer le niveau de la base de donnnées
+			//supprimer le niveau de la base de donnnï¿½es
 			try {
 				Files.delete(Paths.get("levels"+File.separator+items[selection]+".txt"));
 			} catch (IOException e) {

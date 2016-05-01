@@ -338,5 +338,16 @@ public class LevelEditor extends Entity{
 		
 	
 	}
+
+	public void removeAllBriques() {
+
+		briques.removeAll(briques);
+		
+	}
+
+	public void addBrique(Brique b) {
+		briques.add(b);
+		
+	}
 	
 }

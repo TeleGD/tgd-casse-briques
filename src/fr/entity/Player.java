@@ -202,6 +202,8 @@ public class Player extends Movable implements Rectangle {
 		return this.life;
 	}
 
+	
+
 
 
 

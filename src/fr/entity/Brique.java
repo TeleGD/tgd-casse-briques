@@ -104,9 +104,10 @@ public abstract class Brique extends Entity implements Rectangle{
 	public void setLife(int life)
 	{
 		this.life = life;
-		int red = (int)(this.color.getRed()-135/4*life);
-		int green = (int)(this.color.getGreen()-135/4*life);
-		int blue = (int)(this.color.getBlue()-135/4*life);
+		double sqrt= Math.sqrt(life);
+		int red = (int)(this.color.getRed()/sqrt);
+		int green = (int)(this.color.getGreen()/sqrt);
+		int blue = (int)(this.color.getBlue()/sqrt);
 		this.color = new Color(red,green,blue);
 	}
 	
@@ -134,9 +135,10 @@ public abstract class Brique extends Entity implements Rectangle{
 	{
 		this.color = c;
 
-		int red = (int)(this.color.getRed()-135/4*life);
-		int green = (int)(this.color.getGreen()-135/4*life);
-		int blue = (int)(this.color.getBlue()-135/4*life);
+		double sqrt= Math.sqrt(life);
+		int red = (int)(this.color.getRed()/sqrt);
+		int green = (int)(this.color.getGreen()/sqrt);
+		int blue = (int)(this.color.getBlue()/sqrt);
 		this.color = new Color(red,green,blue);
 	}
 	
@@ -184,7 +186,13 @@ public abstract class Brique extends Entity implements Rectangle{
 		
 		b.setX(Double.parseDouble(t[1]));
 		b.setY(Double.parseDouble(t[2]));
-		b.color=new Color(Integer.parseInt(t[3]),Integer.parseInt(t[4]),Integer.parseInt(t[5]));
+		
+		int a=Integer.parseInt(t[3]);
+		int c=Integer.parseInt(t[4]);
+		int d=Integer.parseInt(t[5]);
+		
+		
+		b.color=new Color(a,c,d);
 		b.setLife(Integer.parseInt(t[6]));
 		b.setHard(Boolean.parseBoolean(t[7]));
 		return b;
@@ -207,6 +215,8 @@ public void lastWhisper() {
                 World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));
         }
         }
+
+
 
 
 
