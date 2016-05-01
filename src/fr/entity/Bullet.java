@@ -48,6 +48,11 @@ public class Bullet extends Ball implements Circle{
 		}
 	}
 	
+
+	private boolean isColliding(Brique b) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	public void setTouched(boolean t)
 	{
 		this.touched = t;

@@ -31,7 +31,8 @@ public class MissionMenu extends BasicGameState {
 	public static String[] txt3 = new String[2];/*
 	public static String[] planetName = { "Kepler-770-C", "Utopia", "Balmoran",
 			"Sulituan", "Naeco", "Nihpuad" };
-	public static String[] postName = { "général 6 étoiles en chef",
+
+	public static String[] postName = { "gï¿½nï¿½ral 6 ï¿½toiles en chef",
 			"capitaine de section", "grand administrateur", "chef artilleur" };*/
 	public static ArrayList<String> textList;
 	public static int numMessage;
@@ -53,7 +54,7 @@ public class MissionMenu extends BasicGameState {
 		//int numPost = r.nextInt(postName.length);
 
 		//String text = txt1[numMission] + planetName[numPlanet]+ txt2[numMission] + postName[numPost] + txt3[numMission];
-		String text = txt1[0];
+		String text = txt1[0]+txt2[0]+txt3[0];
 		int lastSpaceIndex = 0;
 		int chunkStart = 0;
 		String tmp = "";
@@ -100,18 +101,21 @@ public class MissionMenu extends BasicGameState {
 
 		Font titre6Font = new Font("Courant", Font.BOLD, 13);
 		font6 = new TrueTypeFont(titre6Font, false);
-		txt1[0]="Un beau jour de 1976, alors qu'il rentrait de l'ecole, le petit Jimmy fit une rencontre qui allait changer sa vie a tout jamais.";
-		txt2[0]="Cependant, ce jeu ne parle pas de cette rencontre. Il ne parle pas non plus de Jimmy. En realite, ce jeu parle d'un probleme bien plus important :";
-		txt3[0]="la menace que representent les ouvriers travaillant dans le BTP. Votre mission est de detruire leurs constructions machiaveliques.";
-		/*
-		txt1[0] = "Depuis plusieurs années, la planète ";
-		txt2[0] = " vit dans la peur de la menace spatio-terroriste. Sur une des dernières planètes de la galaxie possédant encore des arbres naturels fournissant l'oxygène nécessaire à la vie, l'économie inter-stellaire est gangrénée par le trafic de végétaux. Ces pirates de l'espace possèdent leur propre armée et agissent en bande organisée, se livrant à toutes sortes d'activités anti-écologiques de grande ampleur. Vous venez d'être nommé au poste de ";
-		txt3[0] = " à la tête de la brigade d'intervention et de prévision des attaques. Prenez les devants de votre escadron et faites le ménage dans cette armée de cosmobrigands !";
 
-		txt1[1] = "Des idéalistes soviétiques tentent de mettre en place une nouvelle révolution communiste ! Après la migration de l'humanité vers la planète ";
-		txt2[1] = ", des groupuscules armés ont tenté de prendre le pouvoir par la force. Grâce à la puissance du grand chef suprême, les camarades tentent d'envahir les bastions de l'ennemi capitaliste depuis leurs vaisseaux spatiaux. Si rien n'est fait pour les arrêter, la face de ce nouveau monde pourrait changer à jamais ! En tant que ";
-		txt3[1] = " de la contre-révolte capitaliste, vous avez la charge de tuer dans l'oeuf ce soulèvement prolétaire. Soyez fort, le sort de la planète est entre vos mains.";
- 		*/
+
+		txt1[0]="Un matin de 1976, sur le chemin de l'ecole, le petit Jimmy fit une rencontre qui allait changer sa vie.";
+        txt2[0]=" Cependant, ce jeu ne parle pas de cette rencontre. Il ne parle pas non plus de Jimmy. En realite, ce jeu parle d'un probleme bien plus important :";
+        txt3[0]=" la menace que representent les ouvriers extremistes travaillant dans le BTP. Votre mission est de detruire leurs constructions machiaveliques afin de sauver l'humanite de la domination des parpaings.";
+/*
+		txt1[0] = "Depuis plusieurs anné¦¥s, la plané‘¼e ";
+		txt2[0] = " vit dans la peur de la menace spatio-terroriste. Sur une des dernié‘½es plané‘¼es de la galaxie possé¦˜ant encore des arbres naturels fournissant l'oxygéˆ©e né¦—essaire ï¿½ la vie, l'é¦—onomie inter-stellaire est gangré§­é¦¥ par le trafic de vé¦®é¨aux. Ces pirates de l'espace possé¡ent leur propre armé¦¥ et agissent en bande organisé¦¥, se livrant ï¿½ toutes sortes d'activité§¸ anti-é¦—ologiques de grande ampleur. Vous venez d'é»re nommï¿½ au poste de ";
+		txt3[0] = " ï¿½ la té»e de la brigade d'intervention et de pré¨…ision des attaques. Prenez les devants de votre escadron et faites le mé§­age dans cette armé¦¥ de cosmobrigands !";
+
+		txt1[1] = "Des idé¥Œlistes sovié¨iques tentent de mettre en place une nouvelle ré¨…olution communiste ! Apré‘š la migration de l'humanitï¿½ vers la plané‘¼e ";
+		txt2[1] = ", des groupuscules armé§¸ ont tentï¿½ de prendre le pouvoir par la force. Grç¨e ï¿½ la puissance du grand chef supréº¥e, les camarades tentent d'envahir les bastions de l'ennemi capitaliste depuis leurs vaisseaux spatiaux. Si rien n'est fait pour les arré»er, la face de ce nouveau monde pourrait changer ï¿½ jamais ! En tant que ";
+		txt3[1] = " de la contre-ré¨…olte capitaliste, vous avez la charge de tuer dans l'oeuf ce soulé’ement prolé¨aire. Soyez fort, le sort de la plané‘¼e est entre vos mains.";
+ 		
+*/
 		textList = generateText(40);
 		
 
@@ -135,9 +139,9 @@ public class MissionMenu extends BasicGameState {
 		g.setColor(Color.white);
 		g.setFont(font6);
 
-		/*for (int j = 0; j < textList.size(); j++) {
+		for (int j = 0; j < textList.size(); j++) {
 			g.drawString(textList.get(j), 75, 258 + 13 * j);
-		}*/
+		}
 
 		int lines = 12;
 		g.drawString(">>  Continuer", 75, 255 + 25 + lines * 13);

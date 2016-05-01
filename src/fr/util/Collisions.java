@@ -1,5 +1,6 @@
 package fr.util;
 
+import fr.entity.Brique;
 import fr.entity.Player;
 import fr.main.World;
 
@@ -79,7 +80,13 @@ public class Collisions {
 		if(object.getX()+object.getWidth()>player.getX()+World.getPlayer().getWidth()){return false;}
 		return true;
     }
-
+    public static boolean colBrique(Movable object,Brique b){
+    	if(object.getY()+object.getHeight()<b.getY()) return false;
+    	if(object.getY()>b.getY()+b.getHeight()) return false;
+    	if(object.getX()+object.getWidth()<b.getX()) return false;
+    	if(object.getX()>b.getX()+b.getWidth())return false;
+    	return true;
+    }
 	
 	
 }

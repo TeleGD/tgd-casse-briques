@@ -76,7 +76,9 @@ public class World extends BasicGameState{
 
 		for(Brique b:briques)
 		{
-			b.render(arg0, arg1, arg2);
+			if(!b.getDead()){
+				b.render(arg0, arg1, arg2);
+			}
 		}
 
 	}
@@ -89,7 +91,9 @@ public class World extends BasicGameState{
 		}
 		for(Brique b:briques)
 		{
-			b.update(arg0, arg1, arg2);
+			if(!b.getDead()){
+				b.update(arg0, arg1, arg2);
+			}
 		}
 		
 		for (Bullet b:bullet)

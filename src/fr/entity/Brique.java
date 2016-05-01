@@ -70,6 +70,8 @@ public abstract class Brique extends Entity implements Rectangle{
 	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		g.setColor(Color.black);
+		g.fillRect((float)x+2,(float)y+2,(float)width-4,(float)height-4);
 		g.setColor(mettreAjourCouleur());
 		g.fillRect((float)x,(float)y,(float)width,(float)height);
 	}
