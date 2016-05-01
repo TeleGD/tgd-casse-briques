@@ -46,9 +46,7 @@ public class Ball extends Movable implements Circle{
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         setMoving(speedNorm()>0);
-        compt+=1;
-        if(compt==2){
-        compt=0;	
+        
         
         //Detection de collisions avec les murs :
         if(x<=0){
@@ -75,7 +73,8 @@ public class Ball extends Movable implements Circle{
         
         //Detection de collisions avec les briques : 
         for(Brique b:World.getBriques()){
-            b.setColliding(fr.util.Collisions.colBrique(this,b));
+            if(!b.isDead()){
+        	b.setColliding(fr.util.Collisions.colBrique(this,b));
             if(fr.util.Collisions.colBrique(this,b)){	
             	if(b.getHard()){
             		
@@ -83,13 +82,13 @@ public class Ball extends Movable implements Circle{
                 	if((x+width/2>b.getX()) && (x-width/2<(b.getX()+b.getWidth()))){
                 		//Contact effectue par la verticale.
                         speedY = -1*speedY;
-                    }
-                    if((y+height/2>b.getY())&& (y-height/2<(b.getY()+b.getHeight())))
+                    }else if((y+height/2>b.getY())&& (y-height/2<(b.getY()+b.getHeight())))
                     {
                     	//Contact effectue par l'horizontale
                         speedX = -1*speedX;
                     }    
                 }
+            }
             }
         }
         
@@ -98,7 +97,7 @@ public class Ball extends Movable implements Circle{
         this.speedNormAct=Math.sqrt(this.speedX*this.speedX+this.speedY*this.speedY);
     	this.speedX=this.speedX*this.speedNorm/this.speedNormAct;
     	this.speedY=this.speedY*this.speedNorm/this.speedNormAct;
-        }
+        
         moveX(delta);
         moveY(delta);
         

@@ -34,7 +34,7 @@ public class Player extends Movable implements Rectangle {
 		this.height=32;
 		this.width=128;
 		isMoving = true;
-		accelX =7;
+		accelX =2;
 		life = 3;
 		modePistolet=false;
 		compTir=0;

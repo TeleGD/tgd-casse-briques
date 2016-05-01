@@ -96,7 +96,7 @@ public abstract class Brique extends Entity implements Rectangle{
 		this.dead = d;
 	}
 	
-	public boolean getDead()
+	public boolean isDead()
 	{
 		return this.dead;
 	}
