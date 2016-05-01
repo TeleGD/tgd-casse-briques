@@ -73,7 +73,7 @@ public class Ball extends Movable implements Circle{
         
         //Detection de collisions avec les briques : 
         for(Brique b:World.getBriques()){
-            if(!b.isDead()){
+            if(!b.getDead()){
         	b.setColliding(fr.util.Collisions.colBrique(this,b));
             if(fr.util.Collisions.colBrique(this,b)){	
             	if(b.getHard()){
