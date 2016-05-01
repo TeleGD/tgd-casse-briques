@@ -47,7 +47,7 @@ public class BriqueExplosive extends Brique {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		g.setColor(color);
+		g.setColor(mettreAjourCouleur());
 		g.fillRect((float)x,(float)y,(float)width,(float)height);
 		g.setColor(Color.orange);
 		g.fillRoundRect((float)(x+35), (float)(y+10),(float) width/4,(float) height/4, 20,20);

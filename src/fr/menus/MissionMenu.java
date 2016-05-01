@@ -31,10 +31,11 @@ public class MissionMenu extends BasicGameState {
 	public static String[] txt3 = new String[2];/*
 	public static String[] planetName = { "Kepler-770-C", "Utopia", "Balmoran",
 			"Sulituan", "Naeco", "Nihpuad" };
-	public static String[] postName = { "g駭駻al 6 騁oiles en chef",
-			"capitaine de section", "grand administrateur", "chef artilleur" };
+
+	public static String[] postName = { "g�n�ral 6 �toiles en chef",
+			"capitaine de section", "grand administrateur", "chef artilleur" };*/
 	public static ArrayList<String> textList;
-	public static int numMessage;*/
+	public static int numMessage;
 
 	private String nom = "Mission :";
 
@@ -43,17 +44,17 @@ public class MissionMenu extends BasicGameState {
 	static StateBasedGame game;
 
 	
-	/*public static ArrayList<String> generateText(int lineSize) {
+	public static ArrayList<String> generateText(int lineSize) {
 		ArrayList<String> res = new ArrayList<String>();
 		Random r = new Random();
 
 		int numMission = r.nextInt(2);
 		numMessage = numMission;
-		int numPlanet = r.nextInt(planetName.length);
-		int numPost = r.nextInt(postName.length);
+		//int numPlanet = r.nextInt(planetName.length);
+		//int numPost = r.nextInt(postName.length);
 
-		String text = txt1[numMission] + planetName[numPlanet]
-				+ txt2[numMission] + postName[numPost] + txt3[numMission];
+		//String text = txt1[numMission] + planetName[numPlanet]+ txt2[numMission] + postName[numPost] + txt3[numMission];
+		String text = txt1[0];
 		int lastSpaceIndex = 0;
 		int chunkStart = 0;
 		String tmp = "";
@@ -77,7 +78,7 @@ public class MissionMenu extends BasicGameState {
 		res.add(tmp);
 
 		return res;
-	}*/
+	}
 	
 	private boolean mouseOverSelection() {
 		int x = Mouse.getX();
@@ -101,6 +102,7 @@ public class MissionMenu extends BasicGameState {
 		Font titre6Font = new Font("Courant", Font.BOLD, 13);
 		font6 = new TrueTypeFont(titre6Font, false);
 
+
 		txt1[0]="Un beau jour de 1976, alors qu'il rentrait de l'ecole, le petit Jimmy fit une rencontre qui allait changer sa vie a tout jamais.";
         txt2[0]="Cependant, ce jeu ne parle pas de cette rencontre. Il ne parle pas non plus de Jimmy. En realite, ce jeu parle d'un probleme bien plus important :";
         txt3[0]="la menace que representent les ouvriers travaillant dans le BTP. Votre mission est de detruire leurs constructions machiaveliques.";
@@ -113,8 +115,9 @@ public class MissionMenu extends BasicGameState {
 		txt2[1] = ", des groupuscules arm駸 ont tent� de prendre le pouvoir par la force. Gr稍e � la puissance du grand chef supr麥e, les camarades tentent d'envahir les bastions de l'ennemi capitaliste depuis leurs vaisseaux spatiaux. Si rien n'est fait pour les arr黎er, la face de ce nouveau monde pourrait changer � jamais ! En tant que ";
 		txt3[1] = " de la contre-r騅olte capitaliste, vous avez la charge de tuer dans l'oeuf ce soul钁ement prol騁aire. Soyez fort, le sort de la plan鑼e est entre vos mains.";
  		
+*/
 		textList = generateText(40);
-		*/
+		
 
 	}
 
