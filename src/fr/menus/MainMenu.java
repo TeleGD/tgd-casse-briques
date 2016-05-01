@@ -140,6 +140,7 @@ public class MainMenu extends BasicGameState {
 			break;
 		
 		case 2:
+			LevelSelectorMenu.reload();
 			game.enterState(LevelSelectorMenu.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;

@@ -1,6 +1,9 @@
 package fr.menus;
 import java.awt.Font;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
@@ -26,11 +29,11 @@ public class LevelSelectorMenu extends BasicGameState {
 
 	private String nom = "Sélection du niveau";
 
-	private String[] items;
+	private static String[] items;
 	
 	private boolean popup = false;
 	
-	public int nbrOption;
+	public static int nbrOption;
 
 	public String[] getItems() {
 		return this.items;
@@ -41,10 +44,20 @@ public class LevelSelectorMenu extends BasicGameState {
 	static GameContainer container;
 	static StateBasedGame game;
 
-	int selection = 0;
+	static int selection = 0;
 	
-	int selectionPopup = 0;
+	static int selectionPopup = 0;
 
+	
+	public static void reload() {
+		items = (new File("levels")).list();
+		nbrOption = items.length;
+		for (int i = 0; i < items.length; i++)
+			if (items[i].endsWith(".txt"))
+				items[i] = items[i].substring(0, items[i].length()-4);
+		selection = 0;
+	}
+	
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		this.container = container;
@@ -56,17 +69,8 @@ public class LevelSelectorMenu extends BasicGameState {
 		Font titre1Font = new Font("Kalinga", Font.BOLD, 12);
 		font1 = new TrueTypeFont(titre1Font, false);
 		
+		reload();
 		
-		items = (new File("levels")).list();
-		
-		nbrOption = items.length;
-		
-		for (int i = 0; i < items.length; i++)
-			if (items[i].endsWith(".txt"))
-				items[i] = items[i].substring(0, items[i].length()-4);
-		
-
-
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta)
@@ -204,13 +208,18 @@ public class LevelSelectorMenu extends BasicGameState {
 					new FadeInTransition());
 			break;
 		case 1:
-			//World.gameMode = World.mode.MULTI;
 			//charger le niveau dans l'editeur
+			
 			break;
 		
 		case 2:
-			//World.gameMode = World.mode.CUSTOM;
 			//supprimer le niveau de la base de donnnées
+			try {
+				Files.delete(Paths.get("levels"+File.separator+items[selection]+".txt"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			reload();
 			break;
 		}
 	}
@@ -228,6 +237,8 @@ public class LevelSelectorMenu extends BasicGameState {
 	public int getID() {
 		return ID;
 	}
+
+	
 
 
 }
