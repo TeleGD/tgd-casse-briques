@@ -191,7 +191,6 @@ public abstract class Brique extends Entity implements Rectangle{
 		
 	}
 
-
 public static Color[] getCouleurs() {
 	return couleurs;
 }
@@ -208,5 +207,6 @@ public void lastWhisper() {
                 World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));
         }
         }
+
 
 }
