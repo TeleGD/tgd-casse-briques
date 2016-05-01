@@ -22,7 +22,8 @@ public class Main extends StateBasedGame {
 	
 
 	public Main() {
-		super("LE CACHE BRIQUE CH'EST UN CHEU DE PORTOUGESH");
+		//super("LE CACHE BRIQUE CH'EST UN CHEU DE PORTOUGESH");
+		super("L'action de casser des parpaings est un amusement caracteristique de la population portugaise");
 	}
 
 

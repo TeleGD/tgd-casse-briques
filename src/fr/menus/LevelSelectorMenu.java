@@ -27,7 +27,7 @@ public class LevelSelectorMenu extends BasicGameState {
 
 	static TrueTypeFont font1;
 
-	private String nom = "S�lection du niveau";
+	private String nom = "Selection du niveau";
 
 	private static String[] items;
 	
@@ -216,7 +216,7 @@ public class LevelSelectorMenu extends BasicGameState {
 			break;
 		
 		case 2:
-			//supprimer le niveau de la base de donnn�es
+			//supprimer le niveau de la base de donnees
 			try {
 				Files.delete(Paths.get("levels"+File.separator+items[selection]+".txt"));
 			} catch (IOException e) {
