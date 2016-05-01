@@ -184,7 +184,7 @@ public class Player extends Movable implements Rectangle {
 			lastKeyPressed = true;
 			break;
 		case Input.KEY_SPACE:
-			if (compTir==0&&modePistolet){
+			if (compTir==0 && modePistolet){
 				keyPressedSpace=true;
 				new Bullet();
 				compTir=60;

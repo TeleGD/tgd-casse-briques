@@ -41,6 +41,7 @@ public class World extends BasicGameState{
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		Player=new Player();
 		balls=new ArrayList<Ball>();
+		bonus=new ArrayList<Bonus>();
 		balls.add(new Ball());
 		container = arg0;
 		game = arg1;
@@ -73,7 +74,9 @@ public class World extends BasicGameState{
 		for (int i = 0; i < balls.size(); i++) {
 			balls.get(i).render(arg0, arg1, arg2);
 		}
-
+		for (int i = 0; i < bonus.size(); i++) {
+			bonus.get(i).render(arg0, arg1, arg2);
+		}
 		for(Brique b:briques)
 		{
 			if(!b.getDead()){
@@ -88,6 +91,9 @@ public class World extends BasicGameState{
 		Player.update(arg0, arg1, arg2);
 		for (int i = 0; i < balls.size(); i++) {
 			balls.get(i).update(arg0, arg1, arg2);
+		}
+		for (int i = 0; i < bonus.size(); i++) {
+			bonus.get(i).update(arg0, arg1, arg2);
 		}
 		for(Brique b:briques)
 		{

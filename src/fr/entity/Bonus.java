@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import fr.util.*;
@@ -14,8 +15,10 @@ import fr.util.Movable;
 
 public class Bonus  extends Movable implements fr.util.Circle{ 
 	protected String type;
-	public static String[] lesTypes={"accelerer","ralentir","retraicir","agrandir","collant","pleinBalle","pistoletoff","pistolet","agrandirBalle","retrecirBalle"};
+	private static Image[] image=new Image[6];
+	public static String[] lesTypes={"aggrandir","agrandirBalle","cours vite","retrecir","rondfusee","slow down"};
 	
+	private int indexImage;
 	public Bonus(double x, double y, String type){
 		this.x=x;
 		this.y=y;
@@ -23,17 +26,30 @@ public class Bonus  extends Movable implements fr.util.Circle{
 		this.type=type;
 		isMoving = true;
 		this.speedY=0.1;//tester differentes vitesses?
+		for(int i=0;i<lesTypes.length;i++)
+		{
+			if(type==lesTypes[i])indexImage=i;
+		}
+		for(int i=0;i<lesTypes.length;i++)
+		{
+			try {
+				image[i]=new Image("img/bonus/"+lesTypes[i]+".png");
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		g.setColor(Color.pink);
-		g.fillOval((float)x, (float)y, (float)width, (float)width);
+		
+		g.drawImage(image[indexImage],(float)x,(float)y);
 		
 	}
 
 	public boolean collisionPlayer(){
-		return Collisions.isCollisionCircleRect(this, World.getPlayer());
+		return Collisions.colPlayer(this, World.getPlayer());
 	}
 	
 	public boolean collisionGround(){
@@ -66,8 +82,8 @@ public class Bonus  extends Movable implements fr.util.Circle{
 				case "pistolet":World.getPlayer().setModePistolet(true);
 				case "accelerer":World.getPlayer().setAccelX(World.getPlayer().getAccelX()*2);break;
 				case "ralentir":World.getPlayer().setAccelX(World.getPlayer().getAccelX()*0.5);break;
-				case "retraicir":World.getPlayer().modify(0.5, 200);break;
-				case "agrandir":World.getPlayer().modify(2, 200);break;
+				case "retrecir":World.getPlayer().modify(0.5, 200);break;
+				case "aggrandir":World.getPlayer().modify(2, 200);break;
 				default:break;
 				}
 			}

@@ -115,6 +115,7 @@ public abstract class Brique extends Entity implements Rectangle{
 	public void setColliding(boolean c)
 	{
 		this.colliding = c;
+		if(c && Math.random()*100>97)World.getBonus().add(new Bonus(x,y,Bonus.lesTypes[(int) (Math.random()*Bonus.lesTypes.length)]));
 	}
 	
 	public boolean getHard()

@@ -81,6 +81,7 @@ public class Collisions {
 		return true;
     }
     public static boolean colBrique(Movable object,Brique b){
+    	
     	if(object.getY()+object.getHeight()<b.getY()) return false;
     	if(object.getY()>b.getY()+b.getHeight()) return false;
     	if(object.getX()+object.getWidth()<b.getX()) return false;
