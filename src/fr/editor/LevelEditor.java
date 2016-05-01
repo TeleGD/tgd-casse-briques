@@ -28,6 +28,7 @@ public class LevelEditor extends Entity{
 	private Brique lastBrique;
 	private boolean sauvegarder=false;
 	private String nomFichier="";
+	private boolean sauvegarderSucces;
 	public LevelEditor()
 	{
 		width=800;
@@ -84,7 +85,13 @@ public class LevelEditor extends Entity{
 		    font1 = new TrueTypeFont(titre1Font, false);
 			arg2.setFont(font1);
 			arg2.drawString("Entrer le nom du niveau: "+nomFichier, 300, 280);
-			arg2.drawString("Appuyer sur entrer pour enregistrer le niveau", 260, 300);
+			arg2.drawString("Appuyer sur entrer pour enregistrer le niveau", 260, 310);
+			
+			if(sauvegarderSucces)
+			{
+				arg2.setColor(Color.green);
+				arg2.drawString("Sauvegarder avec succès ! (je crois...)", 260, 340);
+			}
 			
 		}
 		
@@ -102,33 +109,20 @@ public class LevelEditor extends Entity{
 				briqueSelectionne.setX(oldBriqueX);
 				briqueSelectionne.setY(oldBriqueY);
 			}
-			lastBrique=briqueSelectionne;
-			briqueSelectionne=new BriqueClassic(briqueSelectionne);
 			briques.add(lastBrique);
+			briqueSelectionne=new BriqueClassic(briqueSelectionne);
 		}
 	
 	}
 	
 	public void mousePressed(int button, int oldx,int oldy){
 		
-		if(!yapasdebriques(oldx,oldy))return;
 		for(int i=0;i<menuBriques.size();i++)
 		{
 			if(menuBriques.get(i).getX()<oldx  && menuBriques.get(i).getX()+menuBriques.get(i).getWidth()>oldx
 				&& menuBriques.get(i).getY()<oldy  && menuBriques.get(i).getY()+menuBriques.get(i).getHeight()>oldy)
 			{
 				briqueSelectionne=new BriqueClassic(menuBriques.get(i));
-				oldBriqueX=(int)briqueSelectionne.getX();
-				oldBriqueY=(int)briqueSelectionne.getY();
-				
-			}
-		}
-		for(int i=0;i<briques.size();i++)
-		{
-			if(briques.get(i).getX()<oldx  && briques.get(i).getX()+briques.get(i).getWidth()>oldx
-				&& briques.get(i).getY()<oldy  && briques.get(i).getY()+briques.get(i).getHeight()>oldy)
-			{
-				briqueSelectionne=briques.get(i);
 				oldBriqueX=(int)briqueSelectionne.getX();
 				oldBriqueY=(int)briqueSelectionne.getY();
 				
@@ -219,7 +213,7 @@ public class LevelEditor extends Entity{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		sauvegarderSucces=true;
 	}
 	
 }
