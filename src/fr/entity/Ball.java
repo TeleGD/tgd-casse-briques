@@ -95,12 +95,16 @@ public class Ball extends Movable implements Circle{
 	            	if(b.getHard()){
 	            		
 	            		//On touche une brique dure.
-	                	if((x+width/2>b.getX()) && (x-width/2<(b.getX()+b.getWidth()))){
+	                	if((x+width/2>b.getX()) && (x+width/2<=(b.getX()+b.getWidth()))){
 	                		//Contact effectue par la verticale.
+	                		if(y<b.getY())y=b.getY()-height-1;
+	                		else y=b.getY()+b.getHeight()+1;
 	                        speedY = -1*speedY;
-	                    }else if((y+height/2>b.getY())&& (y-height/2<(b.getY()+b.getHeight())))
+	                    }else if((y+height/2>b.getY())&& (y+height/2<(b.getY()+b.getHeight())))
 	                    {
 	                    	//Contact effectue par l'horizontale
+	                		if(x<b.getX())x=b.getX()-1-width;
+	                		else x=b.getX()+b.getWidth()+1;
 	                        speedX = -1*speedX;
 	                    }    
 	                }

@@ -216,7 +216,7 @@ public Color mettreAjourCouleur()
 }
 
 public void lastWhisper() {
-        int bonusOuPas = (int) (Math.random()*20+1);
+        int bonusOuPas = (int) (Math.random()*12+1);
         int choixBonus = (int) (Math.random()*Bonus.lesTypes.length);
         if (bonusOuPas==1){
                 World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));

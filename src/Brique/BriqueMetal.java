@@ -22,6 +22,7 @@ public class BriqueMetal extends Brique{
 		type = (int) (Math.random()*(Bonus.lesTypes.length + 1));
 		// TODO Auto-generated constructor stub
 		chargerImage();
+		setLife(-1);
 	}
 	
 	@Override

@@ -106,7 +106,7 @@ public class World extends BasicGameState{
 			arg2.drawString("Level : "+currentCampaignLevel, 50, 580);
 		
 		if (areDestroyed(briques)) {
-			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 2) {
+			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 5) {
 				currentCampaignLevel++;
 				reload();
 			} else {
@@ -117,9 +117,9 @@ public class World extends BasicGameState{
 	}
 
 	private boolean areDestroyed(ArrayList<Brique> br) {
-		for (Brique b : br) {
-			if (!b.getDead())
-				return false;
+		for(int i=0;i<briques.size();i++)
+		{
+			if( briques.get(i).getLife()>0)return false;
 		}
 		return true;
 	}
