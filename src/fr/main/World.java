@@ -27,7 +27,7 @@ public class World extends BasicGameState{
 	private static ArrayList<Bullet> bullet;
 	private static ArrayList<Bonus> bonus;
 	private static Player Player;
-	private static Ball Balls;
+	private static ArrayList<Ball> Balls;
 	
 	public static int ID = 0;
 	
@@ -37,7 +37,8 @@ public class World extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		Player=new Player();
-		Balls=new Ball();
+		Balls=new ArrayList<Ball>();
+		Balls.add(new Ball());
 		container = arg0;
 		game = arg1;
 		briques = new ArrayList<Brique>();
@@ -64,7 +65,10 @@ public class World extends BasicGameState{
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		Player.render(arg0, arg1, arg2);
-		Balls.render(arg0, arg1, arg2);
+		for (int i = 0; i < Balls.size(); i++) {
+			Balls.get(i).render(arg0, arg1, arg2);
+		}
+		
 		for(Brique b:briques)
 		{
 			b.render(arg0, arg1, arg2);
@@ -74,7 +78,9 @@ public class World extends BasicGameState{
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		Player.update(arg0, arg1, arg2);
-		Balls.update(arg0, arg1, arg2);
+		for (int i = 0; i < Balls.size(); i++) {
+			Balls.get(i).update(arg0, arg1, arg2);
+		}
 		for(Brique b:briques)
 		{
 			b.update(arg0, arg1, arg2);
@@ -144,8 +150,16 @@ public class World extends BasicGameState{
 		return bonus;
 	}
 	
+	public static ArrayList<Ball> getBalls(){
+		return Balls;
+	}
+	
 	public static void addBrique(Brique b){
 		briques.add(b);
+	}
+	
+	public static void addBall(Ball b){
+		Balls.add(b);
 	}
 	
 	public static void addBonus(Bonus b){
