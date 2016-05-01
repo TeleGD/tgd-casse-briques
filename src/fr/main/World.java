@@ -30,6 +30,7 @@ public class World extends BasicGameState{
 	private static ArrayList<Bullet> bullet;
 	private static ArrayList<Bonus> bonus;
 	private static Player player;
+	private static Player player2;
 	private static ArrayList<Ball> balls;
     public static enum mode {CAMPAIGN, MULTI, CUSTOM};
     public static mode gameMode;
@@ -40,9 +41,12 @@ public class World extends BasicGameState{
 	private static GameContainer container;
 	private static StateBasedGame game;
 	
+	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		player=new Player();
+		player2 = new Player();
+		player2.setY(85);
 		balls=new ArrayList<Ball>();
 		balls.add(new Ball());
 		container = arg0;
@@ -72,7 +76,9 @@ public class World extends BasicGameState{
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		player.render(arg0, arg1, arg2);
-	    arg2.drawString(Mouse.getY()+", "+Mouse.getY(), 10, 10);
+		if (gameMode == mode.MULTI)
+			player2.render(arg0, arg1, arg2);
+	    arg2.drawString(Mouse.getX()+", "+Mouse.getY(), 10, 10);
 
 		for (int i = 0; i < balls.size(); i++) {
 			balls.get(i).render(arg0, arg1, arg2);
@@ -87,9 +93,6 @@ public class World extends BasicGameState{
 		
 		arg2.drawString("Lives : "+player.getLife(), 700, 580);
 		
-		if (player.getLife() == 0) {
-			game.enterState(GameOverMenu.ID, new FadeOutTransition(), new FadeInTransition());
-		}
 		
 		if (areDestroyed(briques)) {
 			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 2) {
@@ -113,6 +116,8 @@ public class World extends BasicGameState{
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		player.update(arg0, arg1, arg2);
+		if (gameMode == mode.MULTI)
+			player2.update(arg0, arg1, arg2);
 		for (int i = 0; i < balls.size(); i++) {
 			balls.get(i).update(arg0, arg1, arg2);
 		}
@@ -259,12 +264,19 @@ public class World extends BasicGameState{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			if (gameMode == mode.MULTI) {
+				
+			}
+			
 		}
 	}
 	
 	public static void reload() {
 		if (gameMode == mode.CAMPAIGN) {
 			reload("niveau"+currentCampaignLevel+".txt");
+		} else if (gameMode == mode.MULTI) {
+			reload("multi.txt");
 		}
 	}
 	

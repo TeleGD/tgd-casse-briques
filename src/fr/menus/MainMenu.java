@@ -129,12 +129,14 @@ public class MainMenu extends BasicGameState {
 		switch (selection) {
 		case 0:
 			World.gameMode = World.mode.CAMPAIGN;
+			World.reload();
 			game.enterState(MissionMenu.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 
 		case 1:
 			World.gameMode = World.mode.MULTI;
+			World.reload();
 			game.enterState(World.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;

@@ -18,6 +18,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import fr.main.World;
 import fr.menus.MainMenu;
 import fr.main.Main;
+import fr.main.World.mode;
 
 
 public class GameOverMenu extends BasicGameState {
@@ -28,7 +29,7 @@ public class GameOverMenu extends BasicGameState {
 	static TrueTypeFont font4;
 
 	private String nom = "GAME OVER";
-	private String[] items = { "Rejouer", "Retour au menu", "", "Score : "};
+	private String[] items = { "Rejouer", "Retour au menu"};
 
 	public int nbrOption = items.length;
 
@@ -73,10 +74,10 @@ public class GameOverMenu extends BasicGameState {
 
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		if (firstTime) {
+		/*if (firstTime) {
 			items[3] = "Score : "+World.getScore();
 			firstTime = false;
-		}
+		}*/
 		
 		if (mouseOverSelection()) {
 			int x = Mouse.getX();
@@ -139,7 +140,16 @@ public class GameOverMenu extends BasicGameState {
 		switch (selection) {
 		case 0:
 			//World.reset();
-			game.enterState(MissionMenu.ID, new FadeOutTransition(), new FadeInTransition());
+			if (World.gameMode == mode.MULTI) {
+				World.reload();
+				game.enterState(World.ID, new FadeOutTransition(), new FadeInTransition());
+			} else if (World.gameMode == mode.CAMPAIGN) {
+				World.currentCampaignLevel = 1;
+				World.reload();
+				game.enterState(World.ID, new FadeOutTransition(), new FadeInTransition());
+			} else if (World.gameMode == mode.CUSTOM) {
+				game.enterState(LevelSelectorMenu.ID, new FadeOutTransition(), new FadeInTransition());
+			}
 			break;
 		case 1:
 			game.enterState(MainMenu.ID, new FadeOutTransition(), new FadeInTransition());

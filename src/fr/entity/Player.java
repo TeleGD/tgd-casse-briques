@@ -6,7 +6,10 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import fr.menus.GameOverMenu;
 import fr.util.Movable;
 import fr.util.Rectangle;
 
@@ -155,6 +158,11 @@ public class Player extends Movable implements Rectangle {
 			compTir --;
 			keyPressedSpace=false;
 		}
+		
+		if (life == 0) {
+			game.enterState(GameOverMenu.ID, new FadeOutTransition(), new FadeInTransition());
+		}
+		
 	}
 
 	public void keyReleased(int key, char c) {
