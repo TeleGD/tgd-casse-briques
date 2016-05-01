@@ -154,7 +154,7 @@ public abstract class Brique extends Entity implements Rectangle{
 			return  "BriqueExplosive "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
 		}else if(this instanceof BriqueMetal)
 		{
-			return  "BriqueMetals "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
+			return  "BriqueMetal "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
 		}
 		return null;
 		
