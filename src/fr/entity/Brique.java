@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Brique.BriqueClassic;
+import Brique.BriqueExplosive;
 import Brique.BriqueTp;
 import fr.util.Rectangle;
 
@@ -18,7 +19,7 @@ public abstract class Brique extends Entity implements Rectangle{
 	private boolean hard;
 	private boolean dead = false;
 	private boolean rand;
-	private Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan};
+	public static Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan,Color.magenta,Color.pink,Color.white};
 	
 	public Brique(int x, int y, boolean h, boolean random,int life){
 		this.x=x;
@@ -43,7 +44,8 @@ public abstract class Brique extends Entity implements Rectangle{
 	
 	public Brique()
 	{
-		
+		this.width=64;
+		this.height=32;
 	}
 	public Brique(Brique b)
 	{
@@ -51,17 +53,18 @@ public abstract class Brique extends Entity implements Rectangle{
 		this.y = b.y;
 		this.width = 64;
 		this.height = 32;
+		this.color = b.getColor();
 		if (b.rand)
 		{
-			this.life = (int) (Math.random()*4+1);
+			setLife((int) (Math.random()*4+1));
 		}
 		else
 		{
-			this.life = b.life;
+			setLife(b.life);
 		}
 		this.colliding = false;
 		this.hard = b.hard;
-		this.color = new Color(0,0,255-135/4*life);
+		this.color = b.getColor();
 	}
 	
 	@Override
@@ -128,6 +131,11 @@ public abstract class Brique extends Entity implements Rectangle{
 	public void setColor(Color c)
 	{
 		this.color = c;
+
+		int red = (int)(this.color.getRed()-135/4*life);
+		int green = (int)(this.color.getGreen()-135/4*life);
+		int blue = (int)(this.color.getBlue()-135/4*life);
+		this.color = new Color(red,green,blue);
 	}
 	
 	public Color getColor()
@@ -141,10 +149,13 @@ public abstract class Brique extends Entity implements Rectangle{
 	public String briqueToString(){
 		if(this instanceof BriqueClassic)
 		{
-			return  "BriqueClassic "+x+" "+y+" "+color.getBlue()+" "+color.getRed()+" "+color.getGreen()+" "+life+" "+ hard;
+			return  "BriqueClassic "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
 		}else if(this instanceof BriqueTp)
 		{
-			return  "BriqueTp "+x+" "+y+" "+color.getBlue()+" "+color.getRed()+" "+color.getGreen()+" "+life+" "+ hard;
+			return  "BriqueTp "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+" "+life+" "+ hard;
+		}else if(this instanceof BriqueExplosive)
+		{
+			return  "BriqueExplosive "+x+" "+y+" "+color.getRed()+" "+color.getGreen()+" "+color.getBlue()+"  "+life+" "+ hard;
 		}
 		return null;
 		
@@ -161,11 +172,15 @@ public abstract class Brique extends Entity implements Rectangle{
 			b=new BriqueTp();
 		b.setX(Double.parseDouble(t[1]));
 		b.setY(Double.parseDouble(t[2]));
-		b.setColor(new Color(Integer.parseInt(t[3]),Integer.parseInt(t[4]),Integer.parseInt(t[5])));
+		b.color=new Color(Integer.parseInt(t[3]),Integer.parseInt(t[4]),Integer.parseInt(t[5]));
 		b.setLife(Integer.parseInt(t[6]));
 		b.setHard(Boolean.parseBoolean(t[7]));
-
 		return b;
 		
 	}
+
+public void lastWhisper() {
+	// TODO Auto-generated method stub
+	
+}
 }
