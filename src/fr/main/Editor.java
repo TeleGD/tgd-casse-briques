@@ -60,9 +60,11 @@ public class Editor extends BasicGameState{
 	}
 	
 
-	
 	public void mouseDragged(int oldx,int  oldy, int newx,int  newy){
 		editor.mouseDragged(oldx,oldy, newx,  newy);
+	}
+	public void mouseMoved(int oldx,int  oldy, int newx,int  newy){
+		editor.mouseMoved(oldx,oldy, newx,  newy);
 	}
 	public void mouseReleased(int button, int x,int y){
 		editor.mouseReleased(button, x,  y);

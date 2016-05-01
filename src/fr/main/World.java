@@ -1,5 +1,7 @@
 package fr.main;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
@@ -17,6 +19,7 @@ import fr.entity.Brique;
 import fr.entity.Bullet;
 import fr.entity.Player;
 import fr.menus.PauseMenu;
+import fr.parser.ReadFile;
 
 public class World extends BasicGameState{
 	
@@ -38,20 +41,44 @@ public class World extends BasicGameState{
 		container = arg0;
 		game = arg1;
 		briques = new ArrayList<Brique>();
+		bullet=new ArrayList<Bullet>();
+		
+		ReadFile file=new ReadFile("levels"+File.separator+"niveau1.txt");
+	    ArrayList<String> texts;
+		try {
+			texts = file.readFromFile();
+			for(String s:texts)
+			{
+				briques.add(Brique.StringToBrique(s));
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		Player.render(arg0, arg1, arg2);
 		Balls.render(arg0, arg1, arg2);
-		arg2.fillRect(400, 350, 10,10);
-		
+
+		for(Brique b:briques)
+		{
+			b.render(arg0, arg1, arg2);
+		}
+
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		Player.update(arg0, arg1, arg2);
 		Balls.update(arg0, arg1, arg2);
+		for(Brique b:briques)
+		{
+			b.update(arg0, arg1, arg2);
+		}
+		
 		for (Bullet b:bullet)
 		{
 			if (getTouched(b))

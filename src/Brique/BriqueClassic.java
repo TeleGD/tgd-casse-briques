@@ -43,7 +43,14 @@ public class BriqueClassic extends Brique {
 	@Override
 	public void loseLife() {
 		// TODO Auto-generated method stub
-		double coef = (getLife()-1)/getLife();
+		double coef;
+		
+		if(getLife()==0)
+		{
+			coef=1;
+		}else
+		   coef= (getLife()-1)/getLife();
+		 
 		int red = (int)(this.color.getRed()*coef);
 		int green = (int)(this.color.getGreen()*coef);
 		int blue = (int)(this.color.getBlue()*coef);
@@ -52,6 +59,7 @@ public class BriqueClassic extends Brique {
 	}
 
 	public void createBonus(){
+		if(liste==null)return;
 		if(type != liste.length){
 			Bonus bonus = new Bonus(this.getX(),this.getY(),Bonus.lesTypes[type]);
 		}
