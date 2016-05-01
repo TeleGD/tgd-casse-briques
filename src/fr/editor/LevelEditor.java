@@ -57,10 +57,10 @@ public class LevelEditor extends Entity{
 			menuBriques.add(b);
 		}
 		
-		for(int i=0;i<4;i++)
+		for(int i=0;i<1;i++)
 		{
 			BriqueMetal b=new BriqueMetal(300+70*i,600-barHorizontalHeight/2,false);
-			b.setColor(Brique.getCouleurs()[0]);
+			b.setColor(Color.darkGray);
 			b.setLife(i+1);
 			menuBriques.add(b);
 		}
@@ -155,17 +155,17 @@ public class LevelEditor extends Entity{
 		}
 		
 		arg2.setColor(Color.red);
-		arg2.fillOval(600, (float)height-barHorizontalHeight+barHorizontalHeight/4,  barHorizontalHeight/2, barHorizontalHeight/2);
+		arg2.fillOval(400, (float)height-barHorizontalHeight+barHorizontalHeight/4,  barHorizontalHeight/4, barHorizontalHeight/4);
 		if(gommeActive)arg2.setColor(Color.green);
 		else arg2.setColor(Color.black);
-		arg2.fillOval(602, (float)height-barHorizontalHeight+barHorizontalHeight/4+2, barHorizontalHeight/2-4, barHorizontalHeight/2-4);
+		arg2.fillOval(402, (float)height-barHorizontalHeight+barHorizontalHeight/4+2, barHorizontalHeight/4-4, barHorizontalHeight/4-4);
 		
 		
 	}
 
 	public void mouseReleased(int button, int x,int y){
 		
-		if(briqueSelectionne!=null)
+		if(!gommeActive && briqueSelectionne!=null)
 		{
 			if(y<=384)
 			{
@@ -210,6 +210,8 @@ public class LevelEditor extends Entity{
 		}
 		
 		
+		
+		
 	}
 	
 	
@@ -230,6 +232,8 @@ public class LevelEditor extends Entity{
 			briqueSelectionne.setY(newy);
 			briqueSelectionne.setX(((int)briqueSelectionne.getX()/64)*64+12);
 			briqueSelectionne.setY(((int)briqueSelectionne.getY()/32)*32);
+		}else if(gommeActive){
+			
 		}
 		
 	}
@@ -238,7 +242,7 @@ public class LevelEditor extends Entity{
 
 		for(Brique b:briques)
 		{
-			if(b.getX()==(newx/64)*64 && b.getY()==(newy/32)*32)return b;
+			if(b.getX()==((newx)/64)*64+12 && b.getY()==(newy/32)*32)return b;
 		}
 		return null;
 	}
@@ -316,6 +320,21 @@ public class LevelEditor extends Entity{
 			e.printStackTrace();
 		}
 		sauvegarderSucces=true;
+	}
+	
+	public void mouseWheelMoved(int newValue){
+		couleurId++;
+		couleurId=couleurId%Brique.getCouleurs().length;
+		for(int i=0;i<menuBriques.size();i++)
+		{
+			menuBriques.get(i).setColor(Brique.getCouleurs()[couleurId]);
+		}
+		if(briqueSelectionne!=null)
+		{
+			briqueSelectionne.setColor(Brique.getCouleurs()[couleurId]);
+		}
+		
+	
 	}
 	
 }
