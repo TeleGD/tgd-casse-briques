@@ -1,5 +1,8 @@
 package fr.util;
 
+import fr.entity.Player;
+import fr.main.World;
+
 public class Collisions {
 	
 	static double distCC;
@@ -65,5 +68,16 @@ public class Collisions {
 				return true;
 			}	
 		}
+
 	}*/
+
+	//Detection de collisions avec la raquette :
+    public static boolean colPlayer(Movable object,Player player){
+        	
+		if (object.getY()+object.getWidth()<player.getY()){return false;}
+		if(object.getX()+object.getWidth()<player.getX()){return false;}
+		if(object.getX()+object.getWidth()>player.getX()+World.getPlayer().getWidth()){return false;}
+		return true;
+    }
+
 }
