@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -28,6 +29,8 @@ public class World extends BasicGameState{
 	private static ArrayList<Bonus> bonus;
 	private static Player Player;
 	private static ArrayList<Ball> balls;
+    public static enum mode {CAMPAIGN, MULTI, CUSTOM};
+    public static mode gameMode;
 	
 	public static int ID = 0;
 	
@@ -65,6 +68,7 @@ public class World extends BasicGameState{
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		Player.render(arg0, arg1, arg2);
+	    arg2.drawString(Mouse.getY()+", "+Mouse.getY(), 10, 10);
 
 		for (int i = 0; i < balls.size(); i++) {
 			balls.get(i).render(arg0, arg1, arg2);
