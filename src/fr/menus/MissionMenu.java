@@ -54,7 +54,7 @@ public class MissionMenu extends BasicGameState {
 		//int numPost = r.nextInt(postName.length);
 
 		//String text = txt1[numMission] + planetName[numPlanet]+ txt2[numMission] + postName[numPost] + txt3[numMission];
-		String text = txt1[0];
+		String text = txt1[0]+txt2[0]+txt3[0];
 		int lastSpaceIndex = 0;
 		int chunkStart = 0;
 		String tmp = "";
@@ -103,9 +103,9 @@ public class MissionMenu extends BasicGameState {
 		font6 = new TrueTypeFont(titre6Font, false);
 
 
-		txt1[0]="Un beau jour de 1976, alors qu'il rentrait de l'ecole, le petit Jimmy fit une rencontre qui allait changer sa vie a tout jamais.";
-        txt2[0]="Cependant, ce jeu ne parle pas de cette rencontre. Il ne parle pas non plus de Jimmy. En realite, ce jeu parle d'un probleme bien plus important :";
-        txt3[0]="la menace que representent les ouvriers travaillant dans le BTP. Votre mission est de detruire leurs constructions machiaveliques.";
+		txt1[0]="Un matin de 1976, sur le chemin de l'ecole, le petit Jimmy fit une rencontre qui allait changer sa vie.";
+        txt2[0]=" Cependant, ce jeu ne parle pas de cette rencontre. Il ne parle pas non plus de Jimmy. En realite, ce jeu parle d'un probleme bien plus important :";
+        txt3[0]=" la menace que representent les ouvriers extremistes travaillant dans le BTP. Votre mission est de detruire leurs constructions machiaveliques afin de sauver l'humanite de la domination des parpaings.";
 /*
 		txt1[0] = "Depuis plusieurs ann馥s, la plan鑼e ";
 		txt2[0] = " vit dans la peur de la menace spatio-terroriste. Sur une des derni鑽es plan鑼es de la galaxie poss馘ant encore des arbres naturels fournissant l'oxyg鈩e n馗essaire � la vie, l'馗onomie inter-stellaire est gangr駭馥 par le trafic de v馮騁aux. Ces pirates de l'espace poss鐡ent leur propre arm馥 et agissent en bande organis馥, se livrant � toutes sortes d'activit駸 anti-馗ologiques de grande ampleur. Vous venez d'黎re nomm� au poste de ";
@@ -139,9 +139,9 @@ public class MissionMenu extends BasicGameState {
 		g.setColor(Color.white);
 		g.setFont(font6);
 
-		/*for (int j = 0; j < textList.size(); j++) {
+		for (int j = 0; j < textList.size(); j++) {
 			g.drawString(textList.get(j), 75, 258 + 13 * j);
-		}*/
+		}
 
 		int lines = 12;
 		g.drawString(">>  Continuer", 75, 255 + 25 + lines * 13);
