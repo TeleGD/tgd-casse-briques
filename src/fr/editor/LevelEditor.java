@@ -2,6 +2,8 @@ package fr.editor;
 import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color; 
@@ -25,9 +27,12 @@ public class LevelEditor extends Entity{
 	private Brique briqueSelectionne;
 	private int oldBriqueX,oldBriqueY;
 	private int couleurId;
-	private Brique lastBrique;
 	private boolean sauvegarder=false;
 	private String nomFichier="";
+	private boolean sauvegarderSucces;
+	private boolean selectionmenu;
+	private boolean debut=true;
+	private int indexSelection=-1;
 	public LevelEditor()
 	{
 		width=800;
@@ -51,8 +56,28 @@ public class LevelEditor extends Entity{
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		// TODO Auto-generated method stub
+		
+		
+		if(debut)
+		{
+
+			Font titre1Font = new Font("Kalinga", Font.BOLD, 20);
+			TrueTypeFont font1 = new TrueTypeFont(titre1Font, false);
+			arg2.setFont(font1);
+			arg2.drawString("Cliquer sur le carré et cliquer ou vous souhaitez le placer !", 100, 170);
+			arg2.drawString("       Touche haut ou bas pour changer de couleur", 100, 220);
+			arg2.drawString("Appuyez sur S pour sauvegarder", 200, 270);
+
+		}
+		
 		arg2.setColor(Color.red);
 		arg2.fillRect(0f,  (float)height-barHorizontalHeight, (float)width, 2);
+		
+
+		arg2.setColor(Color.white);
+		arg2.fillRect(0f,  384, (float)width, 1);
+		
+		
 		for(int i=0;i<briques.size();i++)
 		{
 			briques.get(i).render(arg0, arg1, arg2);
@@ -66,6 +91,22 @@ public class LevelEditor extends Entity{
 		{
 			briqueSelectionne.render(arg0, arg1, arg2);
 		}
+		
+		if(indexSelection!=-1)
+		{
+			arg2.setColor(Color.white);
+			arg2.fillRect((float)menuBriques.get(indexSelection).getX(),(float)menuBriques.get(indexSelection).getY(),
+					(float)menuBriques.get(indexSelection).getWidth(),2f);
+			arg2.fillRect((float)menuBriques.get(indexSelection).getX(),(float)menuBriques.get(indexSelection).getY()+(float)menuBriques.get(indexSelection).getHeight()-2,
+					(float)menuBriques.get(indexSelection).getWidth(),2f);
+			arg2.fillRect((float)menuBriques.get(indexSelection).getX(),(float)menuBriques.get(indexSelection).getY(),2,
+					(float)menuBriques.get(indexSelection).getHeight());
+			arg2.fillRect((float)menuBriques.get(indexSelection).getX()+(float)menuBriques.get(indexSelection).getWidth()-2,(float)menuBriques.get(indexSelection).getY(),2,
+					(float)menuBriques.get(indexSelection).getHeight());
+			
+			
+		}
+		
 		if(sauvegarder)
 		{
 			arg2.setColor(Color.red);
@@ -84,7 +125,13 @@ public class LevelEditor extends Entity{
 		    font1 = new TrueTypeFont(titre1Font, false);
 			arg2.setFont(font1);
 			arg2.drawString("Entrer le nom du niveau: "+nomFichier, 300, 280);
-			arg2.drawString("Appuyer sur entrer pour enregistrer le niveau", 260, 300);
+			arg2.drawString("Appuyer sur entrer pour enregistrer le niveau", 260, 310);
+			
+			if(sauvegarderSucces)
+			{
+				arg2.setColor(Color.green);
+				arg2.drawString("Sauvegarder avec succès ! (je crois...)", 280, 340);
+			}
 			
 		}
 		
@@ -94,7 +141,7 @@ public class LevelEditor extends Entity{
 		
 		if(briqueSelectionne!=null)
 		{
-			if(y<=370)
+			if(y<=384)
 			{
 				briqueSelectionne.setX(((int)briqueSelectionne.getX()/64)*64);
 				briqueSelectionne.setY(((int)briqueSelectionne.getY()/32)*32);
@@ -102,16 +149,18 @@ public class LevelEditor extends Entity{
 				briqueSelectionne.setX(oldBriqueX);
 				briqueSelectionne.setY(oldBriqueY);
 			}
-			lastBrique=briqueSelectionne;
-			briqueSelectionne=new BriqueClassic(briqueSelectionne);
-			briques.add(lastBrique);
+			if(!selectionmenu){
+				briques.add(briqueSelectionne);
+				briqueSelectionne=new BriqueClassic(briqueSelectionne);
+			}
+			
 		}
 	
 	}
 	
 	public void mousePressed(int button, int oldx,int oldy){
-		
-		if(!yapasdebriques(oldx,oldy))return;
+		debut=false;
+		selectionmenu=false;
 		for(int i=0;i<menuBriques.size();i++)
 		{
 			if(menuBriques.get(i).getX()<oldx  && menuBriques.get(i).getX()+menuBriques.get(i).getWidth()>oldx
@@ -120,27 +169,18 @@ public class LevelEditor extends Entity{
 				briqueSelectionne=new BriqueClassic(menuBriques.get(i));
 				oldBriqueX=(int)briqueSelectionne.getX();
 				oldBriqueY=(int)briqueSelectionne.getY();
-				
+				selectionmenu=true;
+				indexSelection=i;
 			}
 		}
-		for(int i=0;i<briques.size();i++)
-		{
-			if(briques.get(i).getX()<oldx  && briques.get(i).getX()+briques.get(i).getWidth()>oldx
-				&& briques.get(i).getY()<oldy  && briques.get(i).getY()+briques.get(i).getHeight()>oldy)
-			{
-				briqueSelectionne=briques.get(i);
-				oldBriqueX=(int)briqueSelectionne.getX();
-				oldBriqueY=(int)briqueSelectionne.getY();
-				
-			}
-		}
+		
 		
 	}
 	
 	
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 
-		if(briqueSelectionne!=null && yapasdebriques(newx,newy) && newy<=370)
+		if(briqueSelectionne!=null && yapasdebriques(newx,newy) && newy<=384)
 		{
 			briqueSelectionne.setX(newx);
 			briqueSelectionne.setY(newy);
@@ -174,7 +214,10 @@ public class LevelEditor extends Entity{
 			{
 				enregistrerNiveau();
 			}
-			else if(key!=Input.KEY_SPACE) nomFichier+=c;
+			else if(key!=Input.KEY_SPACE && ((int)c)!=0){
+				System.out.println("char : "+c);
+				nomFichier+=c;
+			}
 			
 		}
 		
@@ -212,6 +255,12 @@ public class LevelEditor extends Entity{
 			textLines.add(b.briqueToString());
 		}
 		
+		try {
+			Files.delete(Paths.get("levels"+File.separator+nomFichier+".txt"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		WriteFile file = new WriteFile("levels"+File.separator+nomFichier+".txt",false);
 		try {
 			file.writeToFile(textLines);
@@ -219,7 +268,7 @@ public class LevelEditor extends Entity{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		sauvegarderSucces=true;
 	}
 	
 }

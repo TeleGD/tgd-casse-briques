@@ -19,7 +19,7 @@ public abstract class Brique extends Entity implements Rectangle{
 	private boolean hard;
 	private boolean dead = false;
 	private boolean rand;
-	public static Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan};
+	public static Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan,Color.magenta,Color.pink,Color.white};
 	
 	public Brique(int x, int y, boolean h, boolean random,int life){
 		this.x=x;
