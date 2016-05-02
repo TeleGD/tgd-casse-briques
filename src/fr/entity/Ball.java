@@ -88,10 +88,8 @@ public class Ball extends Movable implements Circle{
         
         //Detection de collisions avec les briques : 
         for(Brique b:World.getBriques()){
-            if(!b.getDead()){
-            	
-	        	b.setColliding(fr.util.Collisions.colBrique(this,b));
-	            if(fr.util.Collisions.colBrique(this,b)){	
+        	      b.setColliding(false);
+            	  if(fr.util.Collisions.colBrique(this,b)){	
 	            	if(b.getHard()){
 	            		
 	            		//On touche une brique dure.
@@ -107,9 +105,9 @@ public class Ball extends Movable implements Circle{
 	                		else x=b.getX()+b.getWidth()+1;
 	                        speedX = -1*speedX;
 	                    }    
+	                	b.setColliding(true);
 	                }
 	            }
-            }
         }
         
         
