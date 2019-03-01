@@ -15,7 +15,7 @@ public class BriqueExplosive extends Brique {
 	int rangeX;
 	int rangeY;
 	int damage;
-	
+
 	public BriqueExplosive(int x, int y, boolean random){
 		super(x, y,true, random,1);
 		this.rangeX = 60;
@@ -58,7 +58,7 @@ public class BriqueExplosive extends Brique {
 		// TODO Auto-generated method stub
 		this.setLife(this.getLife()-1);
 	}
-	
+
 	public void explose(){
 		ArrayList<Brique> briques = World.getBriques();
 		for(Brique b : briques){

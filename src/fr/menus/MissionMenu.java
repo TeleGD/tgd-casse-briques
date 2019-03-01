@@ -43,7 +43,7 @@ public class MissionMenu extends BasicGameState {
 	static GameContainer container;
 	static StateBasedGame game;
 
-	
+
 	public static ArrayList<String> generateText(int lineSize) {
 		ArrayList<String> res = new ArrayList<String>();
 		Random r = new Random();
@@ -79,7 +79,7 @@ public class MissionMenu extends BasicGameState {
 
 		return res;
 	}
-	
+
 	private boolean mouseOverSelection() {
 		int x = Mouse.getX();
 		int y = 600-Mouse.getY();
@@ -114,10 +114,10 @@ public class MissionMenu extends BasicGameState {
 		txt1[1] = "Des id饌listes sovi騁iques tentent de mettre en place une nouvelle r騅olution communiste ! Apr鑚 la migration de l'humanit� vers la plan鑼e ";
 		txt2[1] = ", des groupuscules arm駸 ont tent� de prendre le pouvoir par la force. Gr稍e � la puissance du grand chef supr麥e, les camarades tentent d'envahir les bastions de l'ennemi capitaliste depuis leurs vaisseaux spatiaux. Si rien n'est fait pour les arr黎er, la face de ce nouveau monde pourrait changer � jamais ! En tant que ";
 		txt3[1] = " de la contre-r騅olte capitaliste, vous avez la charge de tuer dans l'oeuf ce soul钁ement prol騁aire. Soyez fort, le sort de la plan鑼e est entre vos mains.";
- 		
+
 */
 		textList = generateText(40);
-		
+
 
 	}
 
@@ -149,7 +149,7 @@ public class MissionMenu extends BasicGameState {
 	}
 
 	public static void reset() {
-		
+
 	}
 
 	public void mousePressed(int button, int oldx,int oldy){
@@ -157,7 +157,7 @@ public class MissionMenu extends BasicGameState {
 			//World.reset();
 			game.enterState(World.ID);
 	}
-	
+
 	@Override
 	public void keyPressed(int key, char c) {
 		switch (key) {

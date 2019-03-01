@@ -30,9 +30,9 @@ public class LevelSelectorMenu extends BasicGameState {
 	private String nom = "Selection du niveau";
 
 	private static String[] items;
-	
+
 	private boolean popup = false;
-	
+
 	public static int nbrOption;
 
 	public String[] getItems() {
@@ -45,19 +45,19 @@ public class LevelSelectorMenu extends BasicGameState {
 	static StateBasedGame game;
 
 	static int selection = 0;
-	
+
 	static int selectionPopup = 0;
 
-	
+
 	public static void reload() {
-		items = (new File("levels")).list();
+		items = (new File("res/levels")).list(); // TODO make multiplatform
 		nbrOption = items.length;
 		for (int i = 0; i < items.length; i++)
 			if (items[i].endsWith(".txt"))
 				items[i] = items[i].substring(0, items[i].length()-4);
 		selection = 0;
 	}
-	
+
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		this.container = container;
@@ -68,15 +68,15 @@ public class LevelSelectorMenu extends BasicGameState {
 
 		Font titre1Font = new Font("Kalinga", Font.BOLD, 12);
 		font1 = new TrueTypeFont(titre1Font, false);
-		
+
 		reload();
-		
+
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 
-		
+
 		if (mouseOverSelection() && !popup) {
 			int y = 600-Mouse.getY();
 			selection = (y-160)/30;
@@ -84,7 +84,7 @@ public class LevelSelectorMenu extends BasicGameState {
 			int y = 600-Mouse.getY();
 			selectionPopup = (y-280)/30;
 		}
-		
+
 	}
 
 	private boolean mouseOverSelection() {
@@ -95,7 +95,7 @@ public class LevelSelectorMenu extends BasicGameState {
 				&& y>160
 				&& y<160+nbrOption*30);
 	}
-	
+
 	private boolean mouseOverPopup() {
 		int x = Mouse.getX();
 		int y = 600-Mouse.getY();
@@ -118,11 +118,11 @@ public class LevelSelectorMenu extends BasicGameState {
 		for (int i = 0; i < nbrOption; i++) {
 			g.drawString(this.items[i], 260, 160 + 30 * i);
 		}
-		
+
 		g.drawString(">>", 240, 160 + 30 * selection);
 
 		if (popup) {
-			
+
 			g.setColor(Color.red);
 			g.fillRoundRect(200, 200, 400, 200,20,20);
 			g.setColor(Color.black);
@@ -134,19 +134,19 @@ public class LevelSelectorMenu extends BasicGameState {
 			TrueTypeFont font1 = new TrueTypeFont(titre1Font, false);
 			g.setFont(font1);
 			g.drawString("Que faire sur "+items[selection]+ " ?", 300, 220);
-			
+
 			titre1Font = new Font("Kalinga", Font.BOLD, 12);
 		    font1 = new TrueTypeFont(titre1Font, false);
 			g.setFont(font1);
 			g.drawString("Jouer", 300, 280);
 			g.drawString("Modifier", 300, 310);
 			g.drawString("Spprimer", 300, 340);
-			
+
 			g.drawString(">>", 280, 280+30*selectionPopup);
-			
+
 		}
-		
-			
+
+
 	}
 
 	@Override
@@ -213,7 +213,7 @@ public class LevelSelectorMenu extends BasicGameState {
 			game.enterState(Editor.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
-		
+
 		case 2:
 			try {
 				Files.delete(Paths.get("levels"+File.separator+items[selection]+".txt"));
@@ -224,7 +224,7 @@ public class LevelSelectorMenu extends BasicGameState {
 			break;
 		}
 	}
-	
+
 	public void mousePressed(int button, int oldx,int oldy){
 		if (mouseOverSelection() && !popup) {
 			popup = true;
@@ -234,12 +234,12 @@ public class LevelSelectorMenu extends BasicGameState {
 			execOption();
 		}
 	}
-	
+
 	public int getID() {
 		return ID;
 	}
 
-	
+
 
 
 }

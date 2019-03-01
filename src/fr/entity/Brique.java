@@ -14,7 +14,7 @@ import fr.main.World;
 import fr.util.Rectangle;
 
 public abstract class Brique extends Entity implements Rectangle{
-	
+
 	private int life;
 	private boolean colliding;
 	private boolean hard;
@@ -22,7 +22,7 @@ public abstract class Brique extends Entity implements Rectangle{
 	private boolean rand;
 	private Color couleurOriginal;
 	private static Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan,Color.magenta,Color.pink,Color.white};
-	
+
 	public Brique(int x, int y, boolean h, boolean random,int life){
 		this.x=x;
 		this.y=y;
@@ -39,11 +39,11 @@ public abstract class Brique extends Entity implements Rectangle{
 			this.life=(life);
 		}
 		this.colliding = false;
-		this.hard = h;		
+		this.hard = h;
 
 		//this.color = new Color(0,0,255-135/4*life);
 	}
-	
+
 	public Brique()
 	{
 		this.width=64;
@@ -67,7 +67,7 @@ public abstract class Brique extends Entity implements Rectangle{
 		this.colliding = false;
 		this.hard = b.hard;
 	}
-	
+
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setColor(Color.black);
@@ -86,58 +86,58 @@ public abstract class Brique extends Entity implements Rectangle{
 	{
 		// TODO
 	}
-	
+
 	public int getLife()
 	{
 		return this.life;
 	}
-	
+
 	public void setDead(boolean d)
 	{
 		this.dead = d;
 	}
-	
+
 	public boolean getDead()
 	{
 		return this.dead;
 	}
-	
+
 	public void setLife(int life)
 	{
 		this.life = life;
 	}
-	
+
 	public boolean getColliding()
 	{
 		return this.colliding;
 	}
-	
+
 	public void setColliding(boolean c)
 	{
 		this.colliding = c;
 	}
-	
+
 	public boolean getHard()
 	{
 		return this.hard;
 	}
-	
+
 	public void setHard(boolean h)
 	{
 		this.hard = h;
 	}
-	
+
 	public void setColor(Color c)
 	{
 
 		this.couleurOriginal=c;
 	}
-	
+
 	public Color getColor()
 	{
 		return this.couleurOriginal;
 	}
-	
+
 	public  void action(){
 		if (this.getLife()==0)
 		{
@@ -146,7 +146,7 @@ public abstract class Brique extends Entity implements Rectangle{
 		}
 	}
 	public abstract void loseLife();
-	
+
 	public String briqueToString(){
 		if(this instanceof BriqueClassic)
 		{
@@ -162,10 +162,10 @@ public abstract class Brique extends Entity implements Rectangle{
 			return  "BriqueMetal "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
 		}
 		return null;
-		
-		
+
+
 	}
-	
+
    public static Brique StringToBrique(String s){
 		String t[]=s.split(" ");
 		Brique b;
@@ -178,22 +178,22 @@ public abstract class Brique extends Entity implements Rectangle{
 		}else if(t[0].equals("BriqueMetal"))
 		{
 			b=new BriqueMetal();
-		}else 
+		}else
 			b=new BriqueTp();
-		
+
 		b.setX(Double.parseDouble(t[1]));
 		b.setY(Double.parseDouble(t[2]));
-		
+
 		int a=Integer.parseInt(t[3]);
 		int c=Integer.parseInt(t[4]);
 		int d=Integer.parseInt(t[5]);
-		
-		
+
+
 		b.setColor(new Color(a,c,d));
 		b.setLife(Integer.parseInt(t[6]));
 		b.setHard(Boolean.parseBoolean(t[7]));
 		return b;
-		
+
 	}
 
    public static Color[] getCouleurs() {
@@ -221,7 +221,7 @@ public void lastWhisper() {
         if (bonusOuPas==1){
                 World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));
         }
-       
+
    }
 
 

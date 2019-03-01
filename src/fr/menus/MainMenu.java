@@ -54,13 +54,13 @@ public class MainMenu extends BasicGameState {
 
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		
+
 		if (mouseOverSelection()) {
 			int x = Mouse.getX();
 			int y = 600-Mouse.getY();
 			selection = (y-360)/30;
 		}
-		
+
 	}
 
 	private boolean mouseOverSelection() {
@@ -85,10 +85,10 @@ public class MainMenu extends BasicGameState {
 		for (int i = 0; i < nbrOption; i++) {
 			g.drawString(this.items[i], 560, 360 + 30 * i);
 		}
-		
+
 		g.drawString(">>", 540, 360 + 30 * selection);
 
-			
+
 	}
 
 	@Override
@@ -140,13 +140,13 @@ public class MainMenu extends BasicGameState {
 			game.enterState(World.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
-		
+
 		case 2:
 			LevelSelectorMenu.reload();
 			game.enterState(LevelSelectorMenu.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
-		 
+
 		case 3:
 			Editor.reload();
 			game.enterState(Editor.ID, new FadeOutTransition(),
@@ -158,12 +158,12 @@ public class MainMenu extends BasicGameState {
 			break;
 		}
 	}
-	
+
 	public void mousePressed(int button, int oldx,int oldy){
 		if (mouseOverSelection())
 			execOption();
 	}
-	
+
 	public int getID() {
 		return ID;
 	}

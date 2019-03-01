@@ -10,11 +10,11 @@ import fr.parser.ReadFile;
 import fr.parser.WriteFile;
 
 public class TestMain {
-	
+
 	public static void main(String[] args) {
-		
+
 		String myFile = "testfolder"+File.separator+"testfile.txt";
-		
+
 		WriteFile datawrite = new WriteFile(myFile, true);
 		ArrayList<String> linesToWrite = new ArrayList<String>();
 		linesToWrite.add("line1");
@@ -25,7 +25,7 @@ public class TestMain {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		ReadFile dataread = new ReadFile(myFile);
 		ArrayList<String> linesRead = new ArrayList<String>();
 		try {
@@ -33,18 +33,18 @@ public class TestMain {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		for (String s : linesRead) {
 			System.out.println(s);
 		}
-		
+
 		try {
 			Files.delete(Paths.get(myFile));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
+
+
 	}
 
 }

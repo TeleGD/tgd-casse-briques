@@ -12,29 +12,29 @@ import fr.entity.Brique;
 
 
 public class BriqueClassic extends Brique {
-	
+
 	private String[] liste;
 	private int type;
 	private int indexImage;
 	private static Image[] images=new Image[3];
 	public BriqueClassic(int x, int y, boolean random) {
 		super(x, y,true, random,1); //Brique à vie random
-		
+
 		type = (int) (Math.random()*(Bonus.lesTypes.length + 1));
 		chargerImage();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	private void chargerImage() {
 		try {
-			if(images[0]==null)images[0]=new Image("img/brique/Normal1.png");
-			if(images[1]==null)images[1]=new Image("img/brique/Normal2.png");
-			if(images[2]==null)images[2]=new Image("img/brique/Normal3.png");
+			if(images[0]==null)images[0]=new Image("img/brique/normal1.png");
+			if(images[1]==null)images[1]=new Image("img/brique/normal2.png");
+			if(images[2]==null)images[2]=new Image("img/brique/normal3.png");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public BriqueClassic(Brique b)
@@ -46,10 +46,10 @@ public class BriqueClassic extends Brique {
 	public BriqueClassic() {
 		chargerImage();
 	}
-	
+
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		
+
 		int i=0;
 		if(getLife()==4 || getLife()==3)i=0;
 		else if(getLife()==2)i=1;
@@ -61,8 +61,8 @@ public class BriqueClassic extends Brique {
 	public void action() {
 		// TODO Auto-generated method stub
 		if (this.getColliding())
-		{	
-			loseLife();		
+		{
+			loseLife();
 		}
 		super.action();
 	}
@@ -71,7 +71,7 @@ public class BriqueClassic extends Brique {
 	public void loseLife() {
 		// TODO Auto-generated method stub
 		double coef;
-		
+
 		if(getLife()==0)
 		{
 			coef=1;
@@ -82,5 +82,5 @@ public class BriqueClassic extends Brique {
 	}
 
 
-	
+
 }

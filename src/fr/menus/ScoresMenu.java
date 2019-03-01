@@ -44,7 +44,7 @@ public class ScoresMenu extends BasicGameState {
 
 	public static void addScoreToList() {
 		if (World.getScore() > scoresList[4]) {
-			
+
 			scoresList[4] = World.getScore();
 			int i = 4; int tmp;
 			while (i>0 && scoresList[i]>scoresList[i-1]) {
@@ -54,12 +54,12 @@ public class ScoresMenu extends BasicGameState {
 				i--;
 			}
 		}
-		
+
 		for (int k=0; k<5; k++)
 			items[k] = (k+1)+". "+scoresList[k];
 		firstTime = false;
 	}
-	
+
 	private boolean mouseOverSelection() {
 		int x = Mouse.getX();
 		int y = 600-Mouse.getY();
@@ -68,7 +68,7 @@ public class ScoresMenu extends BasicGameState {
 				&& y>420 + 13 * (nbrOption-1)
 				&& y<420 + 13 * nbrOption);
 	}
-	
+
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		this.container = container;
@@ -81,7 +81,7 @@ public class ScoresMenu extends BasicGameState {
 
 		Font titre6Font = new Font("Courant", Font.BOLD, 13);
 		font6 = new TrueTypeFont(titre6Font, false);
-		
+
 		firstTime = true;
 	}
 
@@ -120,7 +120,7 @@ public class ScoresMenu extends BasicGameState {
 	public static void reset() {
 		firstTime = true;
 	}
-	
+
 	public void mousePressed(int button, int oldx,int oldy){
 		if (mouseOverSelection())
 			game.enterState(MainMenu.ID);

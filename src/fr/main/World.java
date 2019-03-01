@@ -26,7 +26,7 @@ import fr.menus.PauseMenu;
 import fr.parser.ReadFile;
 
 public class World extends BasicGameState{
-	
+
 	private static ArrayList<Brique> briques;
 	private static ArrayList<Bullet> bullets;
 	private static ArrayList<Bonus> bonus;
@@ -36,18 +36,18 @@ public class World extends BasicGameState{
     public static enum mode {CAMPAIGN, MULTI, CUSTOM};
     public static mode gameMode;
     public static int currentCampaignLevel;
-	
+
     private static Image background;
-    
+
 	public static int ID = 0;
-	
+
 	private static GameContainer container;
 	private static StateBasedGame game;
-	
-	
+
+
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-		background = new Image("img"+File.separator+"background"+File.separator+"Fond5.png");
+		background = new Image("img"+File.separator+"background"+File.separator+"fond5.png");
 		player=new Player();
 		player2 = new Player();
 		player2.setY(85);
@@ -75,8 +75,8 @@ public class World extends BasicGameState{
 				e.printStackTrace();
 			}
 		}
-		
-		
+
+
 	}
 
 	@Override
@@ -93,18 +93,18 @@ public class World extends BasicGameState{
 		for (int i = 0; i < bonus.size(); i++) {
 			bonus.get(i).render(arg0, arg1, arg2);
 		}
-		for(int i = 0; i < briques.size(); i++) 
+		for(int i = 0; i < briques.size(); i++)
 		{
 			briques.get(i).render(arg0, arg1, arg2);
 		}
-		
+
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).render(arg0, arg1, arg2);
 		}
 		arg2.drawString("Lives : "+player.getLife(), 700, 580);
 		if (gameMode == mode.CAMPAIGN)
 			arg2.drawString("Level : "+currentCampaignLevel, 50, 580);
-		
+
 		if (areDestroyed(briques)) {
 			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 5) {
 				currentCampaignLevel++;
@@ -139,16 +139,16 @@ public class World extends BasicGameState{
 		{
 			briques.get(i).update(arg0, arg1, arg2);
 		}
-		
+
 		for (int i=0;i<bullets.size();i++)
 		{
 			bullets.get(i).update(arg0, arg1, arg2);
 		}
-		
+
 		if (player.getLife() == 0) {
 			game.enterState(GameOverMenu.ID, new FadeOutTransition(), new FadeInTransition());
 		}
-		
+
 		if (areDestroyed(briques)) {
 			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 2) {
 				currentCampaignLevel++;
@@ -157,20 +157,20 @@ public class World extends BasicGameState{
 				game.enterState(LevelSelectorMenu.ID);
 			}
 		}
-		
+
 		if(balls.size()==0){
 			player.setLife(player.getLife()-1);
 			balls.add(new Ball());
 			player.setHasBall(true);
 		}
-		
+
 	}
 
 	@Override
 	public int getID() {
 		return ID;
 	}
-	
+
 	public void keyReleased(int key, char c) {
 		player.keyReleased(key, c);
 	}
@@ -183,7 +183,7 @@ public class World extends BasicGameState{
 					new FadeInTransition());
 		}
 	}
-	
+
 	public static Player getPlayer() {
 		return player;
 	}
@@ -196,47 +196,47 @@ public class World extends BasicGameState{
 	{
 		bullets.remove(b);
 	}
-	
+
 	public static void destroy(Brique b)
 	{
 		b.lastWhisper();
 		briques.remove(b);
 	}
-	
+
 	public static void destroy(Bonus b){
 		// TODO destruction du bonus
 		bonus.remove(b);
 	}
-	
+
 	public static int getScore() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	public static ArrayList<Brique> getBriques(){
 		return briques;
 	}
-	
+
 	public static ArrayList<Bonus> getBonus(){
 		return bonus;
 	}
-	
+
 	public static ArrayList<Ball> getBalls(){
 		return balls;
 	}
-	
+
 	public static void addBrique(Brique b){
 		briques.add(b);
 	}
-	
+
 	public static void addBall(Ball b){
 		balls.add(b);
 	}
-	
+
 	public static void addBonus(Bonus b){
 		bonus.add(b);
 	}
-	
+
 	public static void addBullet(Bullet b)
 	{
 		bullets.add(b);
@@ -245,19 +245,19 @@ public class World extends BasicGameState{
 	public static void removeBrique(Brique b){
 		briques.remove(b);
 	}
-	
+
 
 	public static void reload(String niveau)
 	{
 		if(new File("levels"+File.separator+niveau).exists())
 		{
-			
+
 			player=new Player();
 			balls=new ArrayList<Ball>();
 			balls.add(new Ball());
 			briques = new ArrayList<Brique>();
 			bullets=new ArrayList<Bullet>();
-			
+
 			ReadFile file=new ReadFile("levels"+File.separator+niveau);
 		    ArrayList<String> texts;
 			try {
@@ -269,24 +269,24 @@ public class World extends BasicGameState{
 					if(b.getY()<400){
 						briques.add(b);
 					}
-					
+
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			if (gameMode == mode.CAMPAIGN) {
 				try {
-					background = new Image("img"+File.separator+"background"+File.separator+"Fond"+currentCampaignLevel+".png");
+					background = new Image("img"+File.separator+"background"+File.separator+"fond"+currentCampaignLevel+".png");
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
 			}
-			
+
 		}
 	}
-	
+
 	public static void reload() {
 		if (gameMode == mode.CAMPAIGN) {
 			reload("niveau"+currentCampaignLevel+".txt");
@@ -299,5 +299,5 @@ public class World extends BasicGameState{
 		// TODO Auto-generated method stub
 		return bullets;
 	}
-	
+
 }

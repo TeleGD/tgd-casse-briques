@@ -7,9 +7,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import fr.entity.Brique;
 
 public class BriqueTp extends Brique{
-	
+
 	private Brique link;
-	
+
 	public BriqueTp(int x, int y, boolean h, Brique b) {
 		super(x, y, h, false, 0);
 		// TODO Auto-generated constructor stub
@@ -32,10 +32,10 @@ public class BriqueTp extends Brique{
 		// TODO Auto-generated method stub
 		telep();
 	}
-	
+
 	public void telep()
 	{
-		
+
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class BriqueTp extends Brique{
 	@Override
 	public void loseLife() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

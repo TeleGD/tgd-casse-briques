@@ -22,9 +22,9 @@ import fr.main.World.mode;
 
 
 public class GameOverMenu extends BasicGameState {
-	
+
 	public static int ID = 3;
-	
+
 	static TrueTypeFont font3;
 	static TrueTypeFont font4;
 
@@ -38,13 +38,13 @@ public class GameOverMenu extends BasicGameState {
 	}
 
 	//private Image background;
-	
+
 	static StateBasedGame game;
 
 	static GameContainer container;
 	int selection = 0;
 	private static boolean firstTime;
-	
+
 	private boolean mouseOverSelection() {
 		int x = Mouse.getX();
 		int y = 600-Mouse.getY();
@@ -59,17 +59,17 @@ public class GameOverMenu extends BasicGameState {
 		this.game = game;
 		this.container = container;
 		container.setShowFPS(false);
-		
+
 		//background = new Image("Images/background2.png");
-		
+
 		Font titre3Font = new Font("Goudy Stout", Font.BOLD, 30);
     	font3 = new TrueTypeFont(titre3Font, false);
-    	
+
     	Font titre4Font = new Font("Kristen ITC", Font.BOLD, 20);
 		font4 = new TrueTypeFont(titre4Font, false);
-		
+
 		firstTime = true;
-    	
+
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta)
@@ -78,7 +78,7 @@ public class GameOverMenu extends BasicGameState {
 			items[3] = "Score : "+World.getScore();
 			firstTime = false;
 		}*/
-		
+
 		if (mouseOverSelection()) {
 			int x = Mouse.getX();
 			int y = 600-Mouse.getY();
@@ -91,7 +91,7 @@ public class GameOverMenu extends BasicGameState {
 			throws SlickException {
 		//g.drawImage(background, 0, 0);
 
-		
+
 		g.setColor(Color.red);
 		g.setFont(font3);
 
@@ -107,11 +107,11 @@ public class GameOverMenu extends BasicGameState {
 		g.drawString(">>", 230, 280 + 50 * selection);
 
 	}
-	
+
 	public static void reset() {
 		firstTime = true;
 	}
-	
+
 	public void mousePressed(int button, int oldx,int oldy){
 		if (mouseOverSelection())
 			execOption();

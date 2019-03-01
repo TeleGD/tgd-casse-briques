@@ -13,7 +13,7 @@ import fr.main.*;
 
 import fr.util.Movable;
 
-public class Bonus  extends Movable implements fr.util.Circle{ 
+public class Bonus  extends Movable implements fr.util.Circle{
 	protected String type;
 	public static String[] lesTypes={"agrandir","agrandirBalle","accelerer","retrecir","rondfusee","ralentir","multiballe"};
 
@@ -30,7 +30,7 @@ public class Bonus  extends Movable implements fr.util.Circle{
 		{
 			if(type==lesTypes[i])indexImage=i;
 		}
-		
+
 	}
 
 	public static void chargerImageBonus()
@@ -46,26 +46,26 @@ public class Bonus  extends Movable implements fr.util.Circle{
 			}
 		}
 	}
-	
+
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		
+
 		g.drawImage(image[indexImage],(float)x,(float)y);
-		
+
 	}
 
 	public boolean collisionPlayer(){
 		return Collisions.colPlayer(this, World.getPlayer());
 	}
-	
+
 	public boolean collisionGround(){
 		return this.y>=616;
 	}
-	
+
 	public boolean mustBeDeleted(){
 		return (collisionPlayer()||collisionGround());
 	}
-	
+
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if(mustBeDeleted()){
@@ -90,7 +90,7 @@ public class Bonus  extends Movable implements fr.util.Circle{
 							World.addBall(new Ball((int)(World.getBalls().get(i).getX()),(int) World.getBalls().get(i).getY()));
 						}
 					}
-					
+
 					break;
 				case "rondfusee":
 					World.getPlayer().setModePistolet(true);break;

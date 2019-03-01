@@ -19,13 +19,13 @@ import fr.menus.MainMenu;
 import fr.parser.ReadFile;
 
 public class Editor extends BasicGameState{
-	
-	
+
+
 	public static int ID = 9;
 	public static LevelEditor editor;
 	private static GameContainer container;
 	private static StateBasedGame game;
-	
+
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		editor=new LevelEditor();
@@ -36,7 +36,7 @@ public class Editor extends BasicGameState{
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		editor.render(arg0, arg1, arg2);
-		
+
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class Editor extends BasicGameState{
 	public int getID() {
 		return ID;
 	}
-	
+
 	public void keyReleased(int key, char c) {
 		//Player.keyReleased(key, c);
 	}
@@ -60,11 +60,11 @@ public class Editor extends BasicGameState{
 			game.enterState(MainMenu.ID, new FadeOutTransition(),
 					new FadeInTransition());
 		}
-		
+
 
 		editor.keyPressed(key,c);
 	}
-	
+
 
 	public void mouseDragged(int oldx,int  oldy, int newx,int  newy){
 		editor.mouseDragged(oldx,oldy, newx,  newy);
@@ -77,15 +77,15 @@ public class Editor extends BasicGameState{
 	}
 	public void mousePressed(int button, int oldx,int oldy){
 		editor.mousePressed(button, oldx, oldy);
-		
+
 	}
-	
+
 	public void mouseWheelMoved(int newValue){
 		editor.mouseWheelMoved(newValue);
 	}
 
 	public static void reload(String niveau) {
-		
+
 		if(new File("levels"+File.separator+niveau).exists())
 		{
 			ReadFile file=new ReadFile("levels"+File.separator+niveau);
@@ -99,7 +99,7 @@ public class Editor extends BasicGameState{
 					if(b.getY()<400){
 						editor.addBrique(b);
 					}
-					
+
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -110,8 +110,8 @@ public class Editor extends BasicGameState{
 
 	public static void reload() {
 		editor.reload();
-		
+
 	}
 
-	
+
 }

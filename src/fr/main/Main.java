@@ -12,19 +12,17 @@ import fr.menus.*;
 
 
 public class Main extends StateBasedGame {
-	
+
 
 	public static void main(String[] args) throws SlickException {
-		
-		System.setProperty("org.lwjgl.librarypath", new File("").getAbsolutePath());
-		
+
 		AppGameContainer app = new AppGameContainer(new Main(),800, 600, false);
 		app.setTargetFrameRate(60);
 		app.setVSync(true);
 		app.setShowFPS(true);
 		app.start();
 	}
-	
+
 
 	public Main() {
 		//super("LE CACHE BRIQUE CH'EST UN CHEU DE PORTOUGESH");
@@ -35,7 +33,7 @@ public class Main extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-		
+
 		addState(new WelcomeMenu());
 		addState(new MainMenu());
 		addState(new ConfirmMenu());
@@ -48,7 +46,7 @@ public class Main extends StateBasedGame {
 		addState(new LevelSelectorMenu());
 		addState(new Editor());
 		addState(new World());
-		
+
 	}
 
 

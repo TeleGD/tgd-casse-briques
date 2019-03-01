@@ -25,13 +25,13 @@ public class PauseMenu extends BasicGameState {
 	public int nbrOption = items.length;
 
 	public static int ID = 6;
-	
+
 	static TrueTypeFont font1;
 
 	public String[] getItems() {
 		return this.items;
 	}
-	
+
 	private Image background;
 
 	static StateBasedGame game;
@@ -50,14 +50,14 @@ public class PauseMenu extends BasicGameState {
 		container.setShowFPS(false);
 		this.game = game;
 		//background = new Image("Images/background2.png");
-		
+
 		Font titre1Font = new Font("Kalinga", Font.BOLD, 26);
     	font1 = new TrueTypeFont(titre1Font, false);
-    	
-    	
-		
+
+
+
 	}
-	
+
 	private boolean mouseOverSelection() {
 		int x = Mouse.getX();
 		int y = 600-Mouse.getY();
@@ -121,7 +121,7 @@ public class PauseMenu extends BasicGameState {
 
 		}
 	}
-	
+
 	public void mousePressed(int button, int oldx,int oldy){
 		if (mouseOverSelection())
 			execOption();

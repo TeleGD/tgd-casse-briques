@@ -11,8 +11,8 @@ import fr.util.Movable;
 import fr.util.Rectangle;
 
 public class Bullet extends Movable implements Rectangle{
-	
-	
+
+
 	public Bullet(int x,int y){
 		this.x=x;
 		this.y=y;
@@ -22,7 +22,7 @@ public class Bullet extends Movable implements Rectangle{
 		speedX = 0;
 		setMoving(true);
 	}
-	
+
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -30,7 +30,7 @@ public class Bullet extends Movable implements Rectangle{
 		g.fillRoundRect((float)x, (float)y, (float)width, (float)height,2,2);
 
 	}
-	
+
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -46,6 +46,6 @@ public class Bullet extends Movable implements Rectangle{
 		System.out.println("touche");
 		moveY(delta);
 	}
-	
+
 
 }

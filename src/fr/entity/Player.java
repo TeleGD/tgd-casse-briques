@@ -32,7 +32,7 @@ public class Player extends Movable implements Rectangle {
 	private Image raquette256;
 	private Image raquette512;
 	private Image raquette600;
-	
+
 	public Player(){
 		this.x=336;
 		this.y=535;
@@ -54,11 +54,11 @@ public class Player extends Movable implements Rectangle {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean getModePistolet(){
 		return this.modePistolet;
 	}
-	
+
 	public void setModePistolet(boolean modePistolet){
 		this.modePistolet=modePistolet;
 	}
@@ -81,7 +81,7 @@ public class Player extends Movable implements Rectangle {
 	public double getHeight() {
 		return this.height;
 	}
-	
+
 	public void modify ( double multi, int time ){
 		if (this.width*multi<32||this.width*multi>800){
 			if(this.width*multi<32){
@@ -94,13 +94,13 @@ public class Player extends Movable implements Rectangle {
 			this.x = this.x + var/2;
 			this.width = this.width*multi;
 		}
-		
+
 		if ( x <= 0 ){ x = 0;}
 		if ( x >= 800 - this.width ){ x = 800 - this.width; }
 		comp = time;
-		
+
 	}
-	
+
 	public Image getImage(){
 		if ( this.width == 32 ){
 			return raquette32;
@@ -138,7 +138,7 @@ public class Player extends Movable implements Rectangle {
 		}
 		if (keyPressedLeft)  { speedX = -0.5*accelX; }
 		if (keyPressedRight) {	speedX = 0.5*accelX;  }
-		
+
 		switch(stillPressed){
 		case 1 :
 			keyPressedLeft = true;
@@ -147,12 +147,12 @@ public class Player extends Movable implements Rectangle {
 			keyPressedRight = true;
 			break;
 		}
-		
+
 		if ( !(x <= 0 && speedX <=0) && !(x>=800-this.width && speedX >= 0)){
 
 			moveX(delta);
 		}
-		
+
 		if ( comp > 0 ){
 			comp --;
 		}
@@ -160,11 +160,11 @@ public class Player extends Movable implements Rectangle {
 			compTir --;
 			keyPressedSpace=false;
 		}
-		
+
 		if (life == 0) {
 			game.enterState(GameOverMenu.ID, new FadeOutTransition(), new FadeInTransition());
 		}
-		
+
 	}
 
 	public void keyReleased(int key, char c) {
@@ -202,13 +202,13 @@ public class Player extends Movable implements Rectangle {
 			}
 			break;
 		}
-			
+
 	}
-	
+
 	public void setLife(int life){
 		this.life = life;
 	}
-	
+
 	public int getLife(){
 		return this.life;
 	}
@@ -220,12 +220,12 @@ public class Player extends Movable implements Rectangle {
 	public void setHasBall(boolean b) {
 
 		hasBall=b;
-		
+
 	}
 
 
 
 
-	
+
 
 }

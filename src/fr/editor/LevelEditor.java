@@ -34,12 +34,12 @@ public class LevelEditor extends Entity{
 	private int indexSelection=-1;
 	private boolean gommeActive=false;
 	private boolean frolleSauvegarde;
-	
+
 	public LevelEditor()
 	{
 		width=800;
 		height=600;
-		
+
 		for(int i=0;i<4;i++)
 		{
 			BriqueClassic b=new BriqueClassic(70*i,600-barHorizontalHeight/2-35,false);
@@ -54,7 +54,7 @@ public class LevelEditor extends Entity{
 			b.setLife(i+1);
 			menuBriques.add(b);
 		}
-		
+
 		for(int i=0;i<1;i++)
 		{
 			BriqueMetal b=new BriqueMetal(300+70*i,600-barHorizontalHeight/2,false);
@@ -62,19 +62,19 @@ public class LevelEditor extends Entity{
 			b.setLife(i+1);
 			menuBriques.add(b);
 		}
-		
-		
+
+
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		// TODO Auto-generated method stub
-		
-		
+
+
 		if(debut)
 		{
 
@@ -87,15 +87,15 @@ public class LevelEditor extends Entity{
 			arg2.drawString("Appuyez sur S pour sauvegarder", 200, 270);
 
 		}
-		
+
 		arg2.setColor(Color.red);
 		arg2.fillRect(0f,  (float)height-barHorizontalHeight, (float)width, 2);
 		arg2.setColor(Color.white);
 		arg2.fillRect(15f,  384, (float)width-31, 1);
 		arg2.fillRect(15,  0,1, 384);
 		arg2.fillRect((float)width-16,  0,1, 384);
-		
-		
+
+
 		for(int i=0;i<briques.size();i++)
 		{
 			briques.get(i).render(arg0, arg1, arg2);
@@ -104,12 +104,12 @@ public class LevelEditor extends Entity{
 		{
 			menuBriques.get(i).render(arg0, arg1, arg2);
 		}
-		
+
 		if(briqueSelectionne!=null)
 		{
 			briqueSelectionne.render(arg0, arg1, arg2);
 		}
-		
+
 		if(indexSelection!=-1)
 		{
 			arg2.setColor(Color.white);
@@ -121,10 +121,10 @@ public class LevelEditor extends Entity{
 					(float)menuBriques.get(indexSelection).getHeight());
 			arg2.fillRect((float)menuBriques.get(indexSelection).getX()+(float)menuBriques.get(indexSelection).getWidth()-2,(float)menuBriques.get(indexSelection).getY(),2,
 					(float)menuBriques.get(indexSelection).getHeight());
-			
-			
+
+
 		}
-		
+
 		if(sauvegarder)
 		{
 			arg2.setColor(Color.red);
@@ -138,19 +138,19 @@ public class LevelEditor extends Entity{
 			TrueTypeFont font1 = new TrueTypeFont(titre1Font, false);
 			arg2.setFont(font1);
 			arg2.drawString("Sauvegarder le niveau", 300, 220);
-			
+
 			titre1Font = new Font("Kalinga", Font.BOLD, 12);
 		    font1 = new TrueTypeFont(titre1Font, false);
 			arg2.setFont(font1);
 			arg2.drawString("Entrez le nom du niveau: "+nomFichier, 300, 280);
 			arg2.drawString("Appuyez sur entree pour enregistrer le niveau", 260, 310);
-			
+
 			if(sauvegarderSucces)
 			{
 				arg2.setColor(Color.green);
 				arg2.drawString("Sauvegarde avec succes ! (je crois...)", 280, 340);
 			}
-			
+
 		}
 		Font titre1Font = new Font("Kalinga", Font.BOLD, 12);
 	    TrueTypeFont font1 = new TrueTypeFont(titre1Font, false);
@@ -158,34 +158,34 @@ public class LevelEditor extends Entity{
 	    else arg2.setColor(Color.orange);
 		arg2.setFont(font1);
 		arg2.drawString("SAUVEGARDER", 650, 540);
-	
+
 		arg2.setColor(Color.red);
 		arg2.fillOval(310, (float)height-barHorizontalHeight+barHorizontalHeight/7,  barHorizontalHeight/4, barHorizontalHeight/4);
 		if(gommeActive)arg2.setColor(Color.white);
 		else arg2.setColor(Color.black);
 		arg2.fillOval(312, (float)height-barHorizontalHeight+barHorizontalHeight/7+2, barHorizontalHeight/4-4, barHorizontalHeight/4-4);
-		
-		
+
+
 	}
 
 	public void mouseReleased(int button, int x,int y){
-		
-		
-		
+
+
+
 	}
-	
+
 	public void mousePressed(int button, int oldx,int oldy){
 		debut=false;
-		
-		
+
+
 		if(oldx>310 && oldy> (float)height-barHorizontalHeight+barHorizontalHeight/7 &&  oldx<310+barHorizontalHeight/4 && oldy< (float)height-barHorizontalHeight+barHorizontalHeight/7+ barHorizontalHeight/4)
 		{
 			gommeActive=!gommeActive;
 			briqueSelectionne=null;
-			
+
 		}
 		else
-		{	
+		{
 			for(int i=0;i<menuBriques.size();i++)
 			{
 				if(menuBriques.get(i).getX()<oldx  && menuBriques.get(i).getX()+menuBriques.get(i).getWidth()>oldx
@@ -197,7 +197,7 @@ public class LevelEditor extends Entity{
 					gommeActive=false;
 				}
 			}
-			
+
 			if(briqueSelectionne!=null)
 			{
 				if(oldy<=384 && recupererBrique(oldx, oldy)==null)
@@ -210,27 +210,27 @@ public class LevelEditor extends Entity{
 					briqueSelectionne.setX(oldBriqueX);
 					briqueSelectionne.setY(650);
 				}
-				
+
 			}
-			
+
 			if(gommeActive)
 			{
 				Brique b=recupererBrique(oldx,oldy);
 				if( b!=null )briques.remove(b);
 			}
-			
-			
+
+
 			if(frolleSauvegarde){
 				sauvegarder=true;
 			}
 		}
-		
-		
-		
-		
+
+
+
+
 	}
-	
-	
+
+
 	private Brique copie(Brique brique) {
 
 		if(brique instanceof BriqueClassic)return new BriqueClassic(brique);
@@ -244,9 +244,9 @@ public class LevelEditor extends Entity{
 
 		if(newx>650 && newx<750 && newy>=540 && newy<=560){
 			frolleSauvegarde=true;
-		}else 
+		}else
 			frolleSauvegarde=false;
-		
+
 		if(briqueSelectionne!=null && recupererBrique(newx,newy)==null)
 		{
 			if(newy>=384)newy=650;
@@ -254,9 +254,9 @@ public class LevelEditor extends Entity{
 			briqueSelectionne.setX((newx/64)*64+16);
 			briqueSelectionne.setY((newy/32)*32);
 		}
-		
-		
-		
+
+
+
 	}
 
 	private Brique recupererBrique(int newx, int newy) {
@@ -271,13 +271,13 @@ public class LevelEditor extends Entity{
 	public void mouseDragged(int oldx,int  oldy, int newx,int  newy){
 		mouseMoved(oldx,oldy,newx,newy);
 		mousePressed(0,newx,newy);
-		
+
 	}
 	public void keyPressed(int key, char c) {
 
 		if(sauvegarder)
 		{
-			
+
 			if(key==Input.KEY_BACK){
 
 				if(nomFichier.length()>0)nomFichier=nomFichier.substring(0, nomFichier.length()-1);
@@ -289,9 +289,9 @@ public class LevelEditor extends Entity{
 				System.out.println("char : "+c);
 				nomFichier+=c;
 			}
-			
+
 		}
-		
+
 		if(key==Input.KEY_UP){
 			couleurId++;
 			if(couleurId==Brique.getCouleurs().length)couleurId=0;
@@ -304,9 +304,9 @@ public class LevelEditor extends Entity{
 		else if(key==Input.KEY_S)
 		{
 			sauvegarder=true;
-			
+
 		}
-		
+
 		couleurId=couleurId%Brique.getCouleurs().length;
 		for(int i=0;i<menuBriques.size();i++)
 		{
@@ -316,18 +316,18 @@ public class LevelEditor extends Entity{
 		{
 			briqueSelectionne.setColor(Brique.getCouleurs()[couleurId]);
 		}
-		
-	
+
+
 	}
 
 	private void enregistrerNiveau() {
-		
+
 		ArrayList<String> textLines=new ArrayList<String>();
 		for(Brique b:briques)
 		{
 			textLines.add(b.briqueToString());
 		}
-		
+
 		WriteFile file = new WriteFile("levels"+File.separator+nomFichier+".txt",false);
 		try {
 			file.writeToFile(textLines);
@@ -337,7 +337,7 @@ public class LevelEditor extends Entity{
 		}
 		sauvegarderSucces=true;
 	}
-	
+
 	public void mouseWheelMoved(int newValue){
 		couleurId++;
 		couleurId=couleurId%Brique.getCouleurs().length;
@@ -349,18 +349,18 @@ public class LevelEditor extends Entity{
 		{
 			briqueSelectionne.setColor(Brique.getCouleurs()[couleurId]);
 		}
-		
-	
+
+
 	}
 
 	public void removeAllBriques() {
 		briques.removeAll(briques);
-		
+
 	}
 
 	public void addBrique(Brique b) {
 		briques.add(b);
-		
+
 	}
 
 	public void reload() {
@@ -370,7 +370,7 @@ public class LevelEditor extends Entity{
 		briqueSelectionne=null;
 		debut=true;
 		nomFichier="";
-		
+
 	}
-	
+
 }
