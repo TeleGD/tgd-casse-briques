@@ -1,0 +1,9 @@
+- Adrien Wehrung
+- Arthur Canal (@canalarthur)
+- Clément Dugué
+- eveler
+- Guillaume Teset
+- Jérôme Gauzins (@jeromegauzins)
+- JSNerd12345 (@JSNerd12345)
+- Nicolas Bernardes (@nicorb)
+- Romain Gogdemir
