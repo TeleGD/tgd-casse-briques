@@ -6,4 +6,4 @@
 - Jérôme Gauzins (@jeromegauzins)
 - JSNerd12345 (@JSNerd12345)
 - Nicolas Bernardes (@nicorb)
-- Romain Gogdemir
+- Romain Gogdemir (@RomainGogdemir)
