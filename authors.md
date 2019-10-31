@@ -2,7 +2,7 @@
 - Arthur Canal (@canalarthur)
 - Clément Dugué
 - eveler
-- Guillaume Teset
+- Guillaume Teset (@gteset)
 - Jérôme Gauzins (@jeromegauzins)
 - JSNerd12345 (@JSNerd12345)
 - Nicolas Bernardes (@nicorb)
