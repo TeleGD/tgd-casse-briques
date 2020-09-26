@@ -1,12 +1,9 @@
-package fr.main;
-
-import java.io.File;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import fr.main.Editor;
 import fr.main.World;
 import fr.menus.*;
 

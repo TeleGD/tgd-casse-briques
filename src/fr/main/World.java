@@ -60,9 +60,9 @@ public class World extends BasicGameState{
 		briques = new ArrayList<Brique>();
 		bullets=new ArrayList<Bullet>();
 		currentCampaignLevel = 1;
-		if(new File("levels"+File.separator+"niveau1.txt").exists())
+		if(new File("res"+File.separator+"levels"+File.separator+"niveau1.txt").exists())
 		{
-			ReadFile file=new ReadFile("levels"+File.separator+"niveau1.txt");
+			ReadFile file=new ReadFile("res"+File.separator+"levels"+File.separator+"niveau1.txt");
 		    ArrayList<String> texts;
 			try {
 				texts = file.readFromFile();
@@ -249,7 +249,7 @@ public class World extends BasicGameState{
 
 	public static void reload(String niveau)
 	{
-		if(new File("levels"+File.separator+niveau).exists())
+		if(new File("res"+File.separator+"levels"+File.separator+niveau).exists())
 		{
 
 			player=new Player();
@@ -258,7 +258,7 @@ public class World extends BasicGameState{
 			briques = new ArrayList<Brique>();
 			bullets=new ArrayList<Bullet>();
 
-			ReadFile file=new ReadFile("levels"+File.separator+niveau);
+			ReadFile file=new ReadFile("res"+File.separator+"levels"+File.separator+niveau);
 		    ArrayList<String> texts;
 			try {
 				texts = file.readFromFile();

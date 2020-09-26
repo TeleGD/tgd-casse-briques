@@ -86,9 +86,9 @@ public class Editor extends BasicGameState{
 
 	public static void reload(String niveau) {
 
-		if(new File("levels"+File.separator+niveau).exists())
+		if(new File("res"+File.separator+"levels"+File.separator+niveau).exists())
 		{
-			ReadFile file=new ReadFile("levels"+File.separator+niveau);
+			ReadFile file=new ReadFile("res"+File.separator+"levels"+File.separator+niveau);
 		    ArrayList<String> texts;
 			try {
 				texts = file.readFromFile();

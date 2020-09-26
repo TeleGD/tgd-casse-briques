@@ -1,6 +1,6 @@
 - Adrien Wehrung
 - Arthur Canal (@canalarthur)
-- Clément Dugué
+- Clément Dugué (@DugueC)
 - eveler
 - Guillaume Teset (@gteset)
 - Jérôme Gauzins (@jeromegauzins)

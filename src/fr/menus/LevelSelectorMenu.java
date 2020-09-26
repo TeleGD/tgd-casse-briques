@@ -50,7 +50,7 @@ public class LevelSelectorMenu extends BasicGameState {
 
 
 	public static void reload() {
-		items = (new File("res/levels")).list(); // TODO make multiplatform
+		items = (new File("res"+File.separator+"levels")).list(); // TODO make multiplatform
 		nbrOption = items.length;
 		for (int i = 0; i < items.length; i++)
 			if (items[i].endsWith(".txt"))
@@ -216,7 +216,7 @@ public class LevelSelectorMenu extends BasicGameState {
 
 		case 2:
 			try {
-				Files.delete(Paths.get("levels"+File.separator+items[selection]+".txt"));
+				Files.delete(Paths.get("res"+File.separator+"levels"+File.separator+items[selection]+".txt"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

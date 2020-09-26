@@ -17,7 +17,6 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import fr.main.World;
 import fr.menus.MainMenu;
-import fr.main.Main;
 import fr.main.World.mode;
 
 

@@ -328,7 +328,7 @@ public class LevelEditor extends Entity{
 			textLines.add(b.briqueToString());
 		}
 
-		WriteFile file = new WriteFile("levels"+File.separator+nomFichier+".txt",false);
+		WriteFile file = new WriteFile("res"+File.separator+"levels"+File.separator+nomFichier+".txt",false);
 		try {
 			file.writeToFile(textLines);
 		} catch (IOException e) {

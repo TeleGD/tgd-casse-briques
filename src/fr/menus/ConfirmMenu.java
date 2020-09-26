@@ -15,7 +15,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import fr.main.Main;
 import fr.main.World;
 import fr.menus.MainMenu;
 
