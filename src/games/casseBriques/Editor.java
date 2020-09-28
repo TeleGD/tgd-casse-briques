@@ -19,9 +19,9 @@ import games.casseBriques.parser.ReadFile;
 public class Editor extends BasicGameState{
 
 	private int ID;
-	public static LevelEditor editor;
-	private static GameContainer container;
-	private static StateBasedGame game;
+	public LevelEditor editor;
+	private GameContainer container;
+	private StateBasedGame game;
 
 	public Editor(int ID) {
 		this.ID = ID;
@@ -42,13 +42,10 @@ public class Editor extends BasicGameState{
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) {
 		editor.render(arg0, arg1, arg2);
-
 	}
 
 	@Override
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
-		editor.update(arg0, arg1, arg2);
-	}
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {}
 
 	public void keyReleased(int key, char c) {
 		//Player.keyReleased(key, c);
@@ -67,23 +64,24 @@ public class Editor extends BasicGameState{
 	public void mouseDragged(int oldx,int  oldy, int newx,int  newy){
 		editor.mouseDragged(oldx,oldy, newx,  newy);
 	}
+
 	public void mouseMoved(int oldx,int  oldy, int newx,int  newy){
 		editor.mouseMoved(oldx,oldy, newx,  newy);
 	}
+
 	public void mouseReleased(int button, int x,int y){
 		editor.mouseReleased(button, x,  y);
 	}
+
 	public void mousePressed(int button, int oldx,int oldy){
 		editor.mousePressed(button, oldx, oldy);
-
 	}
 
 	public void mouseWheelMoved(int newValue){
 		editor.mouseWheelMoved(newValue);
 	}
 
-	public static void reload(String niveau) {
-
+	public void reload(String niveau) {
 		if(new File("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+niveau).exists())
 		{
 			ReadFile file=new ReadFile("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+niveau);
@@ -93,11 +91,10 @@ public class Editor extends BasicGameState{
 				editor.removeAllBriques();
 				for(String s:texts)
 				{
-					Brique b=Brique.StringToBrique(s);
+					Brique b=Brique.StringToBrique(null, s);
 					if(b.getY()<400){
 						editor.addBrique(b);
 					}
-
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -106,9 +103,8 @@ public class Editor extends BasicGameState{
 		}
 	}
 
-	public static void reload() {
+	public void reload() {
 		editor.reload();
-
 	}
 
 }

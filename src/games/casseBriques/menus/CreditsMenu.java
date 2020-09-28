@@ -16,8 +16,8 @@ public class CreditsMenu extends BasicGameState {
 
 	private int ID;
 
-	static Font font5;
-	static Font font6;
+	Font font5;
+	Font font6;
 
 	private String nom = "Credits :";
 	private String[] items = {
@@ -43,8 +43,8 @@ public class CreditsMenu extends BasicGameState {
 
 	//private Image background;
 
-	static GameContainer container;
-	static StateBasedGame game;
+	GameContainer container;
+	StateBasedGame game;
 	int selection = nbrOption - 1;
 
 	public CreditsMenu(int ID) {
@@ -76,12 +76,9 @@ public class CreditsMenu extends BasicGameState {
 				&& y<390 + 13 * nbrOption);
 	}
 
-	public void update(GameContainer container, StateBasedGame game, int delta) {
-
-	}
+	public void update(GameContainer container, StateBasedGame game, int delta) {}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-
 		//g.drawImage(background, 0, 0);
 
 		g.setColor(Color.red);
@@ -97,7 +94,6 @@ public class CreditsMenu extends BasicGameState {
 		}
 
 		g.drawString(">>", 225, 390 + 13 * selection);
-
 	}
 
 	public void mousePressed(int button, int oldx,int oldy){

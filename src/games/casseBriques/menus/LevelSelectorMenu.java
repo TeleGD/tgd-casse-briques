@@ -26,15 +26,15 @@ public class LevelSelectorMenu extends BasicGameState {
 
 	private int ID;
 
-	static Font font1;
+	Font font1;
 
 	private String nom = "Selection du niveau";
 
-	private static String[] items;
+	private String[] items;
 
 	private boolean popup = false;
 
-	public static int nbrOption;
+	public int nbrOption;
 
 	public String[] getItems() {
 		return this.items;
@@ -42,14 +42,14 @@ public class LevelSelectorMenu extends BasicGameState {
 
 	//private Image background;
 
-	static GameContainer container;
-	static StateBasedGame game;
+	GameContainer container;
+	StateBasedGame game;
 
-	static int selection = 0;
+	int selection = 0;
 
-	static int selectionPopup = 0;
+	int selectionPopup = 0;
 
-	public static void reload() {
+	public void reload() {
 		items = (new File("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels")).list(); // TODO make multiplatform
 		nbrOption = items.length;
 		for (int i = 0; i < items.length; i++)
@@ -77,11 +77,9 @@ public class LevelSelectorMenu extends BasicGameState {
 		font1 = AppLoader.loadFont("Kalinga", AppFont.BOLD, 12); // TODO: trouver une fonte équivalente
 
 		reload();
-
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-
 		if (mouseOverSelection() && !popup) {
 			int y = 600-Mouse.getY();
 			selection = (y-160)/30;
@@ -89,7 +87,6 @@ public class LevelSelectorMenu extends BasicGameState {
 			int y = 600-Mouse.getY();
 			selectionPopup = (y-280)/30;
 		}
-
 	}
 
 	private boolean mouseOverSelection() {
@@ -126,7 +123,6 @@ public class LevelSelectorMenu extends BasicGameState {
 		g.drawString(">>", 240, 160 + 30 * selection);
 
 		if (popup) {
-
 			g.setColor(Color.red);
 			g.fillRoundRect(200, 200, 400, 200,20,20);
 			g.setColor(Color.black);
@@ -144,9 +140,7 @@ public class LevelSelectorMenu extends BasicGameState {
 			g.drawString("Spprimer", 300, 340);
 
 			g.drawString(">>", 280, 280+30*selectionPopup);
-
 		}
-
 	}
 
 	@Override
@@ -201,15 +195,18 @@ public class LevelSelectorMenu extends BasicGameState {
 	}
 
 	public void execOption() {
+		World world = (World) game.getState(0);
+		Editor editor = (Editor) game.getState(9);
 		switch (selectionPopup) {
 		case 0:
-			World.gameMode = World.mode.CUSTOM;
-			World.reload(items[selection]+".txt");
+			world.gameMode = World.mode.CUSTOM;
+			world.currentLevel = items[selection]+".txt";
+			world.load(world.currentLevel);
 			game.enterState(0 /* World */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 		case 1:
-			Editor.reload(items[selection]+".txt");
+			editor.reload(items[selection]+".txt");
 			game.enterState(9 /* Editor */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;

@@ -21,22 +21,22 @@ public class MissionMenu extends BasicGameState {
 
 	private int ID;
 
-	static Font font5;
-	static Font font6;
+	Font font5;
+	Font font6;
 
-	public static String[] txt1 = new String[2];
-	public static String[] txt2 = new String[2];
-	public static String[] txt3 = new String[2];
-	public static ArrayList<String> textList;
-	public static int numMessage;
+	public String[] txt1 = new String[2];
+	public String[] txt2 = new String[2];
+	public String[] txt3 = new String[2];
+	public ArrayList<String> textList;
+	public int numMessage;
 
 	private String nom = "Mission :";
 
 	//private Image background;
-	static GameContainer container;
-	static StateBasedGame game;
+	GameContainer container;
+	StateBasedGame game;
 
-	public static ArrayList<String> generateText(int lineSize) {
+	public ArrayList<String> generateText(int lineSize) {
 		ArrayList<String> res = new ArrayList<String>();
 		Random r = new Random();
 
@@ -59,7 +59,6 @@ public class MissionMenu extends BasicGameState {
 				res.add(tmp);
 				chunkStart = lastSpaceIndex;
 			}
-
 		}
 
 		tmp = text.substring(chunkStart, text.length());
@@ -100,15 +99,11 @@ public class MissionMenu extends BasicGameState {
         txt2[0]=" Cependant, ce jeu ne parle pas de cette rencontre. Il ne parle pas non plus de Jimmy. En realite, ce jeu parle d'un probleme bien plus important :";
         txt3[0]=" la menace que representent les ouvriers extremistes travaillant dans le BTP. Votre mission est de detruire leurs constructions machiaveliques afin de sauver l'humanite de la domination des parpaings.";
 		textList = generateText(40);
-
 	}
 
-	public void update(GameContainer container, StateBasedGame game, int delta) {
-
-	}
+	public void update(GameContainer container, StateBasedGame game, int delta) {}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-
 		//g.drawImage(background, 0, 0);
 
 		g.setColor(Color.red);
@@ -125,12 +120,9 @@ public class MissionMenu extends BasicGameState {
 
 		int lines = 12;
 		g.drawString(">>  Continuer", 75, 255 + 25 + lines * 13);
-
 	}
 
-	public static void reset() {
-
-	}
+	public void reset() {}
 
 	public void mousePressed(int button, int oldx,int oldy){
 		if (mouseOverSelection())

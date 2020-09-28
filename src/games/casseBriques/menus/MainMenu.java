@@ -21,7 +21,7 @@ public class MainMenu extends BasicGameState {
 
 	private int ID;
 
-	static Font font1;
+	Font font1;
 
 	private String nom = "Menu Principal";
 	private String[] items = { "Campagne", "Multijoueur", "Niveaux Custom", "Editeur", "Quitter" };
@@ -34,8 +34,8 @@ public class MainMenu extends BasicGameState {
 
 	//private Image background;
 
-	static GameContainer container;
-	static StateBasedGame game;
+	GameContainer container;
+	StateBasedGame game;
 
 	int selection = 0;
 
@@ -56,17 +56,14 @@ public class MainMenu extends BasicGameState {
 		//background = new Image("sprites/0001.png");
 
 		font1 = AppLoader.loadFont("Kalinga", AppFont.BOLD, 12); // TODO: trouver une fonte équivalente
-
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-
 		if (mouseOverSelection()) {
 			int x = Mouse.getX();
 			int y = 600-Mouse.getY();
 			selection = (y-360)/30;
 		}
-
 	}
 
 	private boolean mouseOverSelection() {
@@ -92,7 +89,6 @@ public class MainMenu extends BasicGameState {
 		}
 
 		g.drawString(">>", 540, 360 + 30 * selection);
-
 	}
 
 	@Override
@@ -130,29 +126,35 @@ public class MainMenu extends BasicGameState {
 	}
 
 	public void execOption() {
+		World world = (World) game.getState(0);
+		Editor editor = (Editor) game.getState(9);
+		LevelSelectorMenu levelSelectorMenu = (LevelSelectorMenu) game.getState(10);
 		switch (selection) {
 		case 0:
-			World.gameMode = World.mode.CAMPAIGN;
-			World.reload();
+			world.gameMode = World.mode.CAMPAIGN;
+			world.currentCampaignLevel = 1;
+			world.currentLevel = "niveau1.txt";
+			world.load(world.currentLevel);
 			game.enterState(5 /* MissionMenu */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 
 		case 1:
-			World.gameMode = World.mode.MULTI;
-			World.reload();
+			world.gameMode = World.mode.MULTI;
+			world.currentLevel = "multi.txt";
+			world.load(world.currentLevel);
 			game.enterState(0 /* World */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 
 		case 2:
-			LevelSelectorMenu.reload();
+			levelSelectorMenu.reload();
 			game.enterState(10 /* LevelSelectorMenu */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 
 		case 3:
-			Editor.reload();
+			editor.reload();
 			game.enterState(9 /* Editor */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;

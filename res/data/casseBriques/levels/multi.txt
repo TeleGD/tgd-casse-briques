@@ -5,10 +5,10 @@ BriqueClassic 332.0 320.0 255 0 0 2 true
 BriqueClassic 396.0 320.0 255 0 0 2 true
 BriqueClassic 332.0 128.0 255 0 0 2 true
 BriqueClassic 396.0 128.0 255 0 0 2 true
-BriqueMetals 268.0 288.0 76 76 76 1 true
-BriqueMetals 460.0 288.0 76 76 76 1 true
-BriqueMetals 460.0 160.0 76 76 76 1 true
-BriqueMetals 268.0 160.0 76 76 76 1 true
+BriqueMetal 268.0 288.0 76 76 76 -1 true
+BriqueMetal 460.0 288.0 76 76 76 -1 true
+BriqueMetal 460.0 160.0 76 76 76 -1 true
+BriqueMetal 268.0 160.0 76 76 76 -1 true
 BriqueClassic 268.0 128.0 255 0 0 4 true
 BriqueClassic 460.0 128.0 255 0 0 4 true
 BriqueClassic 268.0 320.0 255 0 0 4 true

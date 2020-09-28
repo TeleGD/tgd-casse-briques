@@ -1,4 +1,4 @@
-package games.casseBriques.entities;
+package games.casseBriques;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -17,6 +17,7 @@ public abstract class Entity {
 	}
 
 	public abstract void render(GameContainer container, StateBasedGame game, Graphics g);
+
 	public abstract void update(GameContainer container, StateBasedGame game, int delta);
 
 	public double getX() {

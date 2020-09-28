@@ -2,7 +2,6 @@ package games.casseBriques.util;
 
 import games.casseBriques.entities.Brique;
 import games.casseBriques.entities.Player;
-import games.casseBriques.World;
 
 public class Collisions {
 
@@ -69,19 +68,17 @@ public class Collisions {
 				return true;
 			}
 		}
-
 	}*/
 
 	//Detection de collisions avec la raquette :
     public static boolean colPlayer(Movable object,Player player){
-
 		if (object.getY()+object.getWidth()<player.getY()){return false;}
 		if(object.getX()+object.getWidth()<player.getX()){return false;}
-		if(object.getX()+object.getWidth()>player.getX()+World.getPlayer().getWidth()){return false;}
+		if(object.getX()+object.getWidth()>player.getX()+player.getWidth()){return false;}
 		return true;
     }
-    public static boolean colBrique(Movable object,Brique b){
 
+    public static boolean colBrique(Movable object,Brique b){
     	if(object.getY()+object.getHeight()<b.getY()) return false;
     	if(object.getY()>b.getY()+b.getHeight()) return false;
     	if(object.getX()+object.getWidth()<b.getX()) return false;

@@ -21,11 +21,11 @@ public class ScoresMenu extends BasicGameState {
 
 	private int ID;
 
-	static Font font5;
-	static Font font6;
+	Font font5;
+	Font font6;
 
 	private String nom = "Scores :";
-	private static String[] items = { "1. ", "2. ", "3. ", "4. ", "5. ", "",
+	private String[] items = { "1. ", "2. ", "3. ", "4. ", "5. ", "",
 			" Retour Menu" };
 
 	public int nbrOption = items.length;
@@ -35,17 +35,17 @@ public class ScoresMenu extends BasicGameState {
 	}
 
 	private Image background;
-	static GameContainer container;
-	static StateBasedGame game;
+	GameContainer container;
+	StateBasedGame game;
 	int selection = nbrOption - 1;
 
-	private static boolean firstTime;
-	private static int[] scoresList = {0, 0, 0, 0, 0};
+	private boolean firstTime;
+	private int[] scoresList = {0, 0, 0, 0, 0};
 
-	public static void addScoreToList() {
-		if (World.getScore() > scoresList[4]) {
-
-			scoresList[4] = World.getScore();
+	public void addScoreToList() {
+		World world = (World) game.getState(0);
+		if (world.getScore() > scoresList[4]) {
+			scoresList[4] = world.getScore();
 			int i = 4; int tmp;
 			while (i>0 && scoresList[i]>scoresList[i-1]) {
 				tmp = scoresList[i];
@@ -91,11 +91,9 @@ public class ScoresMenu extends BasicGameState {
 		firstTime = true;
 	}
 
-	public void update(GameContainer container, StateBasedGame game, int delta) {
-	}
+	public void update(GameContainer container, StateBasedGame game, int delta) {}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-
 		//g.drawImage(background, 0, 0);
 
 		g.setColor(Color.red);
@@ -113,14 +111,12 @@ public class ScoresMenu extends BasicGameState {
 				g.drawString(items[i].substring(0, 3), 175, 420 + 13 * i);
 			else
 				g.drawString(items[i], 175, 420 + 13 * i);
-
 		}
 
 		g.drawString(">>", 165, 420 + 13 * selection);
-
 	}
 
-	public static void reset() {
+	public void reset() {
 		firstTime = true;
 	}
 

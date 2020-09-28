@@ -1,4 +1,4 @@
-package games.casseBriques.bricks;
+package games.casseBriques.entities.bricks;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -7,21 +7,16 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppLoader;
 
-import games.casseBriques.entities.Bonus;
+import games.casseBriques.World;
 import games.casseBriques.entities.Brique;
 
 public class BriqueClassic extends Brique {
 
-	private String[] liste;
-	private int type;
-	private int indexImage;
 	private static Image[] images=new Image[3];
-	public BriqueClassic(int x, int y, boolean random) {
-		super(x, y,true, random,1); //Brique à vie random
 
-		type = (int) (Math.random()*(Bonus.lesTypes.length + 1));
+	public BriqueClassic(World world, int x, int y, boolean random) {
+		super(world, x, y,true, random,1); //Brique à vie random
 		chargerImage();
-		// TODO Auto-generated constructor stub
 	}
 
 	private void chargerImage() {
@@ -36,13 +31,13 @@ public class BriqueClassic extends Brique {
 		chargerImage();
 	}
 
-	public BriqueClassic() {
+	public BriqueClassic(World world) {
+		super(world);
 		chargerImage();
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-
 		int i=0;
 		if(getLife()==4 || getLife()==3)i=0;
 		else if(getLife()==2)i=1;
@@ -51,27 +46,14 @@ public class BriqueClassic extends Brique {
 	}
 
 	@Override
-	public void action() {
-		// TODO Auto-generated method stub
-		if (this.getColliding())
-		{
-			loseLife();
+	public void update(GameContainer container, StateBasedGame game, int delta) {
+		if (!this.getColliding()) {
+			return;
 		}
-		super.action();
-	}
-
-	@Override
-	public void loseLife() {
-		// TODO Auto-generated method stub
-		double coef;
-
-		if(getLife()==0)
-		{
-			coef=1;
-		}else{
-			this.setLife(this.getLife()-1);
+		this.setLife(this.getLife() - 1);
+		if (this.getLife() <= 0) {
+			this.world.remove(this);
 		}
-		mettreAjourCouleur();
 	}
 
 }

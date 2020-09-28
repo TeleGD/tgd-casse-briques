@@ -27,7 +27,6 @@ public class ReadFile {
 
 		br.close();
 		return textData;
-
 	}
 
 }

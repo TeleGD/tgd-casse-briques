@@ -16,6 +16,7 @@ import games.casseBriques.util.Rectangle;
 
 public class Player extends Movable implements Rectangle {
 
+	private World world;
 	private boolean keyPressedLeft;
 	private boolean keyPressedRight;
 	private boolean keyPressedSpace;
@@ -33,7 +34,8 @@ public class Player extends Movable implements Rectangle {
 	private Image raquette512;
 	private Image raquette600;
 
-	public Player(){
+	public Player(World world){
+		this.world = world;
 		this.x=336;
 		this.y=535;
 		this.height=32;
@@ -94,7 +96,6 @@ public class Player extends Movable implements Rectangle {
 		if ( x <= 0 ){ x = 0;}
 		if ( x >= 800 - this.width ){ x = 800 - this.width; }
 		comp = time;
-
 	}
 
 	public Image getImage(){
@@ -145,7 +146,6 @@ public class Player extends Movable implements Rectangle {
 		}
 
 		if ( !(x <= 0 && speedX <=0) && !(x>=800-this.width && speedX >= 0)){
-
 			moveX(delta);
 		}
 
@@ -160,7 +160,6 @@ public class Player extends Movable implements Rectangle {
 		if (life == 0) {
 			game.enterState(3 /* GameOverMenu */, new FadeOutTransition(), new FadeInTransition());
 		}
-
 	}
 
 	public void keyReleased(int key, char c) {
@@ -192,13 +191,12 @@ public class Player extends Movable implements Rectangle {
 			hasBall=false;
 			if (compTir==0 && modePistolet){
 				keyPressedSpace=true;
-				World.getBullets().add(new Bullet((int)x,(int)y));
-				World.getBullets().add(new Bullet((int)(x+width),(int)y));
+				world.getBullets().add(new Bullet(this.world,(int)x,(int)y));
+				world.getBullets().add(new Bullet(this.world,(int)(x+width),(int)y));
 				compTir=10;
 			}
 			break;
 		}
-
 	}
 
 	public void setLife(int life){
@@ -214,9 +212,7 @@ public class Player extends Movable implements Rectangle {
 	}
 
 	public void setHasBall(boolean b) {
-
 		hasBall=b;
-
 	}
 
 }

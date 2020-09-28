@@ -1,28 +1,26 @@
 package games.casseBriques.entities;
 
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
 
+import games.casseBriques.Entity;
 import games.casseBriques.World;
-import games.casseBriques.bricks.BriqueClassic;
-import games.casseBriques.bricks.BriqueExplosive;
-import games.casseBriques.bricks.BriqueMetal;
-import games.casseBriques.bricks.BriqueTp;
+import games.casseBriques.entities.bricks.BriqueClassic;
+import games.casseBriques.entities.bricks.BriqueExplosive;
+import games.casseBriques.entities.bricks.BriqueMetal;
 import games.casseBriques.util.Rectangle;
 
 public abstract class Brique extends Entity implements Rectangle{
 
+	protected World world;
 	private int life;
 	private boolean colliding;
 	private boolean hard;
-	private boolean dead = false;
 	private boolean rand;
 	private Color couleurOriginal;
 	private static Color[] couleurs={Color.red,Color.blue,Color.green,Color.yellow,Color.orange,Color.cyan,Color.magenta,Color.pink,Color.white};
 
-	public Brique(int x, int y, boolean h, boolean random,int life){
+	public Brique(World world, int x, int y, boolean h, boolean random,int life){
+		this.world = world;
 		this.x=x;
 		this.y=y;
 		this.width=64;
@@ -43,13 +41,15 @@ public abstract class Brique extends Entity implements Rectangle{
 		//this.color = new Color(0,0,255-135/4*life);
 	}
 
-	public Brique()
+	public Brique(World world)
 	{
+		this.world = world;
 		this.width=64;
 		this.height=32;
 	}
 	public Brique(Brique b)
 	{
+		this.world = b.world;
 		this.x = b.x;
 		this.y = b.y;
 		this.width = 64;
@@ -67,38 +67,9 @@ public abstract class Brique extends Entity implements Rectangle{
 		this.hard = b.hard;
 	}
 
-	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-		g.setColor(Color.black);
-		g.fillRect((float)x+2,(float)y+2,(float)width-4,(float)height-4);
-		g.setColor(mettreAjourCouleur());
-		g.fillRect((float)x,(float)y,(float)width,(float)height);
-	}
-
-	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) {
-		// TODO Auto-generated method stub
-		action();
-	}
-
-	public void onHit()
-	{
-		// TODO
-	}
-
 	public int getLife()
 	{
 		return this.life;
-	}
-
-	public void setDead(boolean d)
-	{
-		this.dead = d;
-	}
-
-	public boolean getDead()
-	{
-		return this.dead;
 	}
 
 	public void setLife(int life)
@@ -128,7 +99,6 @@ public abstract class Brique extends Entity implements Rectangle{
 
 	public void setColor(Color c)
 	{
-
 		this.couleurOriginal=c;
 	}
 
@@ -137,47 +107,27 @@ public abstract class Brique extends Entity implements Rectangle{
 		return this.couleurOriginal;
 	}
 
-	public  void action(){
-		if (this.getLife()==0)
-		{
-			this.setDead(true);
-			World.destroy(this);
-		}
-	}
-	public abstract void loseLife();
-
 	public String briqueToString(){
-		if(this instanceof BriqueClassic)
-		{
-			return  "BriqueClassic "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
-		}else if(this instanceof BriqueTp)
-		{
-			return  "BriqueTp "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
-		}else if(this instanceof BriqueExplosive)
-		{
+		if (this instanceof BriqueExplosive) {
 			return  "BriqueExplosive "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
-		}else if(this instanceof BriqueMetal)
-		{
+		}
+		if (this instanceof BriqueMetal) {
 			return  "BriqueMetal "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
 		}
-		return null;
-
+		return  "BriqueClassic "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
 	}
 
-   public static Brique StringToBrique(String s){
+   public static Brique StringToBrique(World world, String s){
 		String t[]=s.split(" ");
 		Brique b;
-		if(t[0].equals("BriqueClassic"))
+		if(t[0].equals("BriqueExplosive"))
 		{
-			b=new BriqueClassic();
-		}else if(t[0].equals("BriqueExplosive"))
-		{
-			b=new BriqueExplosive();
+			b=new BriqueExplosive(world);
 		}else if(t[0].equals("BriqueMetal"))
 		{
-			b=new BriqueMetal();
+			b=new BriqueMetal(world);
 		}else
-			b=new BriqueTp();
+			b=new BriqueClassic(world);
 
 		b.setX(Double.parseDouble(t[1]));
 		b.setY(Double.parseDouble(t[2]));
@@ -190,7 +140,6 @@ public abstract class Brique extends Entity implements Rectangle{
 		b.setLife(Integer.parseInt(t[6]));
 		b.setHard(Boolean.parseBoolean(t[7]));
 		return b;
-
 	}
 
    public static Color[] getCouleurs() {
@@ -203,8 +152,7 @@ public static void setCouleurs(Color[] couleurs) {
 
 public Color mettreAjourCouleur()
 {
-
-	double sqrt= Math.sqrt(life);
+	double sqrt= Math.sqrt(Math.abs(life));
 	int red = (int)(this.couleurOriginal.getRed()/sqrt);
 	int green = (int)(this.couleurOriginal.getGreen()/sqrt);
 	int blue = (int)(this.couleurOriginal.getBlue()/sqrt);
@@ -215,7 +163,7 @@ public void lastWhisper() {
         int bonusOuPas = (int) (Math.random()*12+1);
         int choixBonus = (int) (Math.random()*Bonus.lesTypes.length);
         if (bonusOuPas==1){
-                World.addBonus(new Bonus(this.x,this.y,Bonus.lesTypes[choixBonus]));
+                world.add(new Bonus(this.world,this.x,this.y,Bonus.lesTypes[choixBonus]));
         }
 
    }

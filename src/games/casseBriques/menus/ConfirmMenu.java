@@ -16,8 +16,8 @@ import app.AppLoader;
 
 public class ConfirmMenu extends BasicGameState {
 
-	static Font font9;
-	static Font font6;
+	Font font9;
+	Font font6;
 
 	private int ID;
 
@@ -32,9 +32,9 @@ public class ConfirmMenu extends BasicGameState {
 
 	//private Image background;
 
-	static StateBasedGame game;
+	StateBasedGame game;
 
-	static GameContainer container;
+	GameContainer container;
 	int selection = 0;
 
 	public ConfirmMenu(int ID) {
@@ -56,7 +56,6 @@ public class ConfirmMenu extends BasicGameState {
 		font9 = AppLoader.loadFont("Courant", AppFont.BOLD, 22); // TODO: trouver une fonte équivalente
 
     	font6 = AppLoader.loadFont("Courant", AppFont.BOLD, 16); // TODO: trouver une fonte équivalente
-
 	}
 
 	private boolean mouseOverSelection() {
@@ -69,17 +68,14 @@ public class ConfirmMenu extends BasicGameState {
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-
 		if (mouseOverSelection()) {
 			int x = Mouse.getX();
 			int y = 600-Mouse.getY();
 			selection = (y-280)/50;
 		}
-
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-
 		//g.drawImage(background, 0, 0);
 
 		g.setColor(Color.white);
@@ -94,7 +90,6 @@ public class ConfirmMenu extends BasicGameState {
 		}
 
 		g.drawString(">>", 230, 280 + 50 * selection);
-
 	}
 
 	public void mousePressed(int button, int oldx,int oldy){
@@ -126,7 +121,6 @@ public class ConfirmMenu extends BasicGameState {
 	}
 
 	public void execOption() {
-
 		switch (selection) {
 		case 0:
 			game.enterState(4 /* MainMenu */, new FadeOutTransition(), new FadeInTransition());
@@ -134,7 +128,6 @@ public class ConfirmMenu extends BasicGameState {
 		case 1:
 			container.exit();
 			break;
-
 		}
 	}
 

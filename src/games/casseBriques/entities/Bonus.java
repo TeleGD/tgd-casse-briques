@@ -12,12 +12,14 @@ import games.casseBriques.util.Collisions;
 import games.casseBriques.util.Movable;
 
 public class Bonus  extends Movable implements games.casseBriques.util.Circle{
+	private World world;
 	protected String type;
 	public static String[] lesTypes={"agrandir","agrandirBalle","accelerer","retrecir","rondfusee","ralentir","multiballe"};
 
 	private static Image[] image=new Image[lesTypes.length];
 	private int indexImage;
-	public Bonus(double x, double y, String type){
+	public Bonus(World world, double x, double y, String type){
+		this.world = world;
 		this.x=x;
 		this.y=y;
 		this.width=16;
@@ -26,17 +28,10 @@ public class Bonus  extends Movable implements games.casseBriques.util.Circle{
 		this.speedY=0.1;//tester differentes vitesses?
 		for(int i=0;i<lesTypes.length;i++)
 		{
-			if(type==lesTypes[i])indexImage=i;
-		}
-
-	}
-
-	public static void chargerImageBonus()
-	{
-		for(int i=0;i<lesTypes.length;i++)
-		{
-			System.out.println("bonus:"+lesTypes[i]);
-			image[i]=AppLoader.loadPicture("/images/casseBriques/bonus/"+lesTypes[i]+".png");
+			if(type==lesTypes[i]) {
+				image[i]=AppLoader.loadPicture("/images/casseBriques/bonus/"+lesTypes[i]+".png");
+				indexImage=i;
+			}
 		}
 	}
 
@@ -44,11 +39,10 @@ public class Bonus  extends Movable implements games.casseBriques.util.Circle{
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 
 		g.drawImage(image[indexImage],(float)x,(float)y);
-
 	}
 
 	public boolean collisionPlayer(){
-		return Collisions.colPlayer(this, World.getPlayer());
+		return Collisions.colPlayer(this, world.getPlayer());
 	}
 
 	public boolean collisionGround(){
@@ -66,44 +60,43 @@ public class Bonus  extends Movable implements games.casseBriques.util.Circle{
 				switch (type){
 				// TODO faire les differents bonus
 				case "agrandirBalle":
-					for (int i = 0; i <World.getBalls().size(); i++) {
-						if(World.getBalls().get(i).getRadius()<128)
-							World.getBalls().get(i).setWidth(World.getBalls().get(i).getWidth()*2);;
+					for (int i = 0; i <world.getBalls().size(); i++) {
+						if(world.getBalls().get(i).getRadius()<128)
+							world.getBalls().get(i).setWidth(world.getBalls().get(i).getWidth()*2);;
 					};break;
 				case "retrecirBalle":
-					for (int i = 0; i < World.getBalls().size(); i++) {
-						World.getBalls().get(i).setWidth(World.getBalls().get(i).getWidth()/2);;
+					for (int i = 0; i < world.getBalls().size(); i++) {
+						world.getBalls().get(i).setWidth(world.getBalls().get(i).getWidth()/2);;
 					};break;
 				case "multiballe":
 
-					int h=World.getBalls().size();
+					int h=world.getBalls().size();
 					for(int i=0;i<h;i++)
 					{
 						for (int j = 0; j < 2; j++) {
-							World.addBall(new Ball((int)(World.getBalls().get(i).getX()),(int) World.getBalls().get(i).getY()));
+							world.add(new Ball(this.world,(int)(world.getBalls().get(i).getX()),(int) world.getBalls().get(i).getY()));
 						}
 					}
 
 					break;
 				case "rondfusee":
-					World.getPlayer().setModePistolet(true);break;
-				case "pistoletoff":World.getPlayer().setModePistolet(false);
-				case "pistolet":World.getPlayer().setModePistolet(true);
-				case "accelerer":World.getPlayer().setAccelX(World.getPlayer().getAccelX()*2);break;
-				case "ralentir":World.getPlayer().setAccelX(World.getPlayer().getAccelX()*0.5);break;
-				case "retrecir":World.getPlayer().modify(0.5, 200);break;
-				case "agrandir":World.getPlayer().modify(2, 200);break;
+					world.getPlayer().setModePistolet(true);break;
+				case "pistoletoff":world.getPlayer().setModePistolet(false);
+				case "pistolet":world.getPlayer().setModePistolet(true);
+				case "accelerer":world.getPlayer().setAccelX(world.getPlayer().getAccelX()*2);break;
+				case "ralentir":world.getPlayer().setAccelX(world.getPlayer().getAccelX()*0.5);break;
+				case "retrecir":world.getPlayer().modify(0.5, 200);break;
+				case "agrandir":world.getPlayer().modify(2, 200);break;
 				default:break;
 				}
 			}
-			World.destroy(this);
+			world.remove(this);
 		}
 		moveY(delta);
 	}
 
 	@Override
 	public int getRadius() {
-
 		return (int) this.width;
 	}
 

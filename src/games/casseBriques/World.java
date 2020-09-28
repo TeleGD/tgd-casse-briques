@@ -3,6 +3,9 @@ package games.casseBriques;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -27,20 +30,26 @@ public class World extends BasicGameState{
 	private int ID;
 	private int state;
 
-	private static ArrayList<Brique> briques;
-	private static ArrayList<Bullet> bullets;
-	private static ArrayList<Bonus> bonus;
-	private static Player player;
-	private static Player player2;
-	private static ArrayList<Ball> balls;
-    public static enum mode {CAMPAIGN, MULTI, CUSTOM};
-    public static mode gameMode;
-    public static int currentCampaignLevel;
+	private List<Ball> balls;
+	private List<Bonus> bonuses;
+	private List<Brique> briques;
+	private List<Bullet> bullets;
+	private Set<Ball> ballsToAdd;
+	private Set<Bonus> bonusesToAdd;
+	// private Set<Brique> briquesToAdd;
+	private Set<Bullet> bulletsToAdd;
+	private Set<Ball> ballsToRemove;
+	private Set<Bonus> bonusesToRemove;
+	private Set<Brique> briquesToRemove;
+	private Set<Bullet> bulletsToRemove;
+	private Player player;
+	private Player player2;
+    public enum mode {CAMPAIGN, MULTI, CUSTOM};
+    public mode gameMode;
+    public int currentCampaignLevel;
+	public String currentLevel;
 
-    private static Image background;
-
-	private static GameContainer container;
-	private static StateBasedGame game;
+    private Image background;
 
 	public World(int ID) {
 		this.ID = ID;
@@ -54,35 +63,6 @@ public class World extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) {
 		/* Méthode exécutée une unique fois au chargement du programme */
-		background = AppLoader.loadPicture("/images/casseBriques/background/fond5.png");
-		player=new Player();
-		player2 = new Player();
-		player2.setY(85);
-		balls=new ArrayList<Ball>();
-		bonus=new ArrayList<Bonus>();
-		balls.add(new Ball());
-		Bonus.chargerImageBonus();
-		container = arg0;
-		game = arg1;
-		briques = new ArrayList<Brique>();
-		bullets=new ArrayList<Bullet>();
-		currentCampaignLevel = 1;
-		if(new File("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+"niveau1.txt").exists())
-		{
-			ReadFile file=new ReadFile("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+"niveau1.txt");
-		    ArrayList<String> texts;
-			try {
-				texts = file.readFromFile();
-				for(String s:texts)
-				{
-					briques.add(Brique.StringToBrique(s));
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 	}
 
 	@Override
@@ -115,36 +95,24 @@ public class World extends BasicGameState{
 			player2.render(arg0, arg1, arg2);
 	    //arg2.drawString(Mouse.getX()+", "+Mouse.getY(), 10, 10);
 
-		for (int i = 0; i < balls.size(); i++) {
-			balls.get(i).render(arg0, arg1, arg2);
+		for (Ball ball: this.balls) {
+			ball.render(arg0, arg1, arg2);
 		}
-		for (int i = 0; i < bonus.size(); i++) {
-			bonus.get(i).render(arg0, arg1, arg2);
+		for (Bonus bonus: this.bonuses) {
+			bonus.render(arg0, arg1, arg2);
 		}
-		for(int i = 0; i < briques.size(); i++)
-		{
-			briques.get(i).render(arg0, arg1, arg2);
+		for (Brique brique: this.briques) {
+			brique.render(arg0, arg1, arg2);
 		}
-
-		for (int i = 0; i < bullets.size(); i++) {
-			bullets.get(i).render(arg0, arg1, arg2);
+		for (Bullet bullet: this.bullets) {
+			bullet.render(arg0, arg1, arg2);
 		}
 		arg2.drawString("Lives : "+player.getLife(), 700, 580);
 		if (gameMode == mode.CAMPAIGN)
 			arg2.drawString("Level : "+currentCampaignLevel, 50, 580);
-
-		if (areDestroyed(briques)) {
-			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 5) {
-				currentCampaignLevel++;
-				reload();
-			} else {
-				game.enterState(10 /* LevelSelectorMenu */);
-			}
-		}
-
 	}
 
-	private boolean areDestroyed(ArrayList<Brique> br) {
+	private boolean areBriquesDestroyed() {
 		for(int i=0;i<briques.size();i++)
 		{
 			if( briques.get(i).getLife()>0)return false;
@@ -155,49 +123,80 @@ public class World extends BasicGameState{
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
 		/* Méthode exécutée environ 60 fois par seconde */
-		Input input = container.getInput();
+		Input input = arg0.getInput();
 		if (input.isKeyDown(Input.KEY_ESCAPE)) {
 			this.setState(1);
-			game.enterState(2, new FadeOutTransition(), new FadeInTransition());
+			arg1.enterState(6 /* Pause */, new FadeOutTransition(), new FadeInTransition());
 		}
 		player.update(arg0, arg1, arg2);
 		if (gameMode == mode.MULTI)
 			player2.update(arg0, arg1, arg2);
-		for (int i = 0; i < balls.size(); i++) {
-			balls.get(i).update(arg0, arg1, arg2);
+		for (Brique brique: this.briques) {
+			brique.setColliding(false);
 		}
-		for (int i = 0; i < bonus.size(); i++) {
-			bonus.get(i).update(arg0, arg1, arg2);
+		for (Ball ball: this.balls) {
+			ball.update(arg0, arg1, arg2);
 		}
-		for(int i=0;i<briques.size();i++)
-		{
-			briques.get(i).update(arg0, arg1, arg2);
+		for (Bonus bonus: this.bonuses) {
+			bonus.update(arg0, arg1, arg2);
 		}
-
-		for (int i=0;i<bullets.size();i++)
-		{
-			bullets.get(i).update(arg0, arg1, arg2);
+		for (Brique brique: this.briques) {
+			brique.update(arg0, arg1, arg2);
 		}
-
+		for (Bullet bullet: this.bullets) {
+			bullet.update(arg0, arg1, arg2);
+		}
+		for (Ball ball: this.ballsToRemove) {
+			balls.remove(ball);
+		}
+		for (Bonus bonus: this.bonusesToRemove) {
+			bonuses.remove(bonus);
+		}
+		for (Brique brique: this.briquesToRemove) {
+			brique.lastWhisper();
+			briques.remove(brique);
+		}
+		for (Bullet bullet: this.bulletsToRemove) {
+			bullets.remove(bullet);
+		}
+		this.ballsToRemove.clear();
+		this.bonusesToRemove.clear();
+		this.briquesToRemove.clear();
+		this.bulletsToRemove.clear();
+		for (Ball ball: this.ballsToAdd) {
+			balls.add(ball);
+		}
+		for (Bonus bonus: this.bonusesToAdd) {
+			bonuses.add(bonus);
+		}
+		// for (Brique brique: this.briquesToAdd) {
+		// 	briques.add(brique);
+		// }
+		for (Bullet bullet: this.bulletsToAdd) {
+			bullets.add(bullet);
+		}
+		this.ballsToAdd.clear();
+		this.bonusesToAdd.clear();
+		// this.briquesToAdd.clear();
+		this.bulletsToAdd.clear();
 		if (player.getLife() == 0) {
-			game.enterState(3 /* GameOverMenu */, new FadeOutTransition(), new FadeInTransition());
+			arg1.enterState(3 /* GameOverMenu */, new FadeOutTransition(), new FadeInTransition());
 		}
 
-		if (areDestroyed(briques)) {
-			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 2) {
+		if (areBriquesDestroyed()) {
+			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 5) {
 				currentCampaignLevel++;
-				reload();
+				load("niveau" + currentCampaignLevel + ".txt");
 			} else {
-				game.enterState(10 /* LevelSelectorMenu */);
+				arg1.enterState(4 /* MainMenu */, new FadeOutTransition(), new FadeInTransition());
 			}
 		}
 
 		if(balls.size()==0){
 			player.setLife(player.getLife()-1);
-			balls.add(new Ball());
+			balls.add(new Ball(this));
 			player.setHasBall(true);
 		}
-
 	}
 
 	public void play(GameContainer container, StateBasedGame game) {
@@ -232,79 +231,92 @@ public class World extends BasicGameState{
 		player.keyPressed(key, c);
 	}
 
-	public static Player getPlayer() {
-		return player;
+	public void add(Ball ball) {
+		this.ballsToAdd.add(ball);
 	}
 
-	public static void setPlayer(Player playerP) {
-		player = playerP;
+	public void add(Bonus bonus) {
+		this.bonusesToAdd.add(bonus);
 	}
 
-	public static void destroy(Bullet b)
-	{
-		bullets.remove(b);
+	// public void add(Brique brique) {
+	// 	this.briquesToAdd.add(brique);
+	// }
+
+	public void add(Bullet bullet){
+		this.bulletsToAdd.add(bullet);
 	}
 
-	public static void destroy(Brique b)
-	{
-		b.lastWhisper();
-		briques.remove(b);
+	public void remove(Ball ball) {
+		this.ballsToRemove.add(ball);
 	}
 
-	public static void destroy(Bonus b){
-		// TODO destruction du bonus
-		bonus.remove(b);
+	public void remove(Bonus bonus) {
+		this.bonusesToRemove.add(bonus);
 	}
 
-	public static int getScore() {
+	public void remove(Bullet bullet) {
+		this.bulletsToRemove.add(bullet);
+	}
+
+	public void remove(Brique brique) {
+		this.briquesToRemove.add(brique);
+	}
+
+	public int getScore() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public static ArrayList<Brique> getBriques(){
-		return briques;
+	public Player getPlayer() {
+		return player;
 	}
 
-	public static ArrayList<Bonus> getBonus(){
-		return bonus;
+	public List<Ball> getBalls(){
+		return this.balls;
 	}
 
-	public static ArrayList<Ball> getBalls(){
-		return balls;
+	// public List<Bonus> getBonuses(){
+	// 	return this.bonuses;
+	// }
+
+	public List<Brique> getBriques(){
+		return this.briques;
 	}
 
-	public static void addBrique(Brique b){
-		briques.add(b);
+	public List<Bullet> getBullets() {
+		return this.bullets;
 	}
 
-	public static void addBall(Ball b){
-		balls.add(b);
-	}
-
-	public static void addBonus(Bonus b){
-		bonus.add(b);
-	}
-
-	public static void addBullet(Bullet b)
+	public void load(String niveau)
 	{
-		bullets.add(b);
-	}
-
-	public static void removeBrique(Brique b){
-		briques.remove(b);
-	}
-
-	public static void reload(String niveau)
-	{
+		if (gameMode == mode.CAMPAIGN) {
+			background = AppLoader.loadPicture("/images/casseBriques/background/fond"+currentCampaignLevel+".png");
+		} else {
+			background = AppLoader.loadPicture("/images/casseBriques/background/fond5.png");
+		}
+		player=new Player(this);
+		if (gameMode == mode.MULTI) {
+			player2 = new Player(this);
+			player2.setY(85);
+		} else {
+			player2 = null;
+		}
+		this.balls = new ArrayList<Ball>();
+		this.balls.add(new Ball(this));
+		this.bonuses = new ArrayList<Bonus>();
+		this.briques = new ArrayList<Brique>();
+		this.bullets = new ArrayList<Bullet>();
+		this.ballsToAdd = new HashSet<Ball>();
+		this.bonusesToAdd = new HashSet<Bonus>();
+		// this.briquesToAdd = new HashSet<Brique>();
+		this.bulletsToAdd = new HashSet<Bullet>();
+		this.ballsToRemove = new HashSet<Ball>();
+		this.bonusesToRemove = new HashSet<Bonus>();
+		this.briquesToRemove = new HashSet<Brique>();
+		this.bulletsToRemove = new HashSet<Bullet>();
 		if(new File("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+niveau).exists())
 		{
-
-			player=new Player();
-			balls=new ArrayList<Ball>();
-			balls.add(new Ball());
-			briques = new ArrayList<Brique>();
-			bullets=new ArrayList<Bullet>();
-
 			ReadFile file=new ReadFile("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+niveau);
 		    ArrayList<String> texts;
 			try {
@@ -312,35 +324,16 @@ public class World extends BasicGameState{
 				briques.removeAll(briques);
 				for(String s:texts)
 				{
-					Brique b=Brique.StringToBrique(s);
-					if(b.getY()<400){
+					Brique b=Brique.StringToBrique(this, s);
+					if (b.getX() >= 0 && b.getX() <= 720 && b.getY() >= 0 && b.getY() <= 352) {
 						briques.add(b);
 					}
-
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			if (gameMode == mode.CAMPAIGN) {
-				background = AppLoader.loadPicture("/images/casseBriques/background/fond"+currentCampaignLevel+".png");
-			}
-
 		}
-	}
-
-	public static void reload() {
-		if (gameMode == mode.CAMPAIGN) {
-			reload("niveau"+currentCampaignLevel+".txt");
-		} else if (gameMode == mode.MULTI) {
-			reload("multi.txt");
-		}
-	}
-
-	public static ArrayList<Bullet> getBullets() {
-		// TODO Auto-generated method stub
-		return bullets;
 	}
 
 }

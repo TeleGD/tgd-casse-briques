@@ -11,20 +11,23 @@ import games.casseBriques.util.Movable;
 
 public class Ball extends Movable implements Circle{
 
+    private World world;
     private boolean sticky;
     private double speedNorm=0.3;
     private double speedNormAct;
     private int compt;
 
-    public Ball(){
-    	x=World.getPlayer().x+World.getPlayer().width/2-width/2;
-        y = World.getPlayer().y-16;
+    public Ball(World world){
+        this.world = world;
+    	x=world.getPlayer().getX()+world.getPlayer().getWidth()/2-width/2;
+        y = world.getPlayer().getY()-16;
         width = 16;
         height = 16;
         speedY = -0.3;
         speedX=(Math.random()*4 -2) /10;
     }
-    public Ball(int x,int y){
+    public Ball(World world,int x,int y){
+        this.world = world;
     	this.x=x;
     	this.y=y;
         width = 16;
@@ -42,7 +45,6 @@ public class Ball extends Movable implements Circle{
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
         g.setColor(Color.pink);
         g.fillOval((float)x, (float)y, (float)width, (float)width);
-
     }
 
     public double speedNorm(){
@@ -53,8 +55,8 @@ public class Ball extends Movable implements Circle{
     public void update(GameContainer container, StateBasedGame game, int delta) {
         setMoving(speedNorm()>0);
 
-        if(World.getPlayer().hasBall()){
-        	x=World.getPlayer().x+World.getPlayer().width/2-width/2;
+        if(world.getPlayer().hasBall()){
+        	x=world.getPlayer().getX()+world.getPlayer().getWidth()/2-width/2;
         	return;
         }
 
@@ -71,24 +73,22 @@ public class Ball extends Movable implements Circle{
             speedY *= -1;
             y=1;
         }else if(y>=(600-height/2)){
-            World.getBalls().remove(this);
-        	x=World.getPlayer().x+World.getPlayer().width/2-width/2;
-            y = World.getPlayer().y-16;
+            world.remove(this);
+        	x=world.getPlayer().getX()+world.getPlayer().getWidth()/2-width/2;
+            y = world.getPlayer().getY()-16;
             speedY = -0.3;
             speedX=(Math.random()*4 -2) /10;
         }
 
-        if (games.casseBriques.util.Collisions.colPlayer(this,World.getPlayer())){
-        	this.speedX=this.x-(World.getPlayer().getX()+World.getPlayer().getWidth()/2);//a modifier
-        	this.speedY=-World.getPlayer().getHeight();
+        if (games.casseBriques.util.Collisions.colPlayer(this,world.getPlayer())){
+        	this.speedX=this.x-(world.getPlayer().getX()+world.getPlayer().getWidth()/2);//a modifier
+        	this.speedY=-world.getPlayer().getHeight();
         }
 
         //Detection de collisions avec les briques :
-        for(Brique b:World.getBriques()){
-        	      b.setColliding(false);
+        for(Brique b:world.getBriques()){
             	  if(games.casseBriques.util.Collisions.colBrique(this,b)){
 	            	if(b.getHard()){
-
 	            		//On touche une brique dure.
 	                	if((x+width/2>b.getX()) && (x+width/2<=(b.getX()+b.getWidth()))){
 	                		//Contact effectue par la verticale.
@@ -114,7 +114,6 @@ public class Ball extends Movable implements Circle{
 
         moveX(delta);
         moveY(delta);
-
     }
 
     public boolean getSticky(){
@@ -124,4 +123,5 @@ public class Ball extends Movable implements Circle{
     public void setSticky(boolean value){
         sticky = value;
     }
+
 }

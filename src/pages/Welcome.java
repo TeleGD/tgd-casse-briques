@@ -64,7 +64,7 @@ public class Welcome extends AppPage {
 		if (input.isKeyDown(Input.KEY_ESCAPE)) {
 			container.exit();
 		} else if (input.isKeyDown(Input.KEY_ENTER)) {
-			game.enterState(1, new FadeOutTransition(), new FadeInTransition());
+			game.enterState(4 /* MainMenu */, new FadeOutTransition(), new FadeInTransition());
 		}
 	}
 

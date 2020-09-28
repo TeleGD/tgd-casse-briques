@@ -1,6 +1,6 @@
 package games.casseBriques.util;
 
-import games.casseBriques.entities.Entity;
+import games.casseBriques.Entity;
 
 public abstract class Movable extends Entity{
 
@@ -72,6 +72,7 @@ public abstract class Movable extends Entity{
 	public void setCollision(boolean collision) {
 		this.collision = collision;
 	}
+
 	public double getSpeedX() {
 		return speedX;
 	}

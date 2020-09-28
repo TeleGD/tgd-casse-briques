@@ -20,8 +20,8 @@ public class GameOverMenu extends BasicGameState {
 
 	private int ID;
 
-	static Font font3;
-	static Font font4;
+	Font font3;
+	Font font4;
 
 	private String nom = "GAME OVER";
 	private String[] items = { "Rejouer", "Retour au menu"};
@@ -34,11 +34,11 @@ public class GameOverMenu extends BasicGameState {
 
 	//private Image background;
 
-	static StateBasedGame game;
+	StateBasedGame game;
 
-	static GameContainer container;
+	GameContainer container;
 	int selection = 0;
-	private static boolean firstTime;
+	private boolean firstTime;
 
 	public GameOverMenu(int ID) {
 		this.ID = ID;
@@ -70,7 +70,6 @@ public class GameOverMenu extends BasicGameState {
     	font4 = AppLoader.loadFont("Kristen ITC", AppFont.BOLD, 20); // TODO: trouver une fonte équivalente
 
 		firstTime = true;
-
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
@@ -84,7 +83,6 @@ public class GameOverMenu extends BasicGameState {
 			int y = 600-Mouse.getY();
 			selection = (y-280)/50;
 		}
-
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
@@ -103,10 +101,9 @@ public class GameOverMenu extends BasicGameState {
 		}
 
 		g.drawString(">>", 230, 280 + 50 * selection);
-
 	}
 
-	public static void reset() {
+	public void reset() {
 		firstTime = true;
 	}
 
@@ -134,25 +131,18 @@ public class GameOverMenu extends BasicGameState {
 	}
 
 	public void execOption() {
-
+		World world = (World) game.getState(0);
 		switch (selection) {
 		case 0:
-			//World.reset();
-			if (World.gameMode == World.mode.MULTI) {
-				World.reload();
-				game.enterState(0 /* World */, new FadeOutTransition(), new FadeInTransition());
-			} else if (World.gameMode == World.mode.CAMPAIGN) {
-				World.currentCampaignLevel = 1;
-				World.reload();
-				game.enterState(0 /* World */, new FadeOutTransition(), new FadeInTransition());
-			} else if (World.gameMode == World.mode.CUSTOM) {
-				game.enterState(10 /* LevelSelectorMenu */, new FadeOutTransition(), new FadeInTransition());
+			if (world.gameMode == World.mode.CAMPAIGN) {
+				world.currentCampaignLevel = 1;
 			}
+			world.load(world.currentLevel);
+			game.enterState(0 /* World */, new FadeOutTransition(), new FadeInTransition());
 			break;
 		case 1:
 			game.enterState(4 /* MainMenu */, new FadeOutTransition(), new FadeInTransition());
 			break;
-
 		}
 	}
 
