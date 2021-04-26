@@ -15,7 +15,6 @@ public class Ball extends Movable implements Circle{
     private boolean sticky;
     private double speedNorm=0.3;
     private double speedNormAct;
-    private int compt;
 
     public Ball(World world){
         this.world = world;

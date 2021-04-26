@@ -111,15 +111,7 @@ public class MainMenu extends BasicGameState {
 			break;
 
 		case Input.KEY_ESCAPE:
-			game.enterState(1 /* ConfirmMenu */, new FadeOutTransition(),
-					new FadeInTransition());
-			break;
-		case Input.KEY_C:
-			game.enterState(2 /* CreditsMenu */, new FadeOutTransition(),
-					new FadeInTransition());
-			break;
-		case Input.KEY_M:
-			game.enterState(5 /* MissionMenu */, new FadeOutTransition(),
+			game.enterState(8 /* Welcome */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 		}
@@ -169,7 +161,7 @@ public class MainMenu extends BasicGameState {
 					new FadeInTransition());
 			break;
 		case 5:
-			game.enterState(1 /* ConfirmMenu */, new FadeOutTransition(),
+			game.enterState(8 /* Welcome */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 		}

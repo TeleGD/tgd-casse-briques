@@ -262,11 +262,6 @@ public class World extends BasicGameState{
 		this.briquesToRemove.add(brique);
 	}
 
-	public int getScore() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	public Player getPlayer() {
 		return player;
 	}

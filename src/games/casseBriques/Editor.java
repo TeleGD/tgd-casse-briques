@@ -20,7 +20,6 @@ public class Editor extends BasicGameState{
 
 	private int ID;
 	public LevelEditor editor;
-	private GameContainer container;
 	private StateBasedGame game;
 
 	public Editor(int ID) {
@@ -35,7 +34,6 @@ public class Editor extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) {
 		editor=new LevelEditor();
-		container = arg0;
 		game = arg1;
 	}
 

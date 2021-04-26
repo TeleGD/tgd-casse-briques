@@ -38,7 +38,6 @@ public class GameOverMenu extends BasicGameState {
 
 	GameContainer container;
 	int selection = 0;
-	private boolean firstTime;
 
 	public GameOverMenu(int ID) {
 		this.ID = ID;
@@ -68,16 +67,9 @@ public class GameOverMenu extends BasicGameState {
 		font3 = AppLoader.loadFont("Goudy Stout", AppFont.BOLD, 30); // TODO: trouver une fonte équivalente
 
     	font4 = AppLoader.loadFont("Kristen ITC", AppFont.BOLD, 20); // TODO: trouver une fonte équivalente
-
-		firstTime = true;
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		/*if (firstTime) {
-			items[3] = "Score : "+World.getScore();
-			firstTime = false;
-		}*/
-
 		if (mouseOverSelection()) {
 			int x = Mouse.getX();
 			int y = 600-Mouse.getY();
@@ -103,10 +95,6 @@ public class GameOverMenu extends BasicGameState {
 		g.drawString(">>", 230, 280 + 50 * selection);
 	}
 
-	public void reset() {
-		firstTime = true;
-	}
-
 	public void mousePressed(int button, int oldx,int oldy){
 		if (mouseOverSelection())
 			execOption();
@@ -123,9 +111,6 @@ public class GameOverMenu extends BasicGameState {
 			break;
 		case Input.KEY_ESCAPE:
 			game.enterState(4 /* MainMenu */, new FadeOutTransition(), new FadeInTransition());
-			break;
-		case Input.KEY_C:
-			game.enterState(2 /* CreditsMenu */, new FadeOutTransition(), new FadeInTransition());
 			break;
 		}
 	}
