@@ -24,7 +24,7 @@ public class MainMenu extends BasicGameState {
 	Font font1;
 
 	private String nom = "Menu Principal";
-	private String[] items = { "Campagne", "Multijoueur", "Niveaux Custom", "Editeur", "Quitter" };
+	private String[] items = { "Campagne", "Multijoueur", "Niveaux Intégrés", "Niveaux Custom", "Editeur", "Quitter" };
 
 	public int nbrOption = items.length;
 
@@ -133,32 +133,42 @@ public class MainMenu extends BasicGameState {
 		case 0:
 			world.gameMode = World.mode.CAMPAIGN;
 			world.currentCampaignLevel = 1;
-			world.currentLevel = "niveau1.txt";
-			world.load(world.currentLevel);
+			world.currentLevel = "niveau1";
+			world.load(world.currentLevel, false);
 			game.enterState(5 /* MissionMenu */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 
 		case 1:
 			world.gameMode = World.mode.MULTI;
-			world.currentLevel = "multi.txt";
-			world.load(world.currentLevel);
+			world.currentLevel = "multi";
+			world.load(world.currentLevel, false);
 			game.enterState(0 /* World */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 
 		case 2:
-			levelSelectorMenu.reload();
+			levelSelectorMenu.reload(false);
 			game.enterState(10 /* LevelSelectorMenu */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 
 		case 3:
+			levelSelectorMenu.reload(true);
+			if (levelSelectorMenu.nbrOption == 0) {
+				editor.reload();
+				game.enterState(9 /* Editor */, new FadeOutTransition(), new FadeInTransition());
+			} else {
+				game.enterState(10 /* LevelSelectorMenu */, new FadeOutTransition(), new FadeInTransition());
+			}
+			break;
+
+		case 4:
 			editor.reload();
 			game.enterState(9 /* Editor */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
-		case 4:
+		case 5:
 			game.enterState(1 /* ConfirmMenu */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;

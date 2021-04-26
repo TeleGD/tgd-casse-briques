@@ -1,8 +1,7 @@
 package games.casseBriques;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.StringReader;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,9 +11,10 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import app.AppLoader;
+
 import games.casseBriques.editor.LevelEditor;
 import games.casseBriques.entities.Brique;
-import games.casseBriques.parser.ReadFile;
 
 public class Editor extends BasicGameState{
 
@@ -53,7 +53,7 @@ public class Editor extends BasicGameState{
 
 	public void keyPressed(int key, char c) {
 		//Player.keyPressed(key, c);
-		if(key == Input.KEY_ESCAPE){
+		if(key == Input.KEY_ESCAPE && !this.editor.getSauvegarder()){
 			game.enterState(4 /* MainMenu */, new FadeOutTransition(),
 					new FadeInTransition());
 		}
@@ -82,25 +82,18 @@ public class Editor extends BasicGameState{
 	}
 
 	public void reload(String niveau) {
-		if(new File("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+niveau).exists())
-		{
-			ReadFile file=new ReadFile("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+niveau);
-		    ArrayList<String> texts;
-			try {
-				texts = file.readFromFile();
-				editor.removeAllBriques();
-				for(String s:texts)
-				{
-					Brique b=Brique.StringToBrique(null, s);
-					if(b.getY()<400){
-						editor.addBrique(b);
-					}
+		String level = AppLoader.restoreData("/casseBriques/levels/" + niveau + ".txt");
+		BufferedReader reader = new BufferedReader(new StringReader(level));
+		String line;
+		try {
+			while ((line = reader.readLine()) != null) {
+				Brique b=Brique.StringToBrique(null, line);
+				if(b.getY()<400){
+					editor.addBrique(b);
 				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		}
+			reader.close();
+		} catch (Exception error) {}
 	}
 
 	public void reload() {

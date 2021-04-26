@@ -137,7 +137,7 @@ public class GameOverMenu extends BasicGameState {
 			if (world.gameMode == World.mode.CAMPAIGN) {
 				world.currentCampaignLevel = 1;
 			}
-			world.load(world.currentLevel);
+			world.load(world.currentLevel, false);
 			game.enterState(0 /* World */, new FadeOutTransition(), new FadeInTransition());
 			break;
 		case 1:

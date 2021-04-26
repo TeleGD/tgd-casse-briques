@@ -1,8 +1,9 @@
 package games.casseBriques.editor;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -18,7 +19,6 @@ import games.casseBriques.entities.Brique;
 import games.casseBriques.entities.bricks.BriqueClassic;
 import games.casseBriques.entities.bricks.BriqueExplosive;
 import games.casseBriques.entities.bricks.BriqueMetal;
-import games.casseBriques.parser.WriteFile;
 
 public class LevelEditor {
 
@@ -229,13 +229,15 @@ public class LevelEditor {
 	public void keyPressed(int key, char c) {
 		if(sauvegarder)
 		{
-			if(key==Input.KEY_BACK){
+			if(key == Input.KEY_ESCAPE){
+				sauvegarder=false;
+			}else if(key==Input.KEY_BACK){
 				if(nomFichier.length()>0)nomFichier=nomFichier.substring(0, nomFichier.length()-1);
 			}else if(key==Input.KEY_ENTER)
 			{
 				enregistrerNiveau();
 			}
-			else if(key!=Input.KEY_SPACE && ((int)c)!=0){
+			else if(key!=Input.KEY_SPACE && ((int)c)!=0&&c!='.'){
 				System.out.println("char : "+c);
 				nomFichier+=c;
 			}
@@ -266,19 +268,31 @@ public class LevelEditor {
 	}
 
 	private void enregistrerNiveau() {
+		String levels = AppLoader.restoreData("/casseBriques/levels.txt");
+		BufferedReader reader = new BufferedReader(new StringReader(levels));
+		List<String> items = new ArrayList<String>();
+		String line;
+		try {
+			while ((line = reader.readLine()) != null) {
+				items.add(line);
+			}
+			reader.close();
+		} catch (Exception error) {}
+		int i = 0;
+		int li = items.size();
+		while (i < li && items.get(i).compareTo(nomFichier) < 0) {
+			++i;
+		}
+		if (i == li || !items.get(i).equals(nomFichier)) {
+			items.add(i, nomFichier);
+		}
+		AppLoader.saveData("/casseBriques/levels.txt", String.join("\n", items));
 		ArrayList<String> textLines=new ArrayList<String>();
 		for(Brique b:briques)
 		{
 			textLines.add(b.briqueToString());
 		}
-
-		WriteFile file = new WriteFile("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+nomFichier+".txt",false);
-		try {
-			file.writeToFile(textLines);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		AppLoader.saveData("/casseBriques/levels/" + nomFichier + ".txt", String.join("\n", textLines));
 		sauvegarderSucces=true;
 	}
 
@@ -310,6 +324,10 @@ public class LevelEditor {
 		briqueSelectionne=null;
 		debut=true;
 		nomFichier="";
+	}
+
+	public boolean getSauvegarder() {
+		return this.sauvegarder;
 	}
 
 }

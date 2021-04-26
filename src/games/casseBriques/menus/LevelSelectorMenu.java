@@ -1,9 +1,10 @@
 package games.casseBriques.menus;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
@@ -49,13 +50,29 @@ public class LevelSelectorMenu extends BasicGameState {
 
 	int selectionPopup = 0;
 
-	public void reload() {
-		items = (new File("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels")).list(); // TODO make multiplatform
-		nbrOption = items.length;
-		for (int i = 0; i < items.length; i++)
-			if (items[i].endsWith(".txt"))
-				items[i] = items[i].substring(0, items[i].length()-4);
-		selection = 0;
+	private boolean custom;
+
+	public void reload(boolean custom) {
+		this.custom = custom;
+		String levels;
+		if (custom) {
+			levels = AppLoader.restoreData("/casseBriques/levels.txt");
+		} else {
+			levels = AppLoader.loadData("/data/casseBriques/levels.txt");
+		}
+		BufferedReader reader = new BufferedReader(new StringReader(levels));
+		List<String> items = new ArrayList<String>();
+		String line;
+		try {
+			while ((line = reader.readLine()) != null) {
+				items.add(line);
+			}
+			reader.close();
+		} catch (Exception error) {}
+		this.nbrOption = items.size();
+		this.items = items.toArray(new String[0]);
+		this.selection = 0;
+		this.selectionPopup = 0;
 	}
 
 	public LevelSelectorMenu(int ID) {
@@ -75,8 +92,6 @@ public class LevelSelectorMenu extends BasicGameState {
 		//background = new Image("sprites/0001.png");
 
 		font1 = AppLoader.loadFont("Kalinga", AppFont.BOLD, 12); // TODO: trouver une fonte équivalente
-
-		reload();
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
@@ -136,8 +151,10 @@ public class LevelSelectorMenu extends BasicGameState {
 			font1 = AppLoader.loadFont("Kalinga", AppFont.BOLD, 12); // TODO: trouver une fonte équivalente
 			g.setFont(font1);
 			g.drawString("Jouer", 300, 280);
-			g.drawString("Modifier", 300, 310);
-			g.drawString("Spprimer", 300, 340);
+			if (this.custom) {
+				g.drawString("Modifier", 300, 310);
+				g.drawString("Spprimer", 300, 340);
+			}
 
 			g.drawString(">>", 280, 280+30*selectionPopup);
 		}
@@ -152,7 +169,7 @@ public class LevelSelectorMenu extends BasicGameState {
 					selection++;
 				else
 					selection = 0;
-			} else {
+			} else if (this.custom) {
 				if (selectionPopup < 2)
 					selectionPopup++;
 				else
@@ -165,7 +182,7 @@ public class LevelSelectorMenu extends BasicGameState {
 					selection--;
 				else
 					selection = nbrOption - 1;
-			} else {
+			} else if (this.custom) {
 				if (selectionPopup > 0)
 					selectionPopup--;
 				else
@@ -173,12 +190,12 @@ public class LevelSelectorMenu extends BasicGameState {
 			}
 			break;
 		case Input.KEY_ENTER:
-			if (!popup) {
-				popup = true;
-				selectionPopup = 0;
-			} else {
+			if (popup || !this.custom) {
 				popup = false;
 				execOption();
+			} else {
+				popup = true;
+				selectionPopup = 0;
 			}
 			break;
 
@@ -197,27 +214,33 @@ public class LevelSelectorMenu extends BasicGameState {
 	public void execOption() {
 		World world = (World) game.getState(0);
 		Editor editor = (Editor) game.getState(9);
+		if (!this.custom) {
+			selectionPopup = 0;
+		}
 		switch (selectionPopup) {
 		case 0:
 			world.gameMode = World.mode.CUSTOM;
-			world.currentLevel = items[selection]+".txt";
-			world.load(world.currentLevel);
+			world.currentLevel = items[selection];
+			world.load(world.currentLevel, this.custom);
 			game.enterState(0 /* World */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 		case 1:
-			editor.reload(items[selection]+".txt");
+			editor.reload(items[selection]);
 			game.enterState(9 /* Editor */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 
 		case 2:
-			try {
-				Files.delete(Paths.get("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+items[selection]+".txt"));
-			} catch (IOException e) {
-				e.printStackTrace();
+			String item = this.items[this.selection];
+			List<String> items = new ArrayList<String>(Arrays.asList(this.items));
+			items.remove(item);
+			AppLoader.saveData("/casseBriques/levels.txt", String.join("\n", items));
+			AppLoader.saveData("/casseBriques/levels/" + item + ".txt", null);
+			reload(true);
+			if (this.nbrOption == 0) {
+				game.enterState(4 /* MainMenu */, new FadeOutTransition(), new FadeInTransition());
 			}
-			reload();
 			break;
 		}
 	}

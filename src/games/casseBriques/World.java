@@ -1,7 +1,7 @@
 package games.casseBriques;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +23,6 @@ import games.casseBriques.entities.Bonus;
 import games.casseBriques.entities.Brique;
 import games.casseBriques.entities.Bullet;
 import games.casseBriques.entities.Player;
-import games.casseBriques.parser.ReadFile;
 
 public class World extends BasicGameState{
 
@@ -186,7 +185,7 @@ public class World extends BasicGameState{
 		if (areBriquesDestroyed()) {
 			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 5) {
 				currentCampaignLevel++;
-				load("niveau" + currentCampaignLevel + ".txt");
+				load("niveau" + currentCampaignLevel, false);
 			} else {
 				arg1.enterState(4 /* MainMenu */, new FadeOutTransition(), new FadeInTransition());
 			}
@@ -288,7 +287,7 @@ public class World extends BasicGameState{
 		return this.bullets;
 	}
 
-	public void load(String niveau)
+	public void load(String niveau, boolean custom)
 	{
 		if (gameMode == mode.CAMPAIGN) {
 			background = AppLoader.loadPicture("/images/casseBriques/background/fond"+currentCampaignLevel+".png");
@@ -315,25 +314,23 @@ public class World extends BasicGameState{
 		this.bonusesToRemove = new HashSet<Bonus>();
 		this.briquesToRemove = new HashSet<Brique>();
 		this.bulletsToRemove = new HashSet<Bullet>();
-		if(new File("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+niveau).exists())
-		{
-			ReadFile file=new ReadFile("res"+File.separator+"data"+File.separator+"casseBriques"+File.separator+"levels"+File.separator+niveau);
-		    ArrayList<String> texts;
-			try {
-				texts = file.readFromFile();
-				briques.removeAll(briques);
-				for(String s:texts)
-				{
-					Brique b=Brique.StringToBrique(this, s);
-					if (b.getX() >= 0 && b.getX() <= 720 && b.getY() >= 0 && b.getY() <= 352) {
-						briques.add(b);
-					}
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		String level;
+		if (custom) {
+			level = AppLoader.restoreData("/casseBriques/levels/" + niveau + ".txt");
+		} else {
+			level = AppLoader.loadData("/data/casseBriques/levels/" + niveau + ".txt");
 		}
+		BufferedReader reader = new BufferedReader(new StringReader(level));
+		String line;
+		try {
+			while ((line = reader.readLine()) != null) {
+				Brique b=Brique.StringToBrique(this, line);
+				if (b.getX() >= 0 && b.getX() <= 720 && b.getY() >= 0 && b.getY() <= 352) {
+					briques.add(b);
+				}
+			}
+			reader.close();
+		} catch (Exception error) {}
 	}
 
 }
