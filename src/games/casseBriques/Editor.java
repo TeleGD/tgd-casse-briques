@@ -52,7 +52,7 @@ public class Editor extends BasicGameState{
 	public void keyPressed(int key, char c) {
 		//Player.keyPressed(key, c);
 		if(key == Input.KEY_ESCAPE && !this.editor.getSauvegarder()){
-			game.enterState(4 /* MainMenu */, new FadeOutTransition(),
+			game.enterState(1 /* Choice */, new FadeOutTransition(),
 					new FadeInTransition());
 		}
 
@@ -80,6 +80,7 @@ public class Editor extends BasicGameState{
 	}
 
 	public void reload(String niveau) {
+		editor.reload(niveau);
 		String level = AppLoader.restoreData("/casseBriques/levels/" + niveau + ".txt");
 		BufferedReader reader = new BufferedReader(new StringReader(level));
 		String line;
@@ -95,7 +96,7 @@ public class Editor extends BasicGameState{
 	}
 
 	public void reload() {
-		editor.reload();
+		editor.reload("");
 	}
 
 }

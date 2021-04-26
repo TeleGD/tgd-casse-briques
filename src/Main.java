@@ -49,14 +49,14 @@ public final class Main {
 
 			@Override
 			public void initStatesList(GameContainer container) {
-				this.addState(new pages.Welcome(8));
-				this.addState(new games.casseBriques.menus.MainMenu(4));
-				this.addState(new games.casseBriques.menus.GameOverMenu(3));
-				this.addState(new pages.Pause(6));
+				this.addState(new pages.Welcome(0));
+				this.addState(new pages.Choice(1));
+				this.addState(new pages.Pause(2));
+				this.addState(new games.casseBriques.World(3));
+				this.addState(new games.casseBriques.menus.GameOverMenu(4));
 				this.addState(new games.casseBriques.menus.MissionMenu(5));
-				this.addState(new games.casseBriques.menus.LevelSelectorMenu(10));
-				this.addState(new games.casseBriques.Editor(9));
-				this.addState(new games.casseBriques.World(0));
+				this.addState(new games.casseBriques.menus.LevelSelectorMenu(6));
+				this.addState(new games.casseBriques.Editor(7));
 			}
 
 		};

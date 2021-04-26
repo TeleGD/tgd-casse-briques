@@ -1,6 +1,5 @@
 package games.casseBriques.menus;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -20,8 +19,8 @@ public class GameOverMenu extends BasicGameState {
 
 	private int ID;
 
-	Font font3;
-	Font font4;
+	private Font font3;
+	private Font font4;
 
 	private String nom = "GAME OVER";
 	private String[] items = { "Rejouer", "Retour au menu"};
@@ -31,8 +30,6 @@ public class GameOverMenu extends BasicGameState {
 	public String[] getItems() {
 		return this.items;
 	}
-
-	//private Image background;
 
 	StateBasedGame game;
 
@@ -48,38 +45,18 @@ public class GameOverMenu extends BasicGameState {
 		return this.ID;
 	}
 
-	private boolean mouseOverSelection() {
-		int x = Mouse.getX();
-		int y = 600-Mouse.getY();
-		return (   x>300
-				&& x<550
-				&& y>280
-				&& y<280+nbrOption*50);
-	}
-
 	public void init(GameContainer container, StateBasedGame game) {
 		this.game = game;
 		this.container = container;
-		container.setShowFPS(false);
 
-		//background = new Image("Images/background2.png");
+		font3 = AppLoader.loadFont("/fonts/press-start-2p.ttf", AppFont.BOLD, 40);
 
-		font3 = AppLoader.loadFont("Goudy Stout", AppFont.BOLD, 30); // TODO: trouver une fonte équivalente
-
-    	font4 = AppLoader.loadFont("Kristen ITC", AppFont.BOLD, 20); // TODO: trouver une fonte équivalente
+    	font4 = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 24);
 	}
 
-	public void update(GameContainer container, StateBasedGame game, int delta) {
-		if (mouseOverSelection()) {
-			int x = Mouse.getX();
-			int y = 600-Mouse.getY();
-			selection = (y-280)/50;
-		}
-	}
+	public void update(GameContainer container, StateBasedGame game, int delta) {}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-		//g.drawImage(background, 0, 0);
-
 		g.setColor(Color.red);
 		g.setFont(font3);
 
@@ -89,15 +66,10 @@ public class GameOverMenu extends BasicGameState {
 		g.setFont(font4);
 
 		for (int i = 0; i < nbrOption; i++) {
-			g.drawString(this.items[i], 300, 280 + 50 * i);
+			g.drawString(this.items[i], 300, 273 + 30 * i);
 		}
 
-		g.drawString(">>", 230, 280 + 50 * selection);
-	}
-
-	public void mousePressed(int button, int oldx,int oldy){
-		if (mouseOverSelection())
-			execOption();
+		g.drawString(">>", 273, 273 + 30 * selection);
 	}
 
 	public void keyPressed(int key, char c) {
@@ -110,23 +82,23 @@ public class GameOverMenu extends BasicGameState {
 			execOption();
 			break;
 		case Input.KEY_ESCAPE:
-			game.enterState(4 /* MainMenu */, new FadeOutTransition(), new FadeInTransition());
+			game.enterState(1 /* Choice */, new FadeOutTransition(), new FadeInTransition());
 			break;
 		}
 	}
 
 	public void execOption() {
-		World world = (World) game.getState(0);
+		World world = (World) game.getState(3);
 		switch (selection) {
 		case 0:
 			if (world.campaign) {
 				world.currentCampaignLevel = 1;
 			}
 			world.load(world.currentLevel, world.custom);
-			game.enterState(0 /* World */, new FadeOutTransition(), new FadeInTransition());
+			game.enterState(3 /* World */, new FadeOutTransition(), new FadeInTransition());
 			break;
 		case 1:
-			game.enterState(4 /* MainMenu */, new FadeOutTransition(), new FadeInTransition());
+			game.enterState(1 /* Choice */, new FadeOutTransition(), new FadeInTransition());
 			break;
 		}
 	}

@@ -65,12 +65,12 @@ public class LevelEditor {
 
 		if(debut)
 		{
-			Font font1 = AppLoader.loadFont("Kalinga", AppFont.BOLD, 20); // TODO: trouver une fonte équivalente
+			Font font1 = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 24);
 			arg2.setFont(font1);
 			arg2.setColor(Color.red);
-			arg2.drawString("Cliquez sur le carre et cliquez ou vous souhaitez le placer !", 100, 170);
-			arg2.drawString("       Touche haut ou bas pour changer de couleur", 100, 220);
-			arg2.drawString("Appuyez sur S pour sauvegarder", 200, 270);
+			arg2.drawString("Cliquez sur le carré et cliquez où vous souhaitez le placer !", 75, 143);
+			arg2.drawString("Touchez haut ou bas pour changer de couleur", 150, 173);
+			arg2.drawString("Appuyez sur S pour sauvegarder", 225, 203);
 		}
 
 		arg2.setColor(Color.red);
@@ -110,27 +110,28 @@ public class LevelEditor {
 		if(sauvegarder)
 		{
 			arg2.setColor(Color.red);
-			arg2.fillRoundRect(200, 200, 400, 200,20,20);
+			arg2.fillRoundRect(200, 100, 400, 250,20,20);
 			arg2.setColor(Color.black);
-			arg2.fillRoundRect(202, 202, 396, 196,20,20);
+			arg2.fillRoundRect(202, 102, 396, 246,20,20);
+			arg2.setColor(Color.red);
+			Font font1 = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 30);
+			arg2.setFont(font1);
+			arg2.drawString("Sauvegarder le niveau", 270, 120);
 			arg2.setColor(Color.white);
-
-			Font font1 = AppLoader.loadFont("Kalinga", AppFont.BOLD, 15); // TODO: trouver une fonte équivalente
+			font1 = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 24);
 			arg2.setFont(font1);
-			arg2.drawString("Sauvegarder le niveau", 300, 220);
-
-			font1 = AppLoader.loadFont("Kalinga", AppFont.BOLD, 12); // TODO: trouver une fonte équivalente
-			arg2.setFont(font1);
-			arg2.drawString("Entrez le nom du niveau: "+nomFichier, 300, 280);
-			arg2.drawString("Appuyez sur entree pour enregistrer le niveau", 260, 310);
+			arg2.drawString("Entrez le nom du niveau :", 240, 183);
+			arg2.drawString(nomFichier, 240, 213);
+			arg2.drawString("Appuyez sur entrée pour", 240, 273);
+			arg2.drawString("enregistrer le niveau", 240, 303);
 
 			if(sauvegarderSucces)
 			{
 				arg2.setColor(Color.green);
-				arg2.drawString("Sauvegarde avec succes ! (je crois...)", 280, 340);
+				arg2.drawString("Sauvegardé avec succès ! (je crois)", 210, 423);
 			}
 		}
-		Font font1 = AppLoader.loadFont("Kalinga", AppFont.BOLD, 12); // TODO: trouver une fonte équivalente
+		Font font1 = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 24);
 	    if(frolleSauvegarde)arg2.setColor(Color.red);
 	    else arg2.setColor(Color.orange);
 		arg2.setFont(font1);
@@ -317,13 +318,13 @@ public class LevelEditor {
 		briques.add(b);
 	}
 
-	public void reload() {
+	public void reload(String nomFichier) {
 		briques.removeAll(briques);
 		sauvegarderSucces=false;
 		sauvegarder=false;
 		briqueSelectionne=null;
 		debut=true;
-		nomFichier="";
+		this.nomFichier=nomFichier;
 	}
 
 	public boolean getSauvegarder() {

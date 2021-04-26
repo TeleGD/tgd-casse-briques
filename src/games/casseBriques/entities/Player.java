@@ -158,7 +158,7 @@ public class Player extends Movable implements Rectangle {
 		}
 
 		if (life == 0) {
-			game.enterState(3 /* GameOverMenu */, new FadeOutTransition(), new FadeInTransition());
+			game.enterState(4 /* GameOverMenu */, new FadeOutTransition(), new FadeInTransition());
 		}
 	}
 

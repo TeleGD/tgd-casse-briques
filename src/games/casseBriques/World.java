@@ -120,7 +120,7 @@ public class World extends BasicGameState{
 		Input input = arg0.getInput();
 		if (input.isKeyDown(Input.KEY_ESCAPE)) {
 			this.setState(1);
-			arg1.enterState(6 /* Pause */, new FadeOutTransition(), new FadeInTransition());
+			arg1.enterState(2 /* Pause */, new FadeOutTransition(), new FadeInTransition());
 		}
 		player.update(arg0, arg1, arg2);
 		for (Brique brique: this.briques) {
@@ -172,7 +172,7 @@ public class World extends BasicGameState{
 		// this.briquesToAdd.clear();
 		this.bulletsToAdd.clear();
 		if (player.getLife() == 0) {
-			arg1.enterState(3 /* GameOverMenu */, new FadeOutTransition(), new FadeInTransition());
+			arg1.enterState(4 /* GameOverMenu */, new FadeOutTransition(), new FadeInTransition());
 		}
 
 		if (areBriquesDestroyed()) {
@@ -180,7 +180,7 @@ public class World extends BasicGameState{
 				currentCampaignLevel++;
 				load("niveau" + currentCampaignLevel, false);
 			} else {
-				arg1.enterState(4 /* MainMenu */, new FadeOutTransition(), new FadeInTransition());
+				arg1.enterState(1 /* Choice */, new FadeOutTransition(), new FadeInTransition());
 			}
 		}
 
