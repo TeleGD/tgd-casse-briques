@@ -119,10 +119,10 @@ public class GameOverMenu extends BasicGameState {
 		World world = (World) game.getState(0);
 		switch (selection) {
 		case 0:
-			if (world.gameMode == World.mode.CAMPAIGN) {
+			if (world.campaign) {
 				world.currentCampaignLevel = 1;
 			}
-			world.load(world.currentLevel, false);
+			world.load(world.currentLevel, world.custom);
 			game.enterState(0 /* World */, new FadeOutTransition(), new FadeInTransition());
 			break;
 		case 1:

@@ -42,9 +42,8 @@ public class World extends BasicGameState{
 	private Set<Brique> briquesToRemove;
 	private Set<Bullet> bulletsToRemove;
 	private Player player;
-	private Player player2;
-    public enum mode {CAMPAIGN, MULTI, CUSTOM};
-    public mode gameMode;
+	public boolean custom;
+	public boolean campaign;
     public int currentCampaignLevel;
 	public String currentLevel;
 
@@ -90,10 +89,6 @@ public class World extends BasicGameState{
 		/* Méthode exécutée environ 60 fois par seconde */
 		arg2.drawImage(background, 0, 0);
 		player.render(arg0, arg1, arg2);
-		if (gameMode == mode.MULTI)
-			player2.render(arg0, arg1, arg2);
-	    //arg2.drawString(Mouse.getX()+", "+Mouse.getY(), 10, 10);
-
 		for (Ball ball: this.balls) {
 			ball.render(arg0, arg1, arg2);
 		}
@@ -107,7 +102,7 @@ public class World extends BasicGameState{
 			bullet.render(arg0, arg1, arg2);
 		}
 		arg2.drawString("Lives : "+player.getLife(), 700, 580);
-		if (gameMode == mode.CAMPAIGN)
+		if (campaign)
 			arg2.drawString("Level : "+currentCampaignLevel, 50, 580);
 	}
 
@@ -128,8 +123,6 @@ public class World extends BasicGameState{
 			arg1.enterState(6 /* Pause */, new FadeOutTransition(), new FadeInTransition());
 		}
 		player.update(arg0, arg1, arg2);
-		if (gameMode == mode.MULTI)
-			player2.update(arg0, arg1, arg2);
 		for (Brique brique: this.briques) {
 			brique.setColliding(false);
 		}
@@ -183,7 +176,7 @@ public class World extends BasicGameState{
 		}
 
 		if (areBriquesDestroyed()) {
-			if (gameMode == mode.CAMPAIGN && currentCampaignLevel < 5) {
+			if (campaign && currentCampaignLevel < 5) {
 				currentCampaignLevel++;
 				load("niveau" + currentCampaignLevel, false);
 			} else {
@@ -284,18 +277,13 @@ public class World extends BasicGameState{
 
 	public void load(String niveau, boolean custom)
 	{
-		if (gameMode == mode.CAMPAIGN) {
+		this.custom = custom;
+		if (campaign) {
 			background = AppLoader.loadPicture("/images/casseBriques/background/fond"+currentCampaignLevel+".png");
 		} else {
 			background = AppLoader.loadPicture("/images/casseBriques/background/fond5.png");
 		}
 		player=new Player(this);
-		if (gameMode == mode.MULTI) {
-			player2 = new Player(this);
-			player2.setY(85);
-		} else {
-			player2 = null;
-		}
 		this.balls = new ArrayList<Ball>();
 		this.balls.add(new Ball(this));
 		this.bonuses = new ArrayList<Bonus>();

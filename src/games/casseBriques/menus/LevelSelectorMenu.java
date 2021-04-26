@@ -219,7 +219,7 @@ public class LevelSelectorMenu extends BasicGameState {
 		}
 		switch (selectionPopup) {
 		case 0:
-			world.gameMode = World.mode.CUSTOM;
+			world.campaign = false;
 			world.currentLevel = items[selection];
 			world.load(world.currentLevel, this.custom);
 			game.enterState(0 /* World */, new FadeOutTransition(),
