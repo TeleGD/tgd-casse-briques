@@ -109,12 +109,12 @@ public abstract class Brique extends Entity implements Rectangle{
 
 	public String briqueToString(){
 		if (this instanceof BriqueExplosive) {
-			return  "BriqueExplosive "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
+			return  "BriqueExplosive "+(int)x+" "+(int)y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
 		}
 		if (this instanceof BriqueMetal) {
-			return  "BriqueMetal "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
+			return  "BriqueMetal "+(int)x+" "+(int)y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
 		}
-		return  "BriqueClassic "+x+" "+y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
+		return  "BriqueClassic "+(int)x+" "+(int)y+" "+couleurOriginal.getRed()+" "+couleurOriginal.getGreen()+" "+couleurOriginal.getBlue()+" "+life+" "+ hard;
 	}
 
    public static Brique StringToBrique(World world, String s){
@@ -129,8 +129,8 @@ public abstract class Brique extends Entity implements Rectangle{
 		}else
 			b=new BriqueClassic(world);
 
-		b.setX(Double.parseDouble(t[1]));
-		b.setY(Double.parseDouble(t[2]));
+		b.setX(Integer.parseInt(t[1]));
+		b.setY(Integer.parseInt(t[2]));
 
 		int a=Integer.parseInt(t[3]);
 		int c=Integer.parseInt(t[4]);
