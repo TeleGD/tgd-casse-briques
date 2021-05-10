@@ -62,4 +62,3 @@ BriqueClassic 528.0 288.0 255 255 255 2 true
 BriqueClassic 592.0 288.0 255 255 255 2 true
 BriqueClassic 656.0 288.0 255 255 255 2 true
 BriqueClassic 720.0 288.0 255 255 255 2 true
-BriqueClassic 784.0 320.0 255 255 255 2 true

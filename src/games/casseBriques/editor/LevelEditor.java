@@ -28,7 +28,6 @@ public class LevelEditor {
 	private ArrayList<Brique> briques=new ArrayList<Brique>();
 	private ArrayList<Brique> menuBriques=new ArrayList<Brique>();
 	private Brique briqueSelectionne;
-	private int oldBriqueX;
 	private int couleurId;
 	private boolean sauvegarder=false;
 	private String nomFichier="";
@@ -162,7 +161,6 @@ public class LevelEditor {
 					&& menuBriques.get(i).getY()<oldy  && menuBriques.get(i).getY()+menuBriques.get(i).getHeight()>oldy)
 				{
 					briqueSelectionne=copie(menuBriques.get(i));
-					oldBriqueX=(int)briqueSelectionne.getX();
 					indexSelection=i;
 					gommeActive=false;
 				}
@@ -170,15 +168,15 @@ public class LevelEditor {
 
 			if(briqueSelectionne!=null)
 			{
-				if(oldy<=384 && recupererBrique(oldx, oldy)==null)
+				if(oldx>=16 && oldx<784 && oldy>=0 && oldy<384 && recupererBrique(oldx, oldy)==null)
 				{
-					briqueSelectionne.setX((oldx/64)*64+16);
-					briqueSelectionne.setY((oldy/32)*32);
+					briqueSelectionne.setX((oldx-16)/64*64+16);
+					briqueSelectionne.setY(oldy/32*32);
 					briques.add(briqueSelectionne);
 					briqueSelectionne=copie(briqueSelectionne);
 				}else {
-					briqueSelectionne.setX(oldBriqueX);
-					briqueSelectionne.setY(650);
+					briqueSelectionne.setX(-112);
+					briqueSelectionne.setY(-64);
 				}
 			}
 
@@ -206,19 +204,23 @@ public class LevelEditor {
 		}else
 			frolleSauvegarde=false;
 
-		if(briqueSelectionne!=null && recupererBrique(newx,newy)==null)
+		if(briqueSelectionne!=null)
 		{
-			if(newy>=384)newy=650;
-			if(newx+64>=width-16)newx=(int) (width-16-64);
-			briqueSelectionne.setX((newx/64)*64+16);
-			briqueSelectionne.setY((newy/32)*32);
+			if(newx>=16 && newx<784 && newy>=0 && newy<384 && recupererBrique(newx,newy)==null)
+			{
+				briqueSelectionne.setX((newx-16)/64*64+16);
+				briqueSelectionne.setY((newy/32)*32);
+			} else {
+				briqueSelectionne.setX(-112);
+				briqueSelectionne.setY(-64);
+			}
 		}
 	}
 
 	private Brique recupererBrique(int newx, int newy) {
 		for(Brique b:briques)
 		{
-			if(b.getX()==((newx)/64)*64+16 && b.getY()==(newy/32)*32)return b;
+			if(b.getX()==(newx-16)/64*64+16 && b.getY()==newy/32*32)return b;
 		}
 		return null;
 	}

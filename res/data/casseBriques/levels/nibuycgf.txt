@@ -1,8 +1,8 @@
-BriqueExplosive 320.0 224.0 189 -66 -66 1 true
-BriqueExplosive 256.0 192.0 189 -66 -66 1 true
-BriqueExplosive 256.0 224.0 189 -66 -66 1 true
-BriqueExplosive 256.0 320.0 189 -66 -66 1 true
-BriqueExplosive 0.0 64.0 189 -66 -66 1 true
+BriqueExplosive 336.0 224.0 189 -66 -66 1 true
+BriqueExplosive 272.0 192.0 189 -66 -66 1 true
+BriqueExplosive 272.0 224.0 189 -66 -66 1 true
+BriqueExplosive 272.0 320.0 189 -66 -66 1 true
+BriqueExplosive 16.0 64.0 189 -66 -66 1 true
 BriqueExplosive 16.0 96.0 255 0 0 1 true
 BriqueExplosive 16.0 128.0 255 0 0 1 true
 BriqueExplosive 16.0 192.0 255 0 0 1 true
