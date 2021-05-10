@@ -82,6 +82,9 @@ public class Editor extends BasicGameState{
 	public void reload(String niveau) {
 		editor.reload(niveau);
 		String level = AppLoader.restoreData("/casseBriques/levels/" + niveau + ".txt");
+		if (level == null) {
+			level = "";
+		}
 		BufferedReader reader = new BufferedReader(new StringReader(level));
 		String line;
 		try {

@@ -182,20 +182,21 @@ public class AppLoader {
 	}
 
 	public static String restoreData(String filename) {
-		String data = "";
 		if (filename == null || !filename.startsWith("/")) {
-			return data;
+			return null;
 		}
 		filename = filename.replaceAll("/+", "/");
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(AppLoader.home + filename.replace("/", File.separator)));
+			String data = "";
 			String line;
 			while ((line = reader.readLine()) != null) {
 				data += line + "\n";
 			}
 			reader.close();
+			return data;
 		} catch (Exception error) {}
-		return data;
+		return null;
 	}
 
 	public static void saveData(String filename, String data) {

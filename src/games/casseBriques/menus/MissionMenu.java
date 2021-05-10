@@ -2,7 +2,6 @@ package games.casseBriques.menus;
 
 import java.util.ArrayList;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -69,15 +68,6 @@ public class MissionMenu extends BasicGameState {
 		return this.ID;
 	}
 
-	private boolean mouseOverSelection() {
-		int x = Mouse.getX();
-		int y = 600-Mouse.getY();
-		return (   x>72
-				&& x<275
-				&& y>280+12*13
-				&& y<280+13*13);
-	}
-
 	public void init(GameContainer container, StateBasedGame game) {
 		this.container = container;
 		this.game = game;
@@ -110,11 +100,6 @@ public class MissionMenu extends BasicGameState {
 
 		g.drawString("Continuer", 300, 103 + (lines + 1) * 30);
 		g.drawString(">>", 273, 103 + (lines + 1) * 30);
-	}
-
-	public void mousePressed(int button, int oldx,int oldy){
-		if (mouseOverSelection())
-			game.enterState(3 /* World */);
 	}
 
 	@Override

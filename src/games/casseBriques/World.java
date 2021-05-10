@@ -300,6 +300,9 @@ public class World extends BasicGameState{
 		String level;
 		if (custom) {
 			level = AppLoader.restoreData("/casseBriques/levels/" + niveau + ".txt");
+			if (level == null) {
+				level = "";
+			}
 		} else {
 			level = AppLoader.loadData("/data/casseBriques/levels/" + niveau + ".txt");
 		}

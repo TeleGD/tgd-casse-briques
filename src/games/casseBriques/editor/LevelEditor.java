@@ -270,6 +270,9 @@ public class LevelEditor {
 
 	private void enregistrerNiveau() {
 		String levels = AppLoader.restoreData("/casseBriques/levels.txt");
+		if (levels == null) {
+			levels = "";
+		}
 		BufferedReader reader = new BufferedReader(new StringReader(levels));
 		List<String> items = new ArrayList<String>();
 		String line;

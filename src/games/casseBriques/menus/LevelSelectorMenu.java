@@ -51,6 +51,9 @@ public class LevelSelectorMenu extends AppMenu {
 		String levels;
 		if (custom) {
 			levels = AppLoader.restoreData("/casseBriques/levels.txt");
+			if (levels == null) {
+				levels = "";
+			}
 		} else {
 			levels = AppLoader.loadData("/data/casseBriques/levels.txt");
 		}
