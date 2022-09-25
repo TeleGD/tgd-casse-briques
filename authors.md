@@ -4,5 +4,5 @@
 - Guillaume Teset (@gteset)
 - Jérôme Gauzins (@jeromegauzins)
 - Nicolas Bernardes (@nicorb)
+- Pierre-Arnaud Blanc (@JSNerd12345)
 - Romain Gogdemir (@RomainGogdemir)
-- (@JSNerd12345)
